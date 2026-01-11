@@ -10,71 +10,54 @@ import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import { PROJECTS } from "@/data/navProjects";
-
-// 按 tag 分组项目
-const groupedProjects = PROJECTS.reduce(
-  (acc, project) => {
-    if (!acc[project.tag]) {
-      acc[project.tag] = [];
-    }
-    acc[project.tag].push(project);
-    return acc;
-  },
-  {} as Record<string, typeof PROJECTS>
-);
 ---
 
 <Layout>
   <Header />
   <main id="main-content" class="app-layout">
     <section class="pt-8 pb-6 border-b border-border">
-      <h1 class="text-3xl font-bold sm:text-4xl">� 我的项目</h1>
+      <h1 class="text-3xl font-bold sm:text-4xl">🚀 我的项目</h1>
       <p class="mt-4 text-base-content/70">
         白天搞钱，晚上搞研究。这些是我正在运营的项目，点击卡片直接跳转。
       </p>
     </section>
 
-    {
-      Object.entries(groupedProjects).map(([tag, projects]) => (
-        <section class="pt-8 pb-6 border-b border-border last:border-b-0">
-          <h2 class="text-2xl font-semibold mb-6">{tag}</h2>
-          <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {projects.map(project => (
-              <a
-                href={project.url}
-                class="group flex flex-col gap-2 rounded-xl border border-border bg-base-100 p-5 transition-all hover:border-accent hover:shadow-lg"
-                target={project.url.startsWith("http") ? "_blank" : "_self"}
-                rel={
-                  project.url.startsWith("http")
-                    ? "noopener noreferrer"
-                    : undefined
-                }
-              >
-                <div class="flex items-center gap-3">
-                  <span class="text-3xl">{project.icon || "📦"}</span>
-                  <span class="text-lg font-semibold group-hover:text-accent">
-                    {project.title}
-                  </span>
-                </div>
-                <p class="text-sm text-base-content/70 flex-1">
-                  {project.desc}
-                </p>
-                <div class="mt-2 flex items-center justify-between">
-                  <span class="inline-block rounded-full bg-accent/10 px-2 py-0.5 text-xs text-accent">
-                    {project.tag}
-                  </span>
-                  <span class="text-xs text-base-content/50 group-hover:text-accent">
-                    {project.url.startsWith("http") ? "外部链接 ↗" : "站内 →"}
-                  </span>
-                </div>
-              </a>
-            ))}
-          </div>
-        </section>
-      ))
-    }
+    <section class="pt-8 pb-6">
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        {PROJECTS.map(project => (
+          <a
+            href={project.url}
+            class="group flex flex-col gap-2 rounded-xl border border-border bg-base-100 p-5 transition-all hover:border-accent hover:shadow-lg"
+            target={project.url.startsWith("http") ? "_blank" : "_self"}
+            rel={
+              project.url.startsWith("http")
+                ? "noopener noreferrer"
+                : undefined
+            }
+          >
+            <div class="flex items-center gap-3">
+              <span class="text-3xl">{project.icon || "📦"}</span>
+              <span class="text-lg font-semibold group-hover:text-accent">
+                {project.title}
+              </span>
+            </div>
+            <p class="text-sm text-base-content/70 flex-1">
+              {project.desc}
+            </p>
+            <div class="mt-2 flex items-center justify-between">
+              <span class="inline-block rounded-full bg-accent/10 px-2 py-0.5 text-xs text-accent">
+                {project.tag}
+              </span>
+              <span class="text-xs text-base-content/50 group-hover:text-accent">
+                {project.url.startsWith("http") ? "外部链接 ↗" : "站内 →"}
+              </span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
 
-    <section class="py-12 text-center">
+    <section class="py-8 text-center">
       <p class="text-base-content/60">
         2029 年前，这个列表会越来越长。敬请期待。
       </p>
