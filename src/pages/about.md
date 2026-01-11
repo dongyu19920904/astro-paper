@@ -1,37 +1,35 @@
 ---
 layout: ../layouts/AboutLayout.astro
-title: "About"
+title: "关于我"
 ---
 
-AstroPaper is a minimal, accessible and SEO-friendly blog theme built with [Astro](https://astro.build/) and [Tailwind CSS](https://tailwindcss.com/).
+## 👋 Hi, 我是 yuyu
 
-![Astro Paper](public/astropaper-og.jpg)
+欢迎来到我的个人主页！这里是 **AI 项目** 与 **AI+生命科学** 的导航中心。
 
-AstroPaper provides a solid foundation for blogs, or even portfolios\_ with full markdown support, built-in dark mode, and a clean layout that works out-of-the-box.
+<!-- 
+  ===== 👇 在这里修改你的个人介绍 =====
+  你可以使用 Markdown 语法来格式化内容
+-->
 
-The blog posts in this theme also serve as guides, docs or example articles\_ making AstroPaper a flexible starting point for your next content-driven site.
+### 我在做什么
 
-## Features
+- 🤖 **人工智能** - 探索 AI 技术的各种应用
+- 🧬 **生命科学** - AI 与生物医药的交叉领域
+- 🛠️ **工具开发** - 构建实用的工具和应用
 
-AstroPaper comes with a set of useful features that make content publishing easy and effective:
+### 我的项目
 
-- SEO-friendly
-- Fast performance
-- Light & dark mode
-- Highly customizable
-- Organizable blog posts
-- Responsive & accessible
-- Static search with [PageFind](https://pagefind.app/)
-- Automatic social image generation
+- [aivora.cn](https://aivora.cn) - AI 项目导航与资源中心
+- [aibioo.cn](https://aibioo.cn) - AI+生命科学探索
 
-and so much more.
+### 联系方式
 
-## Show your support
+<!-- 👇 替换为你自己的联系方式 -->
+- **GitHub**: [YOUR_USERNAME](https://github.com/YOUR_USERNAME)
+- **Email**: your@email.com
+- **X (Twitter)**: [@YOUR_USERNAME](https://x.com/YOUR_USERNAME)
 
-If you like [AstroPaper](https://github.com/satnaing/astro-paper), consider giving it a star ⭐️.
+---
 
-Found a bug 🐛 or have an improvement ✨ in mind? Feel free to open an [issue](https://github.com/satnaing/astro-paper/issues), submit a [pull request](https://github.com/satnaing/astro-paper/pulls) or start a [discussion](https://github.com/satnaing/astro-paper/discussions).
-
-If you find this theme helpful, you can also [sponsor me on GitHub](https://github.com/sponsors/satnaing) or [buy me a coffee](https://buymeacoffee.com/satnaing) to show your support — every penny counts.
-
-Kyay zuu! 🙏🏼
+> 这个站点使用 [AstroPaper](https://github.com/satnaing/astro-paper) 主题构建，部署在 GitHub Pages 上。

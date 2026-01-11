@@ -1,23 +1,36 @@
+/**
+ * 站点核心配置
+ * ============
+ * 修改这里的值来自定义你的站点信息
+ *
+ * website: 你的域名（必须以 https:// 开头，结尾带 /）
+ * author: 你的名字
+ * profile: 你的个人主页链接
+ * desc: 站点描述（SEO 用）
+ * title: 站点标题
+ */
 export const SITE = {
-  website: "https://astro-paper.pages.dev/", // replace this with your deployed domain
-  author: "Sat Naing",
-  profile: "https://satnaing.dev/",
-  desc: "A minimal, responsive and SEO-friendly Astro blog theme.",
-  title: "AstroPaper",
-  ogImage: "astropaper-og.jpg",
+  // ===== 👇 修改这里的域名 =====
+  website: "https://yuyu.aivora.cn/", // 你的自定义域名
+  // ===== 👇 修改这里的个人信息 =====
+  author: "yuyu", // 你的名字
+  profile: "https://yuyu.aivora.cn/about", // 个人简介页面
+  desc: "AI 项目与 AI+生命科学导航 | yuyu 的个人主页", // 站点描述
+  title: "yuyu", // 站点标题
+  ogImage: "astropaper-og.jpg", // 默认 OG 图片
   lightAndDarkMode: true,
-  postPerIndex: 4,
-  postPerPage: 4,
+  postPerIndex: 6, // 首页显示的文章数量
+  postPerPage: 6, // 列表页每页文章数
   scheduledPostMargin: 15 * 60 * 1000, // 15 minutes
   showArchives: true,
-  showBackButton: true, // show back button in post detail
+  showBackButton: true,
   editPost: {
-    enabled: true,
-    text: "Edit page",
-    url: "https://github.com/satnaing/astro-paper/edit/main/",
+    enabled: false, // 如需启用"编辑此页"功能，改为 true 并更新下方 url
+    text: "编辑此页",
+    url: "https://github.com/YOUR_USERNAME/YOUR_REPO/edit/main/", // 替换为你的仓库地址
   },
   dynamicOgImage: true,
-  dir: "ltr", // "rtl" | "auto"
-  lang: "en", // html lang code. Set this empty and default will be "en"
-  timezone: "Asia/Bangkok", // Default global timezone (IANA format) https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  dir: "ltr",
+  lang: "zh-CN", // 中文站点
+  timezone: "Asia/Shanghai", // 中国时区
 } as const;
