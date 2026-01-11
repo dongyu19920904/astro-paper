@@ -6,10 +6,23 @@ const currentUrlPath = Astro.url.pathname.replace(/\/+$/, "");
 // eg: /tags/tailwindcss => ['tags', 'tailwindcss']
 const breadcrumbList = currentUrlPath.split("/").slice(1);
 
+// 路径名中英文映射
+const pathNameMap: Record<string, string> = {
+  posts: "博客",
+  tags: "标签",
+  archives: "归档",
+  about: "关于",
+  search: "搜索",
+  projects: "项目",
+};
+
+// 翻译路径名
+const translatePath = (path: string) => pathNameMap[path] || path;
+
 // if breadcrumb is Home > Posts > 1 <etc>
 // replace Posts with Posts (page number)
 if (breadcrumbList[0] === "posts") {
-  breadcrumbList.splice(0, 2, `Posts (page ${breadcrumbList[1] || 1})`);
+  breadcrumbList.splice(0, 2, `博客 (第 ${breadcrumbList[1] || 1} 页)`);
 }
 
 // if breadcrumb is Home > Tags > [tag] > [page] <etc>
@@ -18,7 +31,7 @@ if (breadcrumbList[0] === "tags" && !isNaN(Number(breadcrumbList[2]))) {
   breadcrumbList.splice(
     1,
     3,
-    `${breadcrumbList[1]} ${Number(breadcrumbList[2]) === 1 ? "" : "(page " + breadcrumbList[2] + ")"}`
+    `${breadcrumbList[1]} ${Number(breadcrumbList[2]) === 1 ? "" : "(第 " + breadcrumbList[2] + " 页)"}`
   );
 }
 ---
@@ -28,7 +41,7 @@ if (breadcrumbList[0] === "tags" && !isNaN(Number(breadcrumbList[2]))) {
     class="font-light [&>li]:inline [&>li:not(:last-child)>a]:hover:opacity-100"
   >
     <li>
-      <a href="/" class="opacity-80">Home</a>
+      <a href="/" class="opacity-80">首页</a>
       <span aria-hidden="true" class="opacity-80">&raquo;</span>
     </li>
     {
@@ -40,13 +53,13 @@ if (breadcrumbList[0] === "tags" && !isNaN(Number(breadcrumbList[2]))) {
               aria-current="page"
             >
               {/* make the last part lowercase in Home > Tags > some-tag */}
-              {decodeURIComponent(breadcrumb)}
+              {decodeURIComponent(translatePath(breadcrumb))}
             </span>
           </li>
         ) : (
           <li>
             <a href={`/${breadcrumb}/`} class="capitalize opacity-70">
-              {breadcrumb}
+              {translatePath(breadcrumb)}
             </a>
             <span aria-hidden="true">&raquo;</span>
           </li>
