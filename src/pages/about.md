@@ -3,33 +3,37 @@ layout: ../layouts/AboutLayout.astro
 title: "关于我"
 ---
 
-## 👋 Hi, 我是 yuyu
+## 我是谁
 
-欢迎来到我的个人主页！这里是 **AI 项目** 与 **AI+生命科学** 的导航中心。
+yuyu，一个在 AI 圈摸爬滚打的 90 后。
 
-<!-- 
-  ===== 👇 在这里修改你的个人介绍 =====
-  你可以使用 Markdown 语法来格式化内容
--->
+白天经营 [AI 账号小店](https://aivora.cn)，帮大家低价用上 Cursor、Claude、ChatGPT。
+晚上研究 AI × 生命科学，运营 [BioAI 日报](https://news.aibioo.cn)，追踪长寿赛道的最新动态。
 
-### 我在做什么
+## 我在干什么
 
-- 🤖 **人工智能** - 探索 AI 技术的各种应用
-- 🧬 **生命科学** - AI 与生物医药的交叉领域
-- 🛠️ **工具开发** - 构建实用的工具和应用
+说实话，一开始就是为了搞钱。
 
-### 我的项目
+后来发现 AI 在生命科学领域的进展太猛了——AlphaFold 解决蛋白质折叠、AI 加速药物研发、衰老机制研究突飞猛进……
 
-- [aivora.cn](https://aivora.cn) - AI 项目导航与资源中心
-- [aibioo.cn](https://aibioo.cn) - AI+生命科学探索
+我开始觉得，「长生」这件事，可能真的会在我们这代人手里实现。
 
-### 联系方式
+## 我的目标
 
-<!-- 👇 替换为你自己的联系方式 -->
-- **GitHub**: [YOUR_USERNAME](https://github.com/YOUR_USERNAME)
-- **Email**: your@email.com
-- **X (Twitter)**: [@YOUR_USERNAME](https://x.com/YOUR_USERNAME)
+**2029 年 9 月前，在 AI × 长生赛道搞出真正的成果。**
 
----
+从 2024 年 9 月立下这个 Flag，给自己 5 年时间。现在已经过去 1 年多，还剩不到 4 年。
 
-> 这个站点使用 [AstroPaper](https://github.com/satnaing/astro-paper) 主题构建，部署在 GitHub Pages 上。
+不是"进入行业"这种虚的，是要实实在在推动点什么。
+
+至于 2029 年之后？还有更大的目标，但现在说太早了。先把第一步走扎实。
+
+现在还是个小白，边学边干。这个博客就是我的作战日志。
+
+## 找我聊聊
+
+- 💬 微信：`prompt2333`（加好友请备注来意）
+- 📧 邮箱：dongyu199209@outlook.com
+- 🐙 GitHub：[dongyu19920904](https://github.com/dongyu19920904)
+
+如果你也相信 AI 能帮人类活得更久，欢迎来聊。

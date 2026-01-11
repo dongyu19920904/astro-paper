@@ -15,7 +15,7 @@ export const SITE = {
   // ===== 👇 修改这里的个人信息 =====
   author: "yuyu", // 你的名字
   profile: "https://yuyu.aivora.cn/about", // 个人简介页面
-  desc: "AI 项目与 AI+生命科学导航 | yuyu 的个人主页", // 站点描述
+  desc: "yuyu 的个人主页 | 白天卖 AI 账号，晚上研究 AI 长生", // 站点描述
   title: "yuyu", // 站点标题
   ogImage: "astropaper-og.jpg", // 默认 OG 图片
   lightAndDarkMode: true,
@@ -27,7 +27,7 @@ export const SITE = {
   editPost: {
     enabled: false, // 如需启用"编辑此页"功能，改为 true 并更新下方 url
     text: "编辑此页",
-    url: "https://github.com/YOUR_USERNAME/YOUR_REPO/edit/main/", // 替换为你的仓库地址
+    url: "https://github.com/dongyu19920904/astro-paper/edit/main/",
   },
   dynamicOgImage: true,
   dir: "ltr",

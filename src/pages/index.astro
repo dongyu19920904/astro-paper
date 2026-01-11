@@ -26,7 +26,7 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
     {/* ===== Hero 区块：个人品牌介绍 ===== */}
     <section id="hero" class:list={["pt-8 pb-6", "border-b border-border"]}>
       <h1 class="my-4 inline-block text-4xl font-bold sm:my-8 sm:text-5xl">
-        👋 Hi, I'm yuyu
+        yuyu
       </h1>
       <a
         target="_blank"
@@ -44,16 +44,22 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
       </a>
 
       <p class="text-lg">
-        欢迎来到我的个人主页！这里是 <strong>AI 项目</strong> 与 <strong>AI+生命科学</strong> 的导航中心。
+        一个在 AI 圈摸爬滚打的普通人。
       </p>
       <p class="mt-2 text-base-content/70">
-        我专注于人工智能技术及其在生命科学领域的应用，在这里你可以找到我的项目、博客和更多资源。
+        白天卖 Cursor、Claude 账号养活自己，晚上研究 AI × 生命科学，死磕一个问题：<strong>怎么用 AI 让人活得更久</strong>。
+      </p>
+      <p class="mt-2 text-base-content/70">
+        给自己定了个 Flag：<strong>2029 年前，在 AI 长生赛道搞出点真东西。</strong> 倒计时 3 年半，不是喊口号，是真干。
+      </p>
+      <p class="mt-2 text-base-content/70">
+        这里是我的大本营——项目、日报、学习笔记，都在这儿了。
       </p>
       {
         // only display if at least one social link is enabled
         SOCIALS.length > 0 && (
           <div class="mt-4 flex max-sm:flex-col sm:items-center">
-            <div class="me-2 mb-1 whitespace-nowrap sm:mb-0">联系我：</div>
+            <div class="me-2 mb-1 whitespace-nowrap sm:mb-0">找我聊聊：</div>
             <Socials />
           </div>
         )
@@ -62,7 +68,7 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
 
     {/* ===== 导航区块：快速入口卡片 ===== */}
     <section id="nav-hub" class="pt-8 pb-6 border-b border-border">
-      <h2 class="text-2xl font-semibold tracking-wide mb-6">🚀 快速导航</h2>
+      <h2 class="text-2xl font-semibold tracking-wide mb-6">🚀 我的项目</h2>
       <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {
           NAV_LINKS.map(link => (

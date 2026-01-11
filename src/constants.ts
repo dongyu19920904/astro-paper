@@ -24,20 +24,14 @@ interface Social {
 export const SOCIALS: Social[] = [
   {
     name: "GitHub",
-    href: "https://github.com/YOUR_USERNAME", // 👈 替换为你的 GitHub
-    linkTitle: `${SITE.title} on GitHub`,
+    href: "https://github.com/dongyu19920904",
+    linkTitle: `${SITE.title} 的 GitHub`,
     icon: IconGitHub,
   },
   {
-    name: "X",
-    href: "https://x.com/YOUR_USERNAME", // 👈 替换为你的 X (Twitter)
-    linkTitle: `${SITE.title} on X`,
-    icon: IconBrandX,
-  },
-  {
     name: "Mail",
-    href: "mailto:your@email.com", // 👈 替换为你的邮箱
-    linkTitle: `发送邮件给 ${SITE.title}`,
+    href: "mailto:dongyu199209@outlook.com",
+    linkTitle: `发邮件给 ${SITE.title}`,
     icon: IconMail,
   },
 ] as const;
