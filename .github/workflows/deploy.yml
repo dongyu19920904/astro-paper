@@ -52,6 +52,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
         working-directory: ${{ env.BUILD_PATH }}
+        env:
+          PNPM_IGNORE_SCRIPTS: true
 
       - name: Build with Astro
         run: |
