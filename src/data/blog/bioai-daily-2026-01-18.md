@@ -1,8 +1,8 @@
 ---
-title: '**Examining The Request**'
+title: '**Evaluating the Framework**'
 pubDatetime: 2026-01-18T01:00:00.000Z
 modDatetime: 2026-01-18T01:00:00.000Z
-description: 'I''m starting to assess the request''s core. My focus is on understanding the "yuyu" persona – the AI account seller in Da...'
+description: 'I''ve zeroed in on the persona: yuyu, a seller of AI accounts in Dali. My initial assessment is that their background as ...'
 tags:
   - bioai-daily
   - ai
@@ -10,109 +10,121 @@ tags:
 draft: false
 ---
 
-I'm starting to assess the request's core. My focus is on understanding the "yuyu" persona – the AI account seller in Dali. The specifics of their background, the "shovel seller" label, and the ambition for AI-driven immortality are all key details I'm using to form a base. The blunt, realistic tone is a characteristic I’m keeping in mind.
+I've zeroed in on the persona: yuyu, a seller of AI accounts in Dali. My initial assessment is that their background as a failed prompt engineer and course seller, now hawking "shovels," will be key in understanding their motivation. This offers a specific lens through which I can analyze the request.
 
 
-**Mapping Out The Strategy**
+**Deciphering the Blueprint**
 
-I'm now laying out the roadmap for the blog post. I'm focusing on weaving in my "yuyu" persona, starting with the goal of immortality through AI and then linking to the provided news snippets. I plan to use the triggers to guide the discussion, and I will be keeping the specified format and tone in mind as I begin composing.
-
-
-**Connecting The Dots**
-
-I've been drawing connections between the news snippets and my "yuyu" persona, and it's starting to solidify. The medical summaries angle is a great opening, a relatable entry point. The AlphaFold3 update provides a bridge to the dream of immortality, and the robot mouths give a slightly cynical angle. Thinking about the business side, I'm now exploring how these advancements translate into my own market of AI accounts and tools. The structure is now coalescing.
+I'm now deep into the request's core, dissecting the "BioAI Daily" piece. I've broken down the news items into digestible chunks, especially focusing on AFsample3's potential for protein personality prediction. My goal is to see how this connects to my immortality aspirations.
 
 
-**Composing The Hook**
+**Synthesizing the Narrative**
 
-I'm now writing the intro, and I'm using the date and location to ground the reader. The hook will also include my morning routine: coffee, sales check, then news. I'm aiming for an initial reaction, reflecting the sense that things are happening fast, yet the pursuit of immortality feels distant.
-
-
-**Formulating The Body**
-
-I'm now writing about the AlphaFold news. I'm focusing on my misunderstanding of the technical details and using the concept of "multiple personalities" to make it simple. I’m injecting the sentiment of hope linked to the possibility of avoiding death, as well as a dose of realism about my day-to-day work, while keeping the tone light, but observant.
-
-I'm expanding on my prior reflections, moving now to link them to my past life and recent experiences, which hopefully will let the blog be more compelling for the readers.
+Now I'm focusing on weaving the personal story into the news snippets. I'm imagining the cafe in Dali, the crisp air, and yuyu's general cynicism. I plan to use AFsample3 as a springboard for the immortality dream and the AI discharge summaries to highlight the gap between hype and reality.
 
 
-**Fine-Tuning The Tone**
+**Crafting the Blueprint**
 
-My focus has shifted toward refining the blog's voice. I'm injecting slang and conversational elements, like "卧槽" to match my "yuyu" persona. The goal is to make the piece feel less formal and more relatable, and I've started correcting myself in draft during the final stages. I'm making sure my voice and word choices match the persona and tone outlined in the request.
+I'm now in the thick of organizing the content. The AlphaFold3 news will kick things off, framing my immortality aspirations. I then plan to juxtapose this with skepticism about AI discharge summaries. I'm aiming for a conversational flow, a blend of personal reflections and a dose of cynicism.
 
 
-看到机器人照镜子那个新闻，我突然觉得有点脊背发凉
+**Outlining the Structure**
 
-今天是大理难得的阴天，苍山被云盖得严严实实。我坐在古城边上的咖啡馆，手里捧着热美式，屏幕上是后台的订单数据——今天 Cursor 的销量一般，倒是 Claude 的号莫名其妙卖得不错。
+I'm finalizing the blog post structure. I'll open with a Dali cafe scene, then hit the AlphaFold3 news, linking it to my immortality quest. Next comes the cynical take on AI discharge summaries, and a funny robot lip-sync clip. I’ll wrap up by embracing my role selling AI tools, regardless of their ultimate use.
 
-刚才扫了一眼今天的 BioAI 日报，说实话，看得我心情有点复杂。
+
+**Composing the Introduction**
+
+I'm starting the opening scene, setting the Dali atmosphere. I'll describe the cafe and my current sales. Then, I'm introducing the "BioAI Daily," which I read every morning. The aim is to create a natural, conversational tone and introduce the key topics from the news in a non-academic way.
+
+
+**Formulating the Outline**
+
+I've finally structured my thoughts into a blog post outline. I'm starting with the Dali scene and sales, diving into AlphaFold3, and then my concerns with AI discharge summaries. The robot lip-sync news will follow, leading to a wrap-up on my role. I'll make sure to mention the 2026 date in the future!
+
+
+**Refining the Draft**
+
+I'm now in the process of finalizing the content. I've re-read my plan and begun writing the actual text. I'm taking the opportunity to insert specific details about Dali, along with a bit of slang to make the tone feel more authentic. I'm double-checking to make sure I'm mentioning the 2026 date often enough, as a future-focused detail!
+
+
+AlphaFold3 进化了，但我更关心医生是不是在用 AI 偷懒
+
+大理今天的阳光好得有点过分，晒得人懒洋洋的。
+
+我坐在古城的咖啡馆里，手边是一杯喝了一半的澳白，屏幕上挂着我的淘宝店后台。今天生意一般，Cursor 的换号器只卖出去几单，倒是 Claude 的老号有人来问了一圈。趁着没客服消息回，我把今天的 BioAI 日报给刷了一遍。
+
+说实话，今天是 2026 年 1 月 18 号，距离我定下“借助 AI 实现长生不老”的五年计划，已经过去快两年了。看着今天的这些新闻，我心情有点复杂：一方面觉得科技真的在狂奔，另一方面又觉得，这玩意儿离让我“不死”，好像还是隔着十万八千里。
 
 ## Table of contents
-- 那些我看不太懂的"神仙打架"
-- 那个让我起鸡皮疙瘩的机器人
-- 医生都在用 AI 偷懒了，我的长生不老呢？
-- 卖铲子的人，有时候也会迷茫
+- 蛋白质也有“多重人格”？
+- AI 写出院小结，我是不敢信
+- 机器人照镜子，比我做直播还自然
+- 还是继续卖铲子吧
 
-## 那些我看不太懂的"神仙打架"
+## 蛋白质也有“多重人格”？
 
-先说那个排第一的 **AFsample3**。
+今天的头条是 AlphaFold3 的升级版 AFsample3。简单说，以前 AI 预测蛋白质结构，就像是给人拍一张证件照，死板、静态。现在这个新工具，能预测出蛋白质的“多重构象”。
 
-日报里说它能预测蛋白质的"多重人格"（多构象），准确率暴涨 54%。作为一个文科生底子的账号贩子，我盯着"构象"这个词看了半天。
+看到“多构象”这个词，我第一反应居然是想到了我的客户们。
 
-我大概能理解它的意思：以前 AI 觉得蛋白质是块砖，哪里需要往哪搬；现在 AI 发现蛋白质其实像个变形金刚，碰见不同的人（环境）会变出不同的样子。
+做闲鱼和淘宝久了，你会发现人也是有“多重构象”的。同一个客户，买之前叫你“亲”，语气温柔得像只猫；一旦账号出了点小问题（比如梯子不稳连不上），立马变身“暴躁老哥”，恨不得顺着网线过来掐死你；等你帮他解决了，他又变成“大神牛逼”。
 
-这对我的"长生不老"计划意味着什么？
-我想了想，这可能意味着以前很多药研发失败，是因为没算准蛋白质"变身"后的样子？如果 AI 能算准了，是不是很多绝症就有救了？
+蛋白质也是一样，它在细胞里不是僵死的，它是会动、会变形的。这篇论文说，AFsample3 能预测这些变化，准确率暴涨 54%。
 
-虽然技术细节我是一点都看不懂（我也就只会搬运 API 赚个差价），但直觉告诉我，这是个好消息。起码说明这帮搞生物 AI 的人没闲着，还在给我的寿命"充值"。
+这一条新闻其实让我有点兴奋。为什么？因为我是个生物小白，但我知道一点：**生命在于运动**。如果 AI 只能预测静态的结构，那它永远造不出真正的生命，也就没法真正帮我延寿。只有搞懂了这些微观分子的“动态舞步”，我们才算真的摸到了生命的门槛。
 
-## 那个让我起鸡皮疙瘩的机器人
+虽然现在的我，连那个论文里的“多重采样算法”原理都看不懂，但直觉告诉我，这比单纯多发现几个药物靶点要重要得多。这是从“拍照”到“拍视频”的跨越。
 
-但真正戳中我神经的，是最后那个不起眼的趣闻：**机器人照镜子学会了动嘴**。
+## AI 写出院小结，我是不敢信
 
-新闻说，哥伦比亚大学搞了个机器人，不用人教，自己对着镜子看，或者看网上的人类视频，就学会了说话时怎么配合嘴型。
+另一条新闻让我有点想吐槽。
 
-这让我想起我刚开始做"闲鱼倒爷"的时候。
-那时候我也不懂什么叫 SEO，什么叫权重。我就像个笨拙的机器人，盯着同行的爆款文案（照镜子），人家怎么写标题，我就怎么改；人家主图用黄色大字，我也用。
+《Nature Scientific Reports》发了篇论文，说用微调的大模型来写出院小结，还能“自我评估”准确性。
 
-慢慢地，我也"学会了"。
-我也知道怎么避开敏感词，怎么把"ChatGPT"写成"智能助手"来防封号，怎么在详情页里埋钩子。
+作为一个靠卖 AI 账号为生的人，我对大模型的“幻觉”简直太熟悉了。
 
-现在这个机器人，只是学会了动嘴。再过两年，它会不会学会察言观色？会不会学会像我一样，在闲鱼上跟买家讨价还价，甚至编故事卖惨？
+去年我在闲鱼上被扣分，就是因为我用 GPT-4 写了一段看起来极其专业的“账号使用免责声明”，结果里面胡编乱造了一条不存在的闲鱼社区规则，被系统判定违规。当时我还觉得自己挺冤，现在想想，AI 这家伙，哪怕到了 2026 年，一本正经胡说八道的本事还是在的。
 
-如果 AI 连这种微妙的"自我修正"都能学会，那我这个只会卖账号的人类，还有什么护城河？
+新闻里说这个模型能“自我评估”，检查自己的错误。这逻辑听起来就像是：一个醉汉说他没醉，并且即使他醉了，他也能通过自己那醉醺醺的大脑判断出自己醉了。
 
-## 医生都在用 AI 偷懒了，我的长生不老呢？
+如果我是病人，看到医生拿着 AI 生成的单子给我，我心里绝对发毛。
 
-还有那个 **AI 生成出院小结** 的新闻。
+但转念一想，现实可能是残酷的。医生太忙了，写文书这种枯燥的活儿，他们巴不得甩给 AI。
 
-看到这个我笑了。两年前我在闲鱼接单写 Prompt 的时候，就遇到过一个医生（或者医学生），花 9.9 让我帮他写个"能自动生成病历的指令"。当时那单我折腾了一下午，也就是搞个半成品。
+这让我想到我之前写的那三个 AI 课程。几十万字啊，哪怕没人买，我也写得热血沸腾。后来为了凑字数，我也用了 AI 扩写。结果呢？字数是上去了，但那部分内容读起来就像白开水，没味儿。
 
-现在好了，Nature 上都发论文了，微调的大模型不仅能写，还能"自我评估"查错。
+医疗文书要是也变成这种“白开水”，以后看病会不会更冷冰冰了？不过对于医院来说，效率就是金钱。这技术落地肯定快，毕竟能省人工。
 
-这其实是个巨大的信号。
-**当 AI 开始介入"容错率极低"的医疗文书环节，说明它真的成熟了。**
+## 机器人照镜子，比我做直播还自然
 
-但我更焦虑的是：AI 都能帮医生写作业了，为什么在"让我多活 50 年"这件事上，感觉还是有点慢？
-你看，AlphaFold 还在死磕蛋白质结构，精准医疗还在搞数据清洗（那个 TidyMass2 工具）。
+还有个趣闻，说哥伦比亚大学搞了个机器人，通过照镜子学会了说话时怎么动嘴皮子。
 
-我卖了 130 多天的 AI 账号，看着用户从最初问"ChatGPT 是什么"，到现在熟练地问"有没有 Claude 4.5 的 API key"。工具在普及，大家都在用 AI 提高效率、写代码、写论文。
+看到这儿我笑了。我想起两年前，我刚开始在视频号尝试露脸直播卖课。那时候我甚至不知道手该往哪放，眼睛该看镜头还是看屏幕，嘴巴动得极其僵硬，看着回放我都想抽自己。
 
-**但这一切，似乎还没转化成我能打到身体里的一针"长生药"。**
+结果现在机器人都能自己照镜子学会管理表情了？
 
-## 卖铲子的人，有时候也会迷茫
+这让我想起“恐怖谷”效应。如果哪天，我卖的 AI 助手不仅仅是一个对话框，而是一个有着完美表情、能看着我的眼睛说话的虚拟人，那我的生意会变好还是变坏？
 
-喝完最后一口咖啡，我看了看窗外。大理的风还是那么大。
+也许到那时，我就不是卖账号了，我是卖“虚拟伴侣的灵魂碎片”。这听起来比卖 Cursor 激活码要赛博朋克多了。
 
-虽然嘴上吐槽，但我心里清楚，不管是 AlphaFold 还是那个照镜子的机器人，都在把我往那个疯狂的梦想推近一点点。
+## 还是继续卖铲子吧
 
-我也只是这个巨大生态里的一只蚂蚁。
-科学家在顶层搞研究，我在底层卖账号。他们用我卖的账号去写代码、去分析数据、去发论文（希望他们买的是正版，但我这儿便宜啊）。
+看完日报，合上电脑，我喝完最后一口咖啡。
 
-哪怕我卖的一千个账号里，只有一个被用来做真正的生命科学研究，那我这铲子也算没白卖。
+今天的这些突破——蛋白质的多构象、医疗文书的自动化、机器人的表情管理——每一项都在把这个世界往未来推一步。
 
-好了，不矫情了。
-刚才手机震了一下，又有个客户来问："老板，Cursor 的号怎么登不上了？"
-得，"长生不老"先放放，我得先去处理售后了。这才是 2026 年的真实生活。
+虽然离我梦想的“长生不老”还有很远，虽然 DeepSeek 还是偶尔会崩，虽然我的闲鱼店偶尔还是会收到差评，但只要技术还在动，我就觉得有希望。
+
+对于我这个“卖铲子”的人来说，技术越复杂，普通人越看不懂，我的机会就越多。
+
+刚才手机震了一下，又有个客户问：“老板，你这有那种能分析医学论文的 AI 账号吗？我写毕业论文急用。”
+
+看，需求这不就来了吗？
+
+我回了一句：“有，拍三合一那个链接，管够。”
+
+日子还得过，长生不老先放一放，先把今天的饭钱挣了。
 
 ---
 
