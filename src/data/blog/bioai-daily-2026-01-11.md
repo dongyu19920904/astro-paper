@@ -2,7 +2,7 @@
 title: "Aurora的万能编辑器让我想起了卖账号的逻辑"
 pubDatetime: 2026-01-11T01:00:00.000Z
 modDatetime: 2026-01-11T01:00:00.000Z
-description: "今天看到Aurora那条新闻，说他们要做一个"万能编辑器"，改20个编码就能切换治疗方向，一次性覆盖1600种基因突变。"
+description: '今天看到Aurora那条新闻，说他们要做一个"万能编辑器"，改20个编码就能切换治疗方向，一次性覆盖1600种基因突变。'
 tags:
   - bioai-daily
   - ai

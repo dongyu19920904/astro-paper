@@ -2,7 +2,7 @@
 title: "谷歌让 AI 读我的邮件，我却想到了卖账号的事"
 pubDatetime: 2026-01-15T01:00:00.000Z
 modDatetime: 2026-01-15T01:00:00.000Z
-description: "今天看到谷歌让 Gemini 能读邮件、照片和搜索记录，第一反应不是"哇好厉害"，而是——我的 Gmail 账号库要不要涨价了？"
+description: '今天看到谷歌让 Gemini 能读邮件、照片和搜索记录，第一反应不是"哇好厉害"，而是——我的 Gmail 账号库要不要涨价了？'
 tags:
   - bioai-daily
   - ai

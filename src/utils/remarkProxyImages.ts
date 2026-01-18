@@ -1,3 +1,4 @@
+import type { Root } from "mdast";
 import type { Plugin } from "unified";
 import { visit } from "unist-util-visit";
 
@@ -15,8 +16,8 @@ function normalizeUrl(url: string): string {
   return url;
 }
 
-export const remarkProxyImages: Plugin = () => {
-  return tree => {
+export const remarkProxyImages: Plugin<[], Root> = () => {
+  return (tree: Root) => {
     visit(tree, "image", node => {
       if (!node || typeof node.url !== "string") return;
       const original = node.url.trim();

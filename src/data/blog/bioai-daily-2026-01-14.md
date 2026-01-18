@@ -2,7 +2,7 @@
 title: "BioAI 观察 | 2026/01/14"
 pubDatetime: 2026-01-14T01:00:00.000Z
 modDatetime: 2026-01-14T01:00:00.000Z
-description: "今天看完日报，第一反应不是"哇这个技术好厉害"，而是想起了一年前我在闲鱼搬运 DeepSeek API 赚差价的日子。那时候 DeepSeek 刚火，我觉得这玩意儿顶多热闹两周就凉了——结果打脸了。现在看到 Nature 发的血糖基础模型，..."
+description: '今天看完日报，第一反应不是"哇这个技术好厉害"，而是想起了一年前我在闲鱼搬运 DeepSeek API 赚差价的日子。那时候 DeepSeek 刚火，我觉得这玩意儿顶多热闹两周就凉了——结果打脸了。现在看到 Nature 发的血糖基础模型，...'
 tags:
   - bioai-daily
   - ai

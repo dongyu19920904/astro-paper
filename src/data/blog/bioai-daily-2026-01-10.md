@@ -2,7 +2,7 @@
 title: "BioAI 观察 | 2026/01/10"
 pubDatetime: 2026-01-10T01:00:00.000Z
 modDatetime: 2026-01-10T01:00:00.000Z
-description: "说实话，今天这三篇重磅论文我都没完全看懂。"
+description: '说实话，今天这三篇重磅论文我都没完全看懂。'
 tags:
   - bioai-daily
   - ai
