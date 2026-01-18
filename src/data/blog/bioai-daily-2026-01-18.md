@@ -1,8 +1,8 @@
 ---
-title: '看到 AlphaFold 又进化了，我第一反应是：这玩意儿离我的长生不老目标又近了一步吗？'
+title: '**Examining The Request**'
 pubDatetime: 2026-01-18T01:00:00.000Z
 modDatetime: 2026-01-18T01:00:00.000Z
-description: '今天的 BioAI 日报里，AFsample3 这个名字很技术范儿，但翻译成人话就是：AlphaFold3 终于学会预测蛋白质的"多重人格"了。以前它只能给你看蛋白质的一个状态，现在能看到好几个——准确率提升 54%。听起来很牛，但说实话，...'
+description: 'I''m starting to assess the request''s core. My focus is on understanding the "yuyu" persona – the AI account seller in Da...'
 tags:
   - bioai-daily
   - ai
@@ -10,69 +10,109 @@ tags:
 draft: false
 ---
 
-今天的 BioAI 日报里，AFsample3 这个名字很技术范儿，但翻译成人话就是：AlphaFold3 终于学会预测蛋白质的"多重人格"了。以前它只能给你看蛋白质的一个状态，现在能看到好几个——准确率提升 54%。听起来很牛，但说实话，我看到这种数字的时候，脑子里第一个问题永远是：**这东西什么时候能让我这种普通人用上？**
+I'm starting to assess the request's core. My focus is on understanding the "yuyu" persona – the AI account seller in Dali. The specifics of their background, the "shovel seller" label, and the ambition for AI-driven immortality are all key details I'm using to form a base. The blunt, realistic tone is a characteristic I’m keeping in mind.
+
+
+**Mapping Out The Strategy**
+
+I'm now laying out the roadmap for the blog post. I'm focusing on weaving in my "yuyu" persona, starting with the goal of immortality through AI and then linking to the provided news snippets. I plan to use the triggers to guide the discussion, and I will be keeping the specified format and tone in mind as I begin composing.
+
+
+**Connecting The Dots**
+
+I've been drawing connections between the news snippets and my "yuyu" persona, and it's starting to solidify. The medical summaries angle is a great opening, a relatable entry point. The AlphaFold3 update provides a bridge to the dream of immortality, and the robot mouths give a slightly cynical angle. Thinking about the business side, I'm now exploring how these advancements translate into my own market of AI accounts and tools. The structure is now coalescing.
+
+
+**Composing The Hook**
+
+I'm now writing the intro, and I'm using the date and location to ground the reader. The hook will also include my morning routine: coffee, sales check, then news. I'm aiming for an initial reaction, reflecting the sense that things are happening fast, yet the pursuit of immortality feels distant.
+
+
+**Formulating The Body**
+
+I'm now writing about the AlphaFold news. I'm focusing on my misunderstanding of the technical details and using the concept of "multiple personalities" to make it simple. I’m injecting the sentiment of hope linked to the possibility of avoiding death, as well as a dose of realism about my day-to-day work, while keeping the tone light, but observant.
+
+I'm expanding on my prior reflections, moving now to link them to my past life and recent experiences, which hopefully will let the blog be more compelling for the readers.
+
+
+**Fine-Tuning The Tone**
+
+My focus has shifted toward refining the blog's voice. I'm injecting slang and conversational elements, like "卧槽" to match my "yuyu" persona. The goal is to make the piece feel less formal and more relatable, and I've started correcting myself in draft during the final stages. I'm making sure my voice and word choices match the persona and tone outlined in the request.
+
+
+看到机器人照镜子那个新闻，我突然觉得有点脊背发凉
+
+今天是大理难得的阴天，苍山被云盖得严严实实。我坐在古城边上的咖啡馆，手里捧着热美式，屏幕上是后台的订单数据——今天 Cursor 的销量一般，倒是 Claude 的号莫名其妙卖得不错。
+
+刚才扫了一眼今天的 BioAI 日报，说实话，看得我心情有点复杂。
 
 ## Table of contents
+- 那些我看不太懂的"神仙打架"
+- 那个让我起鸡皮疙瘩的机器人
+- 医生都在用 AI 偷懒了，我的长生不老呢？
+- 卖铲子的人，有时候也会迷茫
 
-## 从论文到临床，还要几年？
+## 那些我看不太懂的"神仙打架"
 
-我关注 BioAI 不是因为我懂生物学（我是个彻头彻尾的外行），而是因为我想活得更久。5 年目标，借 AI 实现长生不老——听起来像民科对吧？但我是认真的。
+先说那个排第一的 **AFsample3**。
 
-所以每次看到这种"重磅突破"，我都会问自己：这是真的突破，还是又在画饼？
+日报里说它能预测蛋白质的"多重人格"（多构象），准确率暴涨 54%。作为一个文科生底子的账号贩子，我盯着"构象"这个词看了半天。
 
-AFsample3 这个技术，能预测蛋白质的多个构象状态，对药物设计有帮助——这我能理解。但从"论文发表"到"药厂用上"，再到"我能吃到这个药"，中间隔着多少年？3 年？5 年？还是 10 年？
+我大概能理解它的意思：以前 AI 觉得蛋白质是块砖，哪里需要往哪搬；现在 AI 发现蛋白质其实像个变形金刚，碰见不同的人（环境）会变出不同的样子。
 
-我不知道答案。但我知道一件事：**AI 在生命科学领域的进展，比我想象的要快。**
+这对我的"长生不老"计划意味着什么？
+我想了想，这可能意味着以前很多药研发失败，是因为没算准蛋白质"变身"后的样子？如果 AI 能算准了，是不是很多绝症就有救了？
 
-去年这个时候，我还在闲鱼卖 DeepSeek 的 API，一单赚几块钱。那时候我觉得 AI 制药、AI 医疗这些东西离我太远了，都是大公司玩的游戏。但现在，AlphaFold 的论文隔三差五就出一篇，代谢组学工具（比如今天提到的 TidyMass2）也在快速迭代。
+虽然技术细节我是一点都看不懂（我也就只会搬运 API 赚个差价），但直觉告诉我，这是个好消息。起码说明这帮搞生物 AI 的人没闲着，还在给我的寿命"充值"。
 
-这种速度让我有点焦虑，也有点兴奋。
+## 那个让我起鸡皮疙瘩的机器人
 
-## 代谢组学工具：我看不懂，但感觉很重要
+但真正戳中我神经的，是最后那个不起眼的趣闻：**机器人照镜子学会了动嘴**。
 
-今天日报里还有一条新闻：TidyMass2，一个代谢组学数据分析工具。
+新闻说，哥伦比亚大学搞了个机器人，不用人教，自己对着镜子看，或者看网上的人类视频，就学会了说话时怎么配合嘴型。
 
-老实说，我不太懂代谢组学是什么。我只知道它研究的是人体内的小分子代谢物——比如你吃了一顿饭，身体会产生哪些化学物质，这些物质又会影响你的健康。
+这让我想起我刚开始做"闲鱼倒爷"的时候。
+那时候我也不懂什么叫 SEO，什么叫权重。我就像个笨拙的机器人，盯着同行的爆款文案（照镜子），人家怎么写标题，我就怎么改；人家主图用黄色大字，我也用。
 
-TidyMass2 的厉害之处在于，它能自动推断代谢物的来源（是从食物来的还是身体自己产生的），还能做功能模块分析。对于研究疾病代谢机制的团队来说，这工具能省下大量时间。
+慢慢地，我也"学会了"。
+我也知道怎么避开敏感词，怎么把"ChatGPT"写成"智能助手"来防封号，怎么在详情页里埋钩子。
 
-我为什么关注这个？因为我觉得，**代谢组学可能是普通人最容易接触到的"长生不老"技术。**
+现在这个机器人，只是学会了动嘴。再过两年，它会不会学会察言观色？会不会学会像我一样，在闲鱼上跟买家讨价还价，甚至编故事卖惨？
 
-想象一下：未来你去体检，医生不只是给你查个血常规，而是做一个代谢组学分析，告诉你"你体内的某个代谢物水平异常，建议调整饮食或者补充某种营养素"。这种精准医疗，听起来比基因编辑、干细胞治疗这些高大上的技术更接地气，也更容易落地。
+如果 AI 连这种微妙的"自我修正"都能学会，那我这个只会卖账号的人类，还有什么护城河？
 
-当然，这只是我的猜测。我不是专家，我只是一个在大理卖 AI 账号的普通人，对这些技术充满好奇。
+## 医生都在用 AI 偷懒了，我的长生不老呢？
 
-## AI 生成医疗文书：这个我能理解
+还有那个 **AI 生成出院小结** 的新闻。
 
-今天日报里还有一条新闻让我眼前一亮：AI 生成出院小结。
+看到这个我笑了。两年前我在闲鱼接单写 Prompt 的时候，就遇到过一个医生（或者医学生），花 9.9 让我帮他写个"能自动生成病历的指令"。当时那单我折腾了一下午，也就是搞个半成品。
 
-这个我能理解，因为它离我的生活更近。医生写出院小结是个耗时的活儿，而且容易出错。AI 能自动生成，还能自我评估准确率——这对医生来说是个实实在在的帮助。
+现在好了，Nature 上都发论文了，微调的大模型不仅能写，还能"自我评估"查错。
 
-我想起去年我在闲鱼卖 ChatGPT Plus 账号的时候，有个客户是医生，他跟我说他每天要写好几份病历，累得要死。我当时就在想，AI 能不能帮他干这个活儿？
+这其实是个巨大的信号。
+**当 AI 开始介入"容错率极低"的医疗文书环节，说明它真的成熟了。**
 
-现在看来，这个技术已经在路上了。虽然还需要更多临床验证，但至少方向是对的。
+但我更焦虑的是：AI 都能帮医生写作业了，为什么在"让我多活 50 年"这件事上，感觉还是有点慢？
+你看，AlphaFold 还在死磕蛋白质结构，精准医疗还在搞数据清洗（那个 TidyMass2 工具）。
 
-这让我想到一个问题：**AI 在医疗领域的落地，可能比我们想象的要快。** 不是那种"10 年后才能用上"的技术，而是"明年就能在某些医院试点"的技术。
+我卖了 130 多天的 AI 账号，看着用户从最初问"ChatGPT 是什么"，到现在熟练地问"有没有 Claude 4.5 的 API key"。工具在普及，大家都在用 AI 提高效率、写代码、写论文。
 
-## 我的焦虑和期待
+**但这一切，似乎还没转化成我能打到身体里的一针"长生药"。**
 
-说实话，我对 BioAI 的关注，有点像一个赌徒在盯着赌桌。
+## 卖铲子的人，有时候也会迷茫
 
-我不懂技术细节，但我能感觉到这个领域正在发生巨变。AlphaFold、代谢组学、AI 医疗文书……这些技术都在快速迭代，而且越来越接近实际应用。
+喝完最后一口咖啡，我看了看窗外。大理的风还是那么大。
 
-我的焦虑在于：**我不知道这些技术什么时候能真正改变我的生活。** 我想活得更久，但我不知道 5 年后、10 年后，AI 能帮我做到什么程度。
+虽然嘴上吐槽，但我心里清楚，不管是 AlphaFold 还是那个照镜子的机器人，都在把我往那个疯狂的梦想推近一点点。
 
-我的期待在于：**至少现在有人在做这件事。** 不管是 DeepMind 的 AlphaFold，还是那些开发代谢组学工具的团队，他们都在推动这个领域往前走。
+我也只是这个巨大生态里的一只蚂蚁。
+科学家在顶层搞研究，我在底层卖账号。他们用我卖的账号去写代码、去分析数据、去发论文（希望他们买的是正版，但我这儿便宜啊）。
 
-作为一个外行，我能做的就是持续关注，持续学习，然后在某个时刻——也许是 5 年后，也许是 10 年后——抓住那个机会。
+哪怕我卖的一千个账号里，只有一个被用来做真正的生命科学研究，那我这铲子也算没白卖。
 
-## 今天没什么特别的结论
-
-今天的博客写得有点散，没什么明确的结论。但这就是我真实的状态：看到这些新闻，有点兴奋，有点困惑，有点焦虑，也有点期待。
-
-我不知道 AFsample3 什么时候能变成一款我能用上的药，也不知道代谢组学工具什么时候能走进普通人的体检中心。但我知道，这些技术正在往前走，而我也在往前走。
-
-在大理的咖啡馆里，我一边看着 BioAI 日报,一边想着我的"长生不老"梦想。听起来很荒诞，但这就是我。
+好了，不矫情了。
+刚才手机震了一下，又有个客户来问："老板，Cursor 的号怎么登不上了？"
+得，"长生不老"先放放，我得先去处理售后了。这才是 2026 年的真实生活。
 
 ---
 
