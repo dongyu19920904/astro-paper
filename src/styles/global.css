@@ -102,7 +102,11 @@ html[data-theme="dark"] {
   .launchpad {
     position: relative;
     overflow: hidden;
-    padding: 2.5rem 0 2.25rem;
+    margin: 1rem 0 1.6rem;
+    padding: clamp(1.6rem, 3.2vw, 2.6rem)
+      clamp(1.4rem, 3.5vw, 2.4rem);
+    border-radius: clamp(24px, 3vw, 36px);
+    border: 1px solid var(--glass-border);
     background: radial-gradient(
         circle at 15% 20%,
         var(--metal-glow),
@@ -110,21 +114,22 @@ html[data-theme="dark"] {
       ),
       linear-gradient(140deg, var(--metal-base), transparent 50%),
       linear-gradient(180deg, var(--metal-panel), var(--metal-base));
-    box-shadow: 0 40px 80px -60px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 45px 90px -60px rgba(15, 23, 42, 0.4);
   }
 
   .launchpad::before {
     content: "";
     position: absolute;
     inset: 0;
+    border-radius: inherit;
     background-image: linear-gradient(
         to right,
         var(--metal-grid) 1px,
         transparent 1px
       ),
       linear-gradient(to bottom, var(--metal-grid) 1px, transparent 1px);
-    background-size: 28px 28px;
-    opacity: 0.35;
+    background-size: 36px 36px;
+    opacity: 0.22;
     pointer-events: none;
   }
 
@@ -150,17 +155,17 @@ html[data-theme="dark"] {
   }
 
   .launchpad-panel {
-    border-radius: 24px;
+    border-radius: 30px;
     border: 1px solid var(--glass-border);
     background: linear-gradient(135deg, var(--glass-bg), var(--glass-bg-soft));
-    padding: 1.35rem 1.5rem;
-    box-shadow: 0 22px 50px -38px rgba(15, 23, 42, 0.35);
+    padding: 1.55rem 1.75rem;
+    box-shadow: 0 20px 55px -42px rgba(15, 23, 42, 0.32);
     backdrop-filter: blur(18px) saturate(1.15);
     -webkit-backdrop-filter: blur(18px) saturate(1.15);
   }
 
   .launchpad-grid {
-    padding: 1.2rem 1.3rem 1.35rem;
+    padding: 1.45rem 1.5rem 1.6rem;
   }
 
   .launchpad-heading {
