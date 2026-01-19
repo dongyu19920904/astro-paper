@@ -26,7 +26,7 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
     {/* ===== Launchpad 首屏：项目入口矩阵 ===== */}
     <section id="launchpad" class="launchpad border-b border-border">
       <div class="launchpad-shell">
-        <div class="launchpad-heading">
+        <div class="launchpad-heading launchpad-panel">
           <span class="launchpad-eyebrow">PROJECT LAUNCHPAD</span>
           <div class="launchpad-title-row">
             <h1 class="launchpad-name">yuyu</h1>
@@ -57,7 +57,7 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
             <span class="launchpad-chip">Build · 工具 / 内容</span>
           </div>
         </div>
-        <div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+        <div class="launchpad-grid launchpad-panel grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
           {
             NAV_LINKS.map((link, index) => (
               <a
