@@ -23,77 +23,117 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
 <Layout>
   <Header />
   <main id="main-content" data-layout="index" class="app-layout">
-    {/* ===== Hero 区块：个人品牌介绍 ===== */}
-    <section id="hero" class:list={["pt-8 pb-6", "border-b border-border"]}>
-      <h1 class="my-4 inline-block text-4xl font-bold sm:my-8 sm:text-5xl">
-        yuyu
-      </h1>
-      <a
-        target="_blank"
-        href="/rss.xml"
-        class="inline-block"
-        aria-label="rss feed"
-        title="RSS Feed"
-      >
-        <IconRss
-          width={20}
-          height={20}
-          class="scale-125 stroke-accent stroke-3 rtl:-rotate-90"
-        />
-        <span class="sr-only">RSS Feed</span>
-      </a>
-
-      <p class="text-lg">
-        一个在 AI 圈摸爬滚打的普通人。
-      </p>
-      <p class="mt-2 text-base-content/70">
-        白天卖 Cursor、Claude 账号养活自己，晚上研究 AI × 生命科学，死磕一个问题：<strong>怎么用 AI 让人活得更久</strong>。
-      </p>
-      <p class="mt-2 text-base-content/70">
-        给自己定了个 Flag：<strong>2029 年前，在 AI 长生赛道搞出点真东西。</strong> 倒计时 3 年半，不是喊口号，是真干。
-      </p>
-      <p class="mt-2 text-base-content/70">
-        这里是我的大本营——项目、日报、学习笔记，都在这儿了。
-      </p>
-      {
-        // only display if at least one social link is enabled
-        SOCIALS.length > 0 && (
-          <div class="mt-4 flex max-sm:flex-col sm:items-center">
-            <div class="me-2 mb-1 whitespace-nowrap sm:mb-0">找我聊聊：</div>
-            <Socials />
-          </div>
-        )
-      }
-    </section>
-
-    {/* ===== 导航区块：快速入口卡片 ===== */}
-    <section id="nav-hub" class="pt-8 pb-6 border-b border-border">
-      <h2 class="text-2xl font-semibold tracking-wide mb-6">🚀 我的项目</h2>
-      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {
-          NAV_LINKS.map(link => (
+    {/* ===== Launchpad 首屏：项目入口矩阵 ===== */}
+    <section id="launchpad" class="launchpad border-b border-border">
+      <div class="launchpad-shell">
+        <div class="launchpad-heading">
+          <span class="launchpad-eyebrow">PROJECT LAUNCHPAD</span>
+          <div class="launchpad-title-row">
+            <h1 class="launchpad-name">yuyu</h1>
             <a
-              href={link.url}
-              class="group flex flex-col gap-2 rounded-xl border border-border bg-base-100 p-4 transition-all hover:border-accent hover:shadow-lg"
-              target={link.url.startsWith("http") ? "_blank" : "_self"}
-              rel={link.url.startsWith("http") ? "noopener noreferrer" : undefined}
+              target="_blank"
+              href="/rss.xml"
+              class="launchpad-rss"
+              aria-label="rss feed"
+              title="RSS Feed"
             >
-              <div class="flex items-center gap-3">
-                <span class="text-2xl">{link.icon}</span>
-                <span class="text-lg font-semibold group-hover:text-accent">
-                  {link.title}
-                </span>
-              </div>
-              <p class="text-sm text-base-content/70">{link.desc}</p>
-              <span class="mt-auto inline-block w-fit rounded-full bg-accent/10 px-2 py-0.5 text-xs text-accent">
-                {link.tag}
-              </span>
+              <IconRss
+                width={20}
+                height={20}
+                class="scale-125 stroke-accent stroke-3 rtl:-rotate-90"
+              />
+              <span class="sr-only">RSS Feed</span>
             </a>
-          ))
-        }
+          </div>
+          <p class="launchpad-tagline">
+            AI × 生命科学 · 日更情报 · 产品化实验
+          </p>
+          <p class="launchpad-sub">
+            从这里开始，选一个入口，直接进入项目与日报。
+          </p>
+          <div class="launchpad-chips">
+            <span class="launchpad-chip">Focus · AI × Bio</span>
+            <span class="launchpad-chip">Daily · AI / BioAI</span>
+            <span class="launchpad-chip">Build · 工具 / 内容</span>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+          {
+            NAV_LINKS.map((link, index) => (
+              <a
+                href={link.url}
+                class="project-card"
+                style={`--delay: ${index * 90}ms`}
+                target={link.url.startsWith("http") ? "_blank" : "_self"}
+                rel={
+                  link.url.startsWith("http") ? "noopener noreferrer" : undefined
+                }
+              >
+                <div class="flex items-center gap-3">
+                  <span class="project-icon">{link.icon}</span>
+                  <span class="project-title">{link.title}</span>
+                </div>
+                <p class="project-desc">{link.desc}</p>
+                <div class="project-footer">
+                  <span class="project-tag">{link.tag}</span>
+                  <span class="project-arrow">↗</span>
+                </div>
+              </a>
+            ))
+          }
+        </div>
       </div>
     </section>
 
+    {/* ===== 个人介绍：移至下方，结构化呈现 ===== */}
+    <section id="about" class="pt-10 pb-8 border-b border-border">
+      <div class="flex flex-wrap items-end justify-between gap-3">
+        <h2 class="text-2xl font-semibold tracking-wide">关于我</h2>
+        <span class="text-xs uppercase tracking-[0.3em] text-base-content/50">
+          Operator Notes
+        </span>
+      </div>
+      <div class="mt-6 grid gap-6 lg:grid-cols-[1.2fr_1fr]">
+        <div class="space-y-3 text-base-content/80">
+          <p class="text-lg text-foreground">
+            一个在 AI 圈摸爬滚打的普通人，白天卖工具账号，晚上死磕
+            AI × 生命科学。
+          </p>
+          <p>
+            我在研究一个问题：<strong>怎么让 AI 让人活得更久</strong>。
+            这不是口号，是一条明确的产品路线。
+          </p>
+          <p>
+            这里是我的大本营——项目、日报、学习笔记与实验记录，都在这里。
+          </p>
+          {
+            // only display if at least one social link is enabled
+            SOCIALS.length > 0 && (
+              <div class="mt-4 flex max-sm:flex-col sm:items-center">
+                <div class="me-2 mb-1 whitespace-nowrap sm:mb-0">
+                  找我聊聊
+                </div>
+                <Socials />
+              </div>
+            )
+          }
+        </div>
+        <div class="about-panel">
+          <div class="about-row">
+            <span class="about-label">正在做</span>
+            <span class="about-value">AI 日报 / BioAI 日报</span>
+          </div>
+          <div class="about-row">
+            <span class="about-label">航向</span>
+            <span class="about-value">AI 长生赛道</span>
+          </div>
+          <div class="about-row">
+            <span class="about-label">目标</span>
+            <span class="about-value">2029 前做出真东西</span>
+          </div>
+        </div>
+      </div>
+    </section>
     {
       featuredPosts.length > 0 && (
         <section
