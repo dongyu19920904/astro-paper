@@ -1,29 +1,134 @@
-# Task Plan
+# Task Plan: [Brief Description]
+<!-- 
+  WHAT: This is your roadmap for the entire task. Think of it as your "working memory on disk."
+  WHY: After 50+ tool calls, your original goals can get forgotten. This file keeps them fresh.
+  WHEN: Create this FIRST, before starting any work. Update after each phase completes.
+-->
 
 ## Goal
-- Identify why astro-paper front-end still shows old posts when repo has new blog content, then fix and verify deployment.
+<!-- 
+  WHAT: One clear sentence describing what you're trying to achieve.
+  WHY: This is your north star. Re-reading this keeps you focused on the end state.
+  EXAMPLE: "Create a Python CLI todo app with add, list, and delete functionality."
+-->
+Make the homepage emphasize project navigation and boost engagement while preserving AstroPaper structure.
+
+## Current Phase
+<!-- 
+  WHAT: Which phase you're currently working on (e.g., "Phase 1", "Phase 3").
+  WHY: Quick reference for where you are in the task. Update this as you progress.
+-->
+Phase 4
 
 ## Phases
-- [x] 1. Gather state from astro-paper repo and deployment status.
-- [x] 2. Trace content pipeline (backend -> repo -> build -> site) to find break point.
-- [x] 3. Apply fix or trigger rebuild; verify site updates.
+<!-- 
+  WHAT: Break your task into 3-7 logical phases. Each phase should be completable.
+  WHY: Breaking work into phases prevents overwhelm and makes progress visible.
+  WHEN: Update status after completing each phase: pending → in_progress → complete
+-->
 
-## Decisions/Notes
-- Project focus: d:\GitHub\astro-paper
-- Root cause found: GitHub Pages deploy fails due to missing unist-util-visit dependency.
-- Applied fixes: add dependencies, fix remark plugin typing, normalize description quoting, push + successful deploy.
+### Phase 1: Requirements & Discovery
+<!-- 
+  WHAT: Understand what needs to be done and gather initial information.
+  WHY: Starting without understanding leads to wasted effort. This phase prevents that.
+-->
+- [ ] Understand user intent
+- [ ] Identify constraints and requirements
+- [ ] Document findings in findings.md
+- **Status:** complete
+<!-- 
+  STATUS VALUES:
+  - pending: Not started yet
+  - in_progress: Currently working on this
+  - complete: Finished this phase
+-->
+
+### Phase 2: Planning & Structure
+<!-- 
+  WHAT: Decide how you'll approach the problem and what structure you'll use.
+  WHY: Good planning prevents rework. Document decisions so you remember why you chose them.
+-->
+- [ ] Define technical approach
+- [ ] Create project structure if needed
+- [ ] Document decisions with rationale
+- **Status:** complete
+
+### Phase 3: Implementation
+<!-- 
+  WHAT: Actually build/create/write the solution.
+  WHY: This is where the work happens. Break into smaller sub-tasks if needed.
+-->
+- [ ] Execute the plan step by step
+- [ ] Write code to files before executing
+- [ ] Test incrementally
+- **Status:** complete
+
+### Phase 4: Testing & Verification
+<!-- 
+  WHAT: Verify everything works and meets requirements.
+  WHY: Catching issues early saves time. Document test results in progress.md.
+-->
+- [ ] Verify all requirements met
+- [ ] Document test results in progress.md
+- [ ] Fix any issues found
+- **Status:** in_progress
+
+### Phase 5: Delivery
+<!-- 
+  WHAT: Final review and handoff to user.
+  WHY: Ensures nothing is forgotten and deliverables are complete.
+-->
+- [ ] Review all output files
+- [ ] Ensure deliverables are complete
+- [ ] Deliver to user
+- **Status:** pending
+
+## Key Questions
+<!-- 
+  WHAT: Important questions you need to answer during the task.
+  WHY: These guide your research and decision-making. Answer them as you go.
+  EXAMPLE: 
+    1. Should tasks persist between sessions? (Yes - need file storage)
+    2. What format for storing tasks? (JSON file)
+-->
+1. 首页主视觉风格更偏哪种方向（杂志感 / 未来科技 / 自然温和 / 复古感）？
+2. 项目导航是否需要排序或突出某 1-2 个重点项目？
+
+## Decisions Made
+<!-- 
+  WHAT: Technical and design decisions you've made, with the reasoning behind them.
+  WHY: You'll forget why you made choices. This table helps you remember and justify decisions.
+  WHEN: Update whenever you make a significant choice (technology, approach, structure).
+  EXAMPLE:
+    | Use JSON for storage | Simple, human-readable, built-in Python support |
+-->
+| Decision | Rationale |
+|----------|-----------|
+|          |           |
 
 ## Errors Encountered
+<!-- 
+  WHAT: Every error you encounter, what attempt number it was, and how you resolved it.
+  WHY: Logging errors prevents repeating the same mistakes. This is critical for learning.
+  WHEN: Add immediately when an error occurs, even if you fix it quickly.
+  EXAMPLE:
+    | FileNotFoundError | 1 | Check if file exists, create empty list if not |
+    | JSONDecodeError | 2 | Handle empty file case explicitly |
+-->
 | Error | Attempt | Resolution |
-| --- | --- | --- |
-| Get-Content failed for src\\pages\\posts\\[...page].astro (PowerShell path parsing) | 1 | Use quoted path or Get-ChildItem to locate file |
-| gh run list timed out for dongyu19920904/astro-paper | 1 | Retry with smaller timeout/limit or check gh auth |
-| gh run list timed out (retry with --json/limit 5) | 2 | Consider checking via web or reduce query further |
-| gh run view without -R hit 404 for wrong repo | 1 | Re-run with -R dongyu19920904/astro-paper |
-| pnpm install reported ERR_PNPM_META_FETCH_FAIL for registry.npmmirror.com | 1 | Non-blocking; install completed; proceed |
-| pnpm astro check failed: missing unist-util-visit | 1 | Expected pre-fix; will add dependency |
-| pnpm astro check failed after dependency add: YAML frontmatter error in ai-daily-2026-01-11.md; fonts.google.com fetch timeout | 1 | Investigate YAML quoting / decide fix |
-| pnpm astro check timed out locally after font provider fetch timeouts | 1 | Retry with longer timeout or rely on CI |
-| pnpm add -D @types/mdast logged ECONNRESET from registry.npmmirror.com | 1 | Retry succeeded; dependency added |
-| pnpm astro check failed: remarkProxyImages Plugin type mismatch (Root vs Node) | 1 | Added mdast types + Plugin<[], Root> |
-| git push origin main timed out | 1 | Verify remote state; retry with higher timeout or push again |
+|-------|---------|------------|
+| apply_patch path not found | 1 | Retried with absolute path in astro-paper |
+| apply_patch line mismatch (emoji headings) | 2 | Verified headings contain emoji via rg; no change needed |
+
+| apply_patch task_plan update mismatch | 1 | Used Python script to update goal/status due to encoding |
+## Notes
+<!-- 
+  REMINDERS:
+  - Update phase status as you progress: pending → in_progress → complete
+  - Re-read this plan before major decisions (attention manipulation)
+  - Log ALL errors - they help avoid repetition
+  - Never repeat a failed action - mutate your approach instead
+-->
+- Update phase status as you progress: pending → in_progress → complete
+- Re-read this plan before major decisions (attention manipulation)
+- Log ALL errors - they help avoid repetition
