@@ -1,0 +1,16 @@
+﻿---
+const { title, description, meta, flip } = Astro.props;
+---
+
+<section class={`story-section ${flip ? "is-flip" : ""}`}>
+  <div class="story-copy reveal">
+    <p class="story-meta">{meta}</p>
+    <h2 class="story-title">{title}</h2>
+    <p class="story-desc">{description}</p>
+  </div>
+  <div class="story-visual reveal" aria-hidden="true">
+    <span class="visual-chip"></span>
+    <span class="visual-line"></span>
+    <span class="visual-dot"></span>
+  </div>
+</section>

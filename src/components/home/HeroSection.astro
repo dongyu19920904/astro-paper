@@ -1,0 +1,21 @@
+﻿---
+const { title, subtitle, primaryCta, secondaryCta } = Astro.props;
+---
+
+<section class="hero">
+  <div class="hero-copy reveal">
+    <p class="hero-eyebrow">PROJECT LAUNCHPAD</p>
+    <h1 class="hero-title">{title}</h1>
+    <p class="hero-subtitle">{subtitle}</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href={primaryCta.href}>{primaryCta.label}</a>
+      <a class="btn btn-secondary" href={secondaryCta.href}>{secondaryCta.label}</a>
+    </div>
+  </div>
+  <div class="hero-visual reveal" aria-hidden="true">
+    <div class="glass-orb orb-1"></div>
+    <div class="glass-orb orb-2"></div>
+    <div class="glass-slab"></div>
+    <div class="glass-spark"></div>
+  </div>
+</section>

@@ -1,188 +1,90 @@
----
-import { getCollection } from "astro:content";
+﻿---
 import Layout from "@/layouts/Layout.astro";
-import Header from "@/components/Header.astro";
-import Footer from "@/components/Footer.astro";
-import Socials from "@/components/Socials.astro";
-import LinkButton from "@/components/LinkButton.astro";
-import Card from "@/components/Card.astro";
-import getSortedPosts from "@/utils/getSortedPosts";
-import IconRss from "@/assets/icons/IconRss.svg";
-import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
-import { SITE } from "@/config";
-import { SOCIALS } from "@/constants";
-import { NAV_LINKS } from "@/data/navProjects";
+import HeaderMinimal from "@/components/home/HeaderMinimal.astro";
+import HeroSection from "@/components/home/HeroSection.astro";
+import FeatureSection from "@/components/home/FeatureSection.astro";
+import FaqSection from "@/components/home/FaqSection.astro";
+import FooterMinimal from "@/components/home/FooterMinimal.astro";
 
-const posts = await getCollection("blog");
+const hero = {
+  title: "每天五分钟跟上 AI 生科",
+  subtitle: "日报+博客+项目入口，一屏找到最该看的",
+  primaryCta: { label: "进入博客", href: "/posts/" },
+  secondaryCta: { label: "查看项目", href: "/projects/" },
+};
 
-const sortedPosts = getSortedPosts(posts);
-const featuredPosts = sortedPosts.filter(({ data }) => data.featured);
-const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
+const features = [
+  {
+    meta: "Daily Brief",
+    title: "日报速览",
+    description:
+      "更快完成当天信息筛选，因为我们只保留可验证来源，同时不牺牲阅读体验。",
+  },
+  {
+    meta: "Deep Read",
+    title: "博客深读",
+    description:
+      "更快完成结构化理解，因为重点观点会被拆成清晰段落，同时不牺牲细节。",
+  },
+  {
+    meta: "Project Entry",
+    title: "项目入口",
+    description:
+      "更快进入当前在做的产品与实验，因为入口集中在一处，同时不牺牲更新节奏。",
+  },
+];
+
+const faqItems = [
+  {
+    q: "更新频率是怎样的？",
+    a: "北京时间每日 02:00 更新日报；博客在 07:00 与 18:00 更新。",
+  },
+  {
+    q: "信息来源与筛选标准？",
+    a: "覆盖预印本、顶刊/顶会、官方发布、开源社区与行业媒体，优先可验证来源。",
+  },
+  {
+    q: "可以订阅吗？",
+    a: "提供 RSS，地址为 /rss.xml，可用阅读器直接订阅。",
+  },
+];
 ---
 
 <Layout>
-  <Header />
-  <main id="main-content" data-layout="index" class="app-layout">
-    {/* ===== Launchpad 首屏：项目入口矩阵 ===== */}
-    <section id="launchpad" class="launchpad">
-      <div class="launchpad-shell">
-        <div class="launchpad-heading launchpad-panel">
-          <span class="launchpad-eyebrow">PROJECT LAUNCHPAD</span>
-          <div class="launchpad-title-row">
-            <h1 class="launchpad-name">yuyu</h1>
-            <a
-              target="_blank"
-              href="/rss.xml"
-              class="launchpad-rss"
-              aria-label="rss feed"
-              title="RSS Feed"
-            >
-              <IconRss
-                width={20}
-                height={20}
-                class="scale-125 stroke-accent stroke-3 rtl:-rotate-90"
-              />
-              <span class="sr-only">RSS Feed</span>
-            </a>
-          </div>
-          <p class="launchpad-tagline">
-            AI × 生命科学 · 日更情报 · 产品化实验
-          </p>
-          <p class="launchpad-sub">
-            从这里开始，选一个入口，直接进入项目与日报。
-          </p>
-          <div class="launchpad-chips">
-            <span class="launchpad-chip">Focus · AI × Bio</span>
-            <span class="launchpad-chip">Daily · AI / BioAI</span>
-            <span class="launchpad-chip">Build · 工具 / 内容</span>
-          </div>
-        </div>
-        <div class="launchpad-grid launchpad-panel grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {
-            NAV_LINKS.map((link, index) => (
-              <a
-                href={link.url}
-                class="project-card"
-                style={`--delay: ${index * 90}ms`}
-                target={link.url.startsWith("http") ? "_blank" : "_self"}
-                rel={
-                  link.url.startsWith("http") ? "noopener noreferrer" : undefined
-                }
-              >
-                <div class="flex items-center gap-3">
-                  <span class="project-icon">{link.icon}</span>
-                  <span class="project-title">{link.title}</span>
-                </div>
-                <p class="project-desc">{link.desc}</p>
-                <div class="project-footer">
-                  <span class="project-tag">{link.tag}</span>
-                  <span class="project-arrow">↗</span>
-                </div>
-              </a>
-            ))
-          }
-        </div>
-      </div>
-    </section>
-
-    {/* ===== 个人介绍：移至下方，结构化呈现 ===== */}
-    <section id="about" class="pt-10 pb-8 border-b border-border">
-      <div class="flex flex-wrap items-end justify-between gap-3">
-        <h2 class="text-2xl font-semibold tracking-wide">关于我</h2>
-        <span class="text-xs uppercase tracking-[0.3em] text-base-content/50">
-          Operator Notes
-        </span>
-      </div>
-      <div class="mt-6 grid gap-6 lg:grid-cols-[1.2fr_1fr]">
-        <div class="space-y-3 text-base-content/80">
-          <p class="text-lg text-foreground">
-            一个在 AI 圈摸爬滚打的普通人，白天卖工具账号，晚上死磕
-            AI × 生命科学。
-          </p>
-          <p>
-            我在研究一个问题：<strong>怎么让 AI 让人活得更久</strong>。
-            这不是口号，是一条明确的产品路线。
-          </p>
-          <p>
-            这里是我的大本营——项目、日报、学习笔记与实验记录，都在这里。
-          </p>
-          {
-            // only display if at least one social link is enabled
-            SOCIALS.length > 0 && (
-              <div class="mt-4 flex max-sm:flex-col sm:items-center">
-                <div class="me-2 mb-1 whitespace-nowrap sm:mb-0">
-                  找我聊聊
-                </div>
-                <Socials />
-              </div>
-            )
-          }
-        </div>
-        <div class="about-panel">
-          <div class="about-row">
-            <span class="about-label">正在做</span>
-            <span class="about-value">AI 日报 / BioAI 日报</span>
-          </div>
-          <div class="about-row">
-            <span class="about-label">航向</span>
-            <span class="about-value">AI 长生赛道</span>
-          </div>
-          <div class="about-row">
-            <span class="about-label">目标</span>
-            <span class="about-value">2029 前做出真东西</span>
-          </div>
-        </div>
-      </div>
-    </section>
-    {
-      featuredPosts.length > 0 && (
-        <section
-          id="featured"
-          class:list={[
-            "pt-12 pb-6",
-            { "border-b border-border": recentPosts.length > 0 },
-          ]}
-        >
-          <h2 class="text-2xl font-semibold tracking-wide">⭐ 精选文章</h2>
-          <ul>
-            {featuredPosts.map(data => (
-              <Card variant="h3" {...data} />
-            ))}
-          </ul>
-        </section>
-      )
-    }
-
-    {
-      recentPosts.length > 0 && (
-        <section id="recent-posts" class="pt-12 pb-6">
-          <h2 class="text-2xl font-semibold tracking-wide">📝 最新文章</h2>
-          <ul>
-            {recentPosts.map(
-              (data, index) =>
-                index < SITE.postPerIndex && <Card variant="h3" {...data} />
-            )}
-          </ul>
-        </section>
-      )
-    }
-
-    <div class="my-8 text-center">
-      <LinkButton href="/posts/">
-        查看全部文章
-        <IconArrowRight class="inline-block rtl:-rotate-180" />
-      </LinkButton>
+  <HeaderMinimal />
+  <main id="main-content" class="home-main app-layout">
+    <div class="home-stack">
+      <HeroSection {...hero} />
+      {features.map((feature, index) => (
+        <FeatureSection {...feature} flip={index % 2 === 1} />
+      ))}
+      <FaqSection items={faqItems} />
     </div>
   </main>
-  <Footer />
+  <FooterMinimal />
 </Layout>
 
 <script>
-  document.addEventListener("astro:page-load", () => {
-    const indexLayout = (document.querySelector("#main-content") as HTMLElement)
-      ?.dataset?.layout;
-    if (indexLayout) {
-      sessionStorage.setItem("backUrl", "/");
-    }
-  });
+  const prefersReduced = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+  const revealElements = Array.from(document.querySelectorAll(".reveal"));
+
+  if (prefersReduced) {
+    revealElements.forEach(el => el.classList.add("is-visible"));
+  } else {
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+
+    revealElements.forEach(el => observer.observe(el));
+  }
 </script>

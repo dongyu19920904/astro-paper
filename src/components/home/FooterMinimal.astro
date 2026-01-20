@@ -1,0 +1,20 @@
+﻿---
+const links = [
+  { label: "博客", href: "/posts/" },
+  { label: "项目", href: "/projects/" },
+  { label: "标签", href: "/tags/" },
+  { label: "关于", href: "/about/" },
+  { label: "RSS", href: "/rss.xml" },
+];
+---
+
+<footer class="home-footer">
+  <div class="home-footer-inner app-layout">
+    <span>© yuyu</span>
+    <nav class="home-footer-links">
+      {links.map(link => (
+        <a href={link.href}>{link.label}</a>
+      ))}
+    </nav>
+  </div>
+</footer>

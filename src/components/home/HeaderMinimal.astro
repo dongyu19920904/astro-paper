@@ -1,0 +1,20 @@
+﻿---
+const links = [
+  { label: "博客", href: "/posts/" },
+  { label: "项目", href: "/projects/" },
+  { label: "标签", href: "/tags/" },
+  { label: "关于", href: "/about/" },
+];
+---
+
+<header class="home-header">
+  <div class="home-header-inner app-layout">
+    <a class="home-logo" href="/">yuyu</a>
+    <nav class="home-nav" aria-label="主导航">
+      {links.map(link => (
+        <a class="home-nav-link" href={link.href}>{link.label}</a>
+      ))}
+    </nav>
+    <a class="home-cta" href="/posts/">进入博客</a>
+  </div>
+</header>
