@@ -138,3 +138,13 @@
 - No git http.proxy or sslCAInfo settings found.
 ## 2026-01-19 13:15
 - Network TCP to github.com:443 OK; TLS handshake issue likely schannel/cert layer.
+## 2026-01-19 14:23
+- Deploy workflow triggered for astro-paper; current run 21127468435.
+- Current homepage layout is defined in src/pages/index.astro with a launchpad hero, about section, featured/recent posts, and uses NAV_LINKS from src/data/navProjects.ts.
+- Global styles for launchpad and visual tokens are in src/styles/global.css and currently use Oxanium/IBM Plex fonts and metal/glass theme.
+- Header navigation is in src/components/Header.astro and currently includes menu links, search, and theme toggle without a primary CTA.
+- Read task_plan.md: Phase 1 in_progress; decisions table empty; key questions still present. TDD skill requires failing test unless user approves skip for style-only changes.
+- index.astro still uses Launchpad/about/featured/recent layout with mojibake text and a broken project-arrow span ("a??/span>"), so homepage needs full replacement per new Apple-like scrollytelling spec.
+- Loaded using-git-worktrees + writing-plans skills. Need to create isolated worktree and write implementation plan before code; plan expects TDD but user approved skipping tests, so plan will document manual visual verification instead.
+- No .worktrees/ or worktrees/ directory found in astro-paper.
+- git worktree list shows only main worktree at D:/GitHub/astro-paper. Repo root confirmed: D:/GitHub/astro-paper.

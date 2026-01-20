@@ -156,3 +156,16 @@
 - No explicit http.proxy or http.sslCAInfo configured in git config.
 ## 2026-01-19 13:15
 - Test-NetConnection github.com:443 succeeded (TCP connectivity OK).
+## 2026-01-19 14:23
+- Confirmed clean git status (manual push done).
+- Triggered Deploy to GitHub Pages workflow; run id 21127468435 in progress.
+- New task: Apple-like scrollytelling redesign for homepage per user spec; reviewing existing planning files.
+- Reviewed homepage and header structure plus navProjects data for upcoming Apple-like redesign.
+- Checked BioAI backend wrangler.toml; crons are 0 18 * * *, 0 23 * * *, 0 10 * * * (UTC).
+- Verified RSS support exists: src/pages/rss.xml.ts and auto-discovery in Layout. RSS link already in index hero.
+- 2026-01-20: Activated planning-with-files. Loaded using-superpowers/brainstorming/frontend-design. superpowers bootstrap returned no output.
+- 2026-01-20: git status shows main behind origin by 4 commits; only planning files modified. docs/plans directory does not exist yet.
+- 2026-01-20: apply_patch failed to edit task_plan.md (invalid UTF-8 / wrong path). Rewrote task_plan.md in UTF-8 with updated phases and decisions.
+- 2026-01-20: Staged docs/plans/2026-01-20-astro-homepage-design.md for commit; planning files remain unstaged.
+- 2026-01-20: Get-Content CLAUDE.md failed (file missing). Logged error and confirmed no CLAUDE.md preference. apply_patch still points to wrong repo path; used PowerShell text replacement to update task_plan.md instead.
+- 2026-01-20: Verified worktree list (only main). Confirmed repo root path.
