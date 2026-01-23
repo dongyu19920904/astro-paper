@@ -1,4 +1,4 @@
----
+﻿---
 import IconX from "@/assets/icons/IconX.svg";
 import IconMoon from "@/assets/icons/IconMoon.svg";
 import IconSearch from "@/assets/icons/IconSearch.svg";
@@ -73,28 +73,28 @@ const isActive = (path: string) => {
       >
         <li class="col-span-2">
           <a href="/posts" class:list={{ "active-nav": isActive("/posts") }}>
-            博客
+            鍗氬
           </a>
         </li>
         <li class="col-span-2">
           <a href="/projects" class:list={{ "active-nav": isActive("/projects") }}>
-            项目
+            椤圭洰
           </a>
         </li>
         <li class="col-span-2">
-          <a href="https://news.aivora.cn">AI �ձ�</a>
+          <a href="https://news.aivora.cn">AI 日报</a>
         </li>
         <li class="col-span-2">
-          <a href="https://news.aibioo.cn">AI ������ѧ�ձ�</a>
+          <a href="https://news.aibioo.cn">AI 生命科学日报</a>
         </li>
         <li class="col-span-2">
           <a href="/tags" class:list={{ "active-nav": isActive("/tags") }}>
-            标签
+            鏍囩
           </a>
         </li>
         <li class="col-span-2">
           <a href="/about" class:list={{ "active-nav": isActive("/about") }}>
-            关于
+            鍏充簬
           </a>
         </li>
         {
@@ -178,3 +178,5 @@ const isActive = (path: string) => {
   // Runs on view transitions navigation
   document.addEventListener("astro:after-swap", toggleNav);
 </script>
+
+
