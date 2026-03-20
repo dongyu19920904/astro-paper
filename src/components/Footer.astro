@@ -1,6 +1,7 @@
 ﻿---
 import type { HTMLAttributes } from "astro/types";
 import Socials from "./Socials.astro";
+import { SITE } from "@/config";
 
 const currentYear = new Date().getFullYear();
 
@@ -40,5 +41,18 @@ const { noMarginTop = false, class: className, ...attrs } = Astro.props;
     </div>
   </div>
 </footer>
+{
+  SITE.analytics.la51Id && (
+    <div class="pb-6 text-center">
+      <script
+        is:inline
+        id="LA-DATA-WIDGET"
+        crossorigin="anonymous"
+        charset="UTF-8"
+        src={`https://v6-widget.51.la/v6/${SITE.analytics.la51Id}/quote.js?theme=0&f=12`}
+      />
+    </div>
+  )
+}
 
 

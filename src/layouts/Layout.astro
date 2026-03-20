@@ -137,6 +137,22 @@ const structuredData = {
 
     <ClientRouter />
 
+    {
+      SITE.analytics.la51Id && (
+        <>
+          <script
+            is:inline
+            charset="UTF-8"
+            id="LA_COLLECT"
+            src="//sdk.51.la/js-sdk-pro.min.js"
+          />
+          <script is:inline>
+            {`LA.init({id:"${SITE.analytics.la51Id}",ck:"${SITE.analytics.la51Id}",autoTrack:true,hashMode:${SITE.analytics.hashMode ? "true" : "false"}})`}
+          </script>
+        </>
+      )
+    }
+
     <!-- Minimal inline script to prevent FOUC - sets theme immediately -->
     <script is:inline>
       (function () {

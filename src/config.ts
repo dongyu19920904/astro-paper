@@ -30,6 +30,10 @@ export const SITE = {
     url: "https://github.com/dongyu19920904/astro-paper/edit/main/",
   },
   dynamicOgImage: true,
+  analytics: {
+    la51Id: "3PMbujTBSvRv3c5i",
+    hashMode: false,
+  },
   dir: "ltr",
   lang: "zh-CN", // 中文站点
   timezone: "Asia/Shanghai", // 中国时区
