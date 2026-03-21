@@ -90,4 +90,4 @@ Nature Medicine那篇讨论医学AI跨场景扩展的文章，戳中了一个我
 
 ---
 
-> 📰 完整版日报请��?[BioAI 生命科学日报](https://news.aibioo.cn/2026-02/2026-02-04/)
+> 📰 完整版日报请看 [BioAI 生命科学日报](https://news.aibioo.cn/2026-02/2026-02-04/)

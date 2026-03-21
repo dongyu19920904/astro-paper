@@ -68,4 +68,4 @@ Nature Biotechnology发的那篇，说用蛋白质语言模型重新设计CRISPR
 
 ---
 
-> 📰 完整版日报请��?[BioAI 生命科学日报](https://news.aibioo.cn/2026-02/2026-02-03/)
+> 📰 完整版日报请看 [BioAI 生命科学日报](https://news.aibioo.cn/2026-02/2026-02-03/)

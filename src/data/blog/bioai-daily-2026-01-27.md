@@ -64,4 +64,4 @@ draft: false
 
 ---
 
-> 📰 完整版日报请��?[BioAI 生命科学日报](https://news.aibioo.cn/2026-01/2026-01-27/)
+> 📰 完整版日报请看 [BioAI 生命科学日报](https://news.aibioo.cn/2026-01/2026-01-27/)

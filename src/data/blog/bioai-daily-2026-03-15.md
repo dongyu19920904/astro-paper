@@ -22,4 +22,4 @@ If you're looking to automate blog writing based on daily reports, I could help 
 
 ---
 
-> 📰 完整版日报请��?[BioAI 生命科学日报](https://news.aibioo.cn/2026-03/2026-03-15/)
+> 📰 完整版日报请看 [BioAI 生命科学日报](https://news.aibioo.cn/2026-03/2026-03-15/)
