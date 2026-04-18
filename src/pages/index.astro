@@ -20,7 +20,10 @@ const featuredPosts = sortedPosts.filter(({ data }) => data.featured);
 const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
 ---
 
-<Layout>
+<Layout
+  title="yuyu | AI日报、BioAI 与个人博客"
+  description="yuyu 的个人主页，聚合 AI 日报、AI 延续学日报、个人博客与项目入口，持续更新 AI 工具、商机与生命科学观察。"
+>
   <Header />
   <main id="main-content" data-layout="index" class="app-layout">
     {/* ===== Launchpad 首屏：项目入口矩阵 ===== */}

@@ -18,7 +18,10 @@ export const getStaticPaths = (async ({ paginate }) => {
 const { page } = Astro.props;
 ---
 
-<Layout title={`博客 | ${SITE.title}`}>
+<Layout
+  title={`博客 | ${SITE.title}`}
+  description="yuyu 的 AI 与 BioAI 观察博客列表，持续更新 AI 日报延展内容、商机观察与生命科学思考。"
+>
   <Header />
   <Main pageTitle="博客" pageDesc="我写的所有文章">
     <ul>
