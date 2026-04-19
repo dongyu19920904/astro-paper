@@ -7,6 +7,7 @@ import Socials from "@/components/Socials.astro";
 import LinkButton from "@/components/LinkButton.astro";
 import Card from "@/components/Card.astro";
 import getSortedPosts from "@/utils/getSortedPosts";
+import { getPath } from "@/utils/getPath";
 import IconRss from "@/assets/icons/IconRss.svg";
 import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
 import { SITE } from "@/config";
@@ -18,48 +19,147 @@ const posts = await getCollection("blog");
 const sortedPosts = getSortedPosts(posts);
 const featuredPosts = sortedPosts.filter(({ data }) => data.featured);
 const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
+const dispatchPosts = sortedPosts.slice(0, 3);
+const signalStats = [
+  {
+    label: "项目入口",
+    value: String(NAV_LINKS.length).padStart(2, "0"),
+    note: "AI 店铺 / 日报 / 导航 / 博客",
+  },
+  {
+    label: "博客档案",
+    value: String(sortedPosts.length).padStart(2, "0"),
+    note: "持续更新的 AI 与 BioAI 观察",
+  },
+  {
+    label: "精选内容",
+    value: String(featuredPosts.length).padStart(2, "0"),
+    note: "长期命题与重点追踪",
+  },
+];
 ---
 
 <Layout
-  title="yuyu | AI日报、BioAI 与个人博客"
-  description="yuyu 的个人主页，聚合 AI 日报、AI 延续学日报、个人博客与项目入口，持续更新 AI 工具、商机与生命科学观察。"
+  title="yuyu | AI 日报、BioAI 与个人博客"
+  description="yuyu 的个人主页，聚合 AI 日报、BioAI、个人博客与项目入口，持续更新 AI 工具、商机与生命科学观察。"
 >
   <Header />
   <main id="main-content" data-layout="index" class="app-layout">
-    {/* ===== Launchpad 首屏：项目入口矩阵 ===== */}
     <section id="launchpad" class="launchpad">
       <div class="launchpad-shell">
-        <div class="launchpad-heading launchpad-panel">
-          <span class="launchpad-eyebrow">PROJECT LAUNCHPAD</span>
-          <div class="launchpad-title-row">
-            <h1 class="launchpad-name">yuyu</h1>
-            <a
-              target="_blank"
-              href="/rss.xml"
-              class="launchpad-rss"
-              aria-label="rss feed"
-              title="RSS Feed"
-            >
-              <IconRss
-                width={20}
-                height={20}
-                class="scale-125 stroke-accent stroke-3 rtl:-rotate-90"
-              />
-              <span class="sr-only">RSS Feed</span>
+        <div class="launchpad-masthead launchpad-panel">
+          <div class="launchpad-heading">
+            <span class="launchpad-eyebrow">FUTURE EDITORIAL DESK</span>
+            <div class="launchpad-title-row">
+              <h1 class="launchpad-name">yuyu</h1>
+              <a
+                target="_blank"
+                href="/rss.xml"
+                class="launchpad-rss"
+                aria-label="rss feed"
+                title="RSS Feed"
+              >
+                <IconRss
+                  width={20}
+                  height={20}
+                  class="scale-125 stroke-accent stroke-3 rtl:-rotate-90"
+                />
+                <span class="sr-only">RSS Feed</span>
+              </a>
+            </div>
+            <p class="launchpad-tagline">
+              把 AI 日报、BioAI、个人实验与长期主题，整理成一个更像内容产品的总控台。
+            </p>
+            <p class="launchpad-sub">
+              这里不是单纯的博客首页，而是一张正在运行的编辑台地图。你可以从这里直接进入 AI 情报流、BioAI 研究流和我的长期写作档案。
+            </p>
+            <div class="launchpad-chips">
+              <span class="launchpad-chip">AI Daily Desk</span>
+              <span class="launchpad-chip">BioAI Research</span>
+              <span class="launchpad-chip">Personal Lab Notes</span>
+            </div>
+            <div class="launchpad-actions">
+              <LinkButton href="/posts/" class="launchpad-primary">
+                浏览博客档案
+                <IconArrowRight class="inline-block rtl:-rotate-180" />
+              </LinkButton>
+              <LinkButton
+                href="https://news.aivora.cn"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="launchpad-secondary"
+              >
+                打开 AI 日报
+              </LinkButton>
+            </div>
+          </div>
+          <aside class="dispatch-board" aria-label="站点动态概览">
+            <div class="dispatch-board__header">
+              <div>
+                <p class="dispatch-board__eyebrow">Live Desk</p>
+                <h2 class="dispatch-board__title">今日总览</h2>
+              </div>
+              <span class="dispatch-board__badge">Daily Refresh</span>
+            </div>
+            <div class="dispatch-board__stats">
+              {
+                signalStats.map(item => (
+                  <article class="dispatch-stat">
+                    <span class="dispatch-stat__value">{item.value}</span>
+                    <div class="dispatch-stat__copy">
+                      <h3>{item.label}</h3>
+                      <p>{item.note}</p>
+                    </div>
+                  </article>
+                ))
+              }
+            </div>
+            <div class="dispatch-board__feed">
+              <div class="dispatch-board__feed-title">最新调度</div>
+              <ul class="dispatch-feed">
+                {
+                  dispatchPosts.map(post => (
+                    <li class="dispatch-feed__item">
+                      <a href={getPath(post.id, post.filePath)} class="dispatch-feed__link">
+                        <span class="dispatch-feed__label">
+                          {post.data.featured ? "Cover" : "Dispatch"}
+                        </span>
+                        <span class="dispatch-feed__headline">{post.data.title}</span>
+                      </a>
+                    </li>
+                  ))
+                }
+              </ul>
+            </div>
+          </aside>
+        </div>
+
+        <div class="signal-strip launchpad-panel" aria-label="站点路线图">
+          <div class="signal-strip__intro">
+            <span class="signal-strip__eyebrow">Route Map</span>
+            <p class="signal-strip__text">
+              三条主线并行运行：即时 AI 信息、BioAI 长期观察、以及个人项目化写作。
+            </p>
+          </div>
+          <div class="signal-strip__grid">
+            <a class="signal-tile" href="https://news.aivora.cn" target="_blank" rel="noopener noreferrer">
+              <span class="signal-tile__label">情报流</span>
+              <strong class="signal-tile__title">AI 日报</strong>
+              <span class="signal-tile__meta">热点、商机、账号机会</span>
+            </a>
+            <a class="signal-tile" href="https://news.aibioo.cn" target="_blank" rel="noopener noreferrer">
+              <span class="signal-tile__label">研究流</span>
+              <strong class="signal-tile__title">BioAI 日报</strong>
+              <span class="signal-tile__meta">生命科学、长寿、AI 生物研究</span>
+            </a>
+            <a class="signal-tile" href="/posts/">
+              <span class="signal-tile__label">档案流</span>
+              <strong class="signal-tile__title">个人博客</strong>
+              <span class="signal-tile__meta">把日报延展成更完整的长期内容</span>
             </a>
           </div>
-          <p class="launchpad-tagline">
-            AI × 生命科学 · 日更情报 · 产品化实验
-          </p>
-          <p class="launchpad-sub">
-            从这里开始，选一个入口，直接进入项目与日报。
-          </p>
-          <div class="launchpad-chips">
-            <span class="launchpad-chip">Focus · AI × Bio</span>
-            <span class="launchpad-chip">Daily · AI / BioAI</span>
-            <span class="launchpad-chip">Build · 工具 / 内容</span>
-          </div>
         </div>
+
         <div class="launchpad-grid launchpad-panel grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
           {
             NAV_LINKS.map((link, index) => (
@@ -79,7 +179,7 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
                 <p class="project-desc">{link.desc}</p>
                 <div class="project-footer">
                   <span class="project-tag">{link.tag}</span>
-                  <span class="project-arrow">↗</span>
+                  <span class="project-arrow">→</span>
                 </div>
               </a>
             ))
@@ -88,34 +188,26 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
       </div>
     </section>
 
-    {/* ===== 个人介绍：移至下方，结构化呈现 ===== */}
-    <section id="about" class="pt-10 pb-8 border-b border-border">
-      <div class="flex flex-wrap items-end justify-between gap-3">
-        <h2 class="text-2xl font-semibold tracking-wide">关于我</h2>
-        <span class="text-xs uppercase tracking-[0.3em] text-base-content/50">
-          Operator Notes
-        </span>
+    <section id="about" class="operator-section border-b border-border">
+      <div class="section-heading">
+        <h2 class="section-heading__title">关于这个站</h2>
+        <span class="section-heading__label">Operator Notes</span>
       </div>
-      <div class="mt-6 grid gap-6 lg:grid-cols-[1.2fr_1fr]">
-        <div class="space-y-3 text-base-content/80">
-          <p class="text-lg text-foreground">
-            一个在 AI 圈摸爬滚打的普通人，白天卖工具账号，晚上死磕
-            AI × 生命科学。
+      <div class="operator-room">
+        <div class="operator-room__copy">
+          <p class="operator-room__lead">
+            我在做的事情很简单：一边做 AI 工具和内容，一边长期追踪 AI 与生命科学交叉的机会。
           </p>
           <p>
-            我在研究一个问题：<strong>怎么让 AI 让人活得更久</strong>。
-            这不是口号，是一条明确的产品路线。
+            这个主页就是我的内容总控台。它把日报、商机、博客和项目入口放在一起，让内容不只是“写完就结束”，而是继续演化成更有用的产品和观察。
           </p>
           <p>
-            这里是我的大本营——项目、日报、学习笔记与实验记录，都在这里。
+            如果你关心 AI 工具、内容生意、BioAI、长寿研究，或者只是想看一个人如何把碎片信息慢慢做成长期资产，这里就是入口。
           </p>
           {
-            // only display if at least one social link is enabled
             SOCIALS.length > 0 && (
-              <div class="mt-4 flex max-sm:flex-col sm:items-center">
-                <div class="me-2 mb-1 whitespace-nowrap sm:mb-0">
-                  找我聊聊
-                </div>
+              <div class="operator-room__socials">
+                <div class="operator-room__socials-label">找我聊聊</div>
                 <Socials />
               </div>
             )
@@ -123,31 +215,32 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
         </div>
         <div class="about-panel">
           <div class="about-row">
-            <span class="about-label">正在做</span>
+            <span class="about-label">正在推进</span>
             <span class="about-value">AI 日报 / BioAI 日报</span>
           </div>
           <div class="about-row">
-            <span class="about-label">航向</span>
-            <span class="about-value">AI 长生赛道</span>
+            <span class="about-label">主航向</span>
+            <span class="about-value">AI 长寿赛道</span>
           </div>
           <div class="about-row">
             <span class="about-label">目标</span>
-            <span class="about-value">2029 前做出真东西</span>
+            <span class="about-value">把长期研究做成真正有用的东西</span>
           </div>
         </div>
       </div>
     </section>
+
     {
       featuredPosts.length > 0 && (
         <section
           id="featured"
-          class:list={[
-            "pt-12 pb-6",
-            { "border-b border-border": recentPosts.length > 0 },
-          ]}
+          class:list={["story-section", { "border-b border-border": recentPosts.length > 0 }]}
         >
-          <h2 class="text-2xl font-semibold tracking-wide">⭐ 精选文章</h2>
-          <ul>
+          <div class="section-heading">
+            <h2 class="section-heading__title">精选主稿</h2>
+            <span class="section-heading__label">Cover Stories</span>
+          </div>
+          <ul class="story-grid">
             {featuredPosts.map(data => (
               <Card variant="h3" {...data} />
             ))}
@@ -158,9 +251,12 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
 
     {
       recentPosts.length > 0 && (
-        <section id="recent-posts" class="pt-12 pb-6">
-          <h2 class="text-2xl font-semibold tracking-wide">📝 最新文章</h2>
-          <ul>
+        <section id="recent-posts" class="story-section">
+          <div class="section-heading">
+            <h2 class="section-heading__title">最新派送</h2>
+            <span class="section-heading__label">Archive Feed</span>
+          </div>
+          <ul class="story-grid">
             {recentPosts.map(
               (data, index) =>
                 index < SITE.postPerIndex && <Card variant="h3" {...data} />
@@ -170,8 +266,8 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
       )
     }
 
-    <div class="my-8 text-center">
-      <LinkButton href="/posts/">
+    <div class="archive-cta">
+      <LinkButton href="/posts/" class="launchpad-primary">
         查看全部文章
         <IconArrowRight class="inline-block rtl:-rotate-180" />
       </LinkButton>

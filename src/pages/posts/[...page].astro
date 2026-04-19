@@ -20,11 +20,38 @@ const { page } = Astro.props;
 
 <Layout
   title={`博客 | ${SITE.title}`}
-  description="yuyu 的 AI 与 BioAI 观察博客列表，持续更新 AI 日报延展内容、商机观察与生命科学思考。"
+  description="yuyu 的 AI 与 BioAI 观察博客列表，持续更新日报延展内容、长期主题与个人实验记录。"
 >
   <Header />
-  <Main pageTitle="博客" pageDesc="我写的所有文章">
-    <ul>
+  <Main
+    pageTitle="博客档案"
+    pageDesc="把日报、长期主题和个人观察整理成可回看的内容档案。"
+  >
+    <section class="archive-hero" aria-label="博客档案概览">
+      <div class="archive-hero__copy">
+        <span class="archive-hero__eyebrow">Editorial Archive</span>
+        <h2 class="archive-hero__title">这里收录所有延展开来的长期内容</h2>
+        <p class="archive-hero__text">
+          AI 日报和 BioAI 日报会先以“今天发生了什么”出现，真正沉淀下来的判断、方法和更完整的思考，会进入这份档案。
+        </p>
+      </div>
+      <div class="archive-hero__meta">
+        <div class="archive-hero__metric">
+          <span class="archive-hero__metric-value">{String(page.total).padStart(2, "0")}</span>
+          <span class="archive-hero__metric-label">文章总数</span>
+        </div>
+        <div class="archive-hero__metric">
+          <span class="archive-hero__metric-value">{String(page.currentPage).padStart(2, "0")}</span>
+          <span class="archive-hero__metric-label">当前页码</span>
+        </div>
+        <div class="archive-hero__metric">
+          <span class="archive-hero__metric-value">{String(page.lastPage).padStart(2, "0")}</span>
+          <span class="archive-hero__metric-label">总页数</span>
+        </div>
+      </div>
+    </section>
+
+    <ul class="story-grid story-grid--archive">
       {page.data.map(data => <Card {...data} />)}
     </ul>
   </Main>

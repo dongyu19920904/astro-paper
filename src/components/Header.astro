@@ -1,4 +1,4 @@
-﻿---
+---
 import IconX from "@/assets/icons/IconX.svg";
 import IconMoon from "@/assets/icons/IconMoon.svg";
 import IconSearch from "@/assets/icons/IconSearch.svg";
@@ -10,7 +10,6 @@ import { SITE } from "@/config";
 
 const { pathname } = Astro.url;
 
-// Remove trailing slash from current pathname if exists
 const currentPath =
   pathname.endsWith("/") && pathname !== "/" ? pathname.slice(0, -1) : pathname;
 
@@ -30,9 +29,7 @@ const isActive = (path: string) => {
   Skip to content
 </a>
 
-<header
-  class="app-layout flex flex-col items-center justify-between sm:flex-row"
->
+<header class="app-layout site-header">
   <div
     id="top-nav-wrap"
     class:list={[
@@ -42,13 +39,16 @@ const isActive = (path: string) => {
       "flex items-baseline justify-between sm:items-center",
     ]}
   >
-    <a
-      href="/"
-      translate="no"
-      class="absolute py-1 text-xl leading-8 font-semibold whitespace-nowrap sm:static sm:my-auto sm:text-2xl sm:leading-none"
-    >
-      {SITE.title}
-    </a>
+    <div class="site-header__brand">
+      <a
+        href="/"
+        translate="no"
+        class="site-header__title absolute py-1 text-xl leading-8 font-semibold whitespace-nowrap sm:static sm:my-auto sm:text-2xl sm:leading-none"
+      >
+        {SITE.title}
+      </a>
+      <p class="site-header__strap">AI Daily / BioAI / Personal Editorial Lab</p>
+    </div>
     <nav
       id="nav-menu"
       class="flex w-full flex-col items-center sm:ms-2 sm:flex-row sm:justify-end sm:space-x-4 sm:py-0"
@@ -69,7 +69,7 @@ const isActive = (path: string) => {
           "mt-4 grid w-44 grid-cols-2 place-content-center gap-2",
           "[&>li>a]:block [&>li>a]:px-4 [&>li>a]:py-3 [&>li>a]:text-center [&>li>a]:font-medium [&>li>a]:hover:text-accent sm:[&>li>a]:px-2 sm:[&>li>a]:py-1",
           "hidden",
-          "sm:mt-0 sm:flex sm:w-auto sm:gap-x-5 sm:gap-y-0",
+          "sm:mt-0 sm:flex sm:w-auto sm:items-center sm:gap-x-3 sm:gap-y-0",
         ]}
       >
         <li class="col-span-2">
@@ -182,8 +182,5 @@ const isActive = (path: string) => {
 
   toggleNav();
 
-  // Runs on view transitions navigation
   document.addEventListener("astro:after-swap", toggleNav);
 </script>
-
-

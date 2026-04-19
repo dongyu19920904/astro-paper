@@ -10,13 +10,14 @@ type Props = {
 
 const { variant: Heading = "h2", id, data, filePath } = Astro.props;
 
-const { title, description, ...props } = data;
+const { title, description, tags = [], featured, ...props } = data;
+const firstTag = tags[0];
 ---
 
 <li class="story-card">
   <article class="story-card__shell">
     <div class="story-card__meta">
-      <span class="story-card__kicker">最新更新</span>
+      <span class="story-card__kicker">{featured ? "Cover Story" : "Field Note"}</span>
       <Datetime {...props} class="story-card__datetime" />
     </div>
     <a
@@ -34,5 +35,9 @@ const { title, description, ...props } = data;
       </Heading>
     </a>
     <p class="story-card__description">{description}</p>
+    <div class="story-card__footer">
+      {firstTag ? <span class="story-card__pill">{firstTag}</span> : <span class="story-card__pill">博客</span>}
+      <span class="story-card__readmore">继续阅读 →</span>
+    </div>
   </article>
 </li>
