@@ -10,34 +10,22 @@ type Props = {
 
 const { variant: Heading = "h2", id, data, filePath } = Astro.props;
 
-const { title, description, tags = [], featured, ...props } = data;
-const firstTag = tags[0];
+const { title, description, ...props } = data;
 ---
 
-<li class="story-card">
-  <article class="story-card__shell">
-    <div class="story-card__meta">
-      <span class="story-card__kicker">{featured ? "Cover Story" : "Field Note"}</span>
-      <Datetime {...props} class="story-card__datetime" />
-    </div>
-    <a
-      href={getPath(id, filePath)}
-      class:list={[
-        "story-card__title-link",
-        "focus-visible:no-underline focus-visible:underline-offset-0",
-      ]}
-    >
-      <Heading
-        class="story-card__title"
-        style={{ viewTransitionName: slugifyStr(title) }}
-      >
-        {title}
-      </Heading>
-    </a>
-    <p class="story-card__description">{description}</p>
-    <div class="story-card__footer">
-      {firstTag ? <span class="story-card__pill">{firstTag}</span> : <span class="story-card__pill">博客</span>}
-      <span class="story-card__readmore">继续阅读 →</span>
-    </div>
-  </article>
+<li class="my-6">
+  <a
+    href={getPath(id, filePath)}
+    class:list={[
+      "inline-block text-lg font-medium text-accent",
+      "decoration-dashed underline-offset-4 hover:underline",
+      "focus-visible:no-underline focus-visible:underline-offset-0",
+    ]}
+  >
+    <Heading style={{ viewTransitionName: slugifyStr(title) }}>
+      {title}
+    </Heading>
+  </a>
+  <Datetime {...props} />
+  <p>{description}</p>
 </li>
