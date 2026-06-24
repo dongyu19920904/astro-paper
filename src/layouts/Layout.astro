@@ -46,6 +46,12 @@ const structuredData = {
     },
   ],
 };
+
+const la51InitScript = SITE.analytics.la51Id
+  ? `LA.init({id:${JSON.stringify(SITE.analytics.la51Id)},ck:${JSON.stringify(
+      SITE.analytics.la51Id
+    )},autoTrack:true,hashMode:${SITE.analytics.hashMode ? "true" : "false"}});`
+  : "";
 ---
 
 <!doctype html>
@@ -144,11 +150,9 @@ const structuredData = {
             is:inline
             charset="UTF-8"
             id="LA_COLLECT"
-            src="//sdk.51.la/js-sdk-pro.min.js"
+            src="https://sdk.51.la/js-sdk-pro.min.js"
           />
-          <script is:inline>
-            {`LA.init({id:"${SITE.analytics.la51Id}",ck:"${SITE.analytics.la51Id}",autoTrack:true,hashMode:${SITE.analytics.hashMode ? "true" : "false"}})`}
-          </script>
+          <script is:inline set:html={la51InitScript} />
         </>
       )
     }
