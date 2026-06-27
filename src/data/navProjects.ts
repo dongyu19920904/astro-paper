@@ -48,7 +48,8 @@ export const NAV_LINKS: NavProject[] = [
     url: "https://news.aibioo.cn",
     tag: "生命科学",
     icon: "🧬",
-  },  {
+  },
+  {
     title: "脑健康成分地图",
     desc: "麦角硫因 × 脑健康互动工具",
     url: "https://dongyu19920904.github.io/Brain-Nutrient-Map-Web/",
@@ -93,7 +94,8 @@ export const PROJECTS: NavProject[] = [
     url: "https://news.aibioo.cn",
     tag: "生命科学",
     icon: "🧬",
-  },  {
+  },
+  {
     title: "脑健康成分地图",
     desc: "从 AI 延续学商机日报落地的互动科普工具：围绕麦角硫因、饮食来源和脑健康行动，生成可分享卡片，为后续资料包和报告转化做验证",
     url: "https://dongyu19920904.github.io/Brain-Nutrient-Map-Web/",
