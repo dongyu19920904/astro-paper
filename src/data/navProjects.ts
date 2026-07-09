@@ -57,6 +57,13 @@ export const NAV_LINKS: NavProject[] = [
     icon: "🧠",
   },
   {
+    title: "AI 延续学内容库",
+    desc: "把日报商机做成文章、资料包和轻工具",
+    url: "https://life.aivora.cn",
+    tag: "内容库",
+    icon: "📚",
+  },
+  {
     title: "BioAI 导航",
     desc: "生命科学 AI 工具一站式入口",
     url: "https://nav.aibioo.cn",
@@ -101,6 +108,13 @@ export const PROJECTS: NavProject[] = [
     url: "https://dongyu19920904.github.io/Brain-Nutrient-Map-Web/",
     tag: "延续学实验",
     icon: "🧠",
+  },
+  {
+    title: "AI 延续学内容库",
+    desc: "把 AI 延续学商机日报里的灵感沉淀成文章、资料包和自动化内容产品",
+    url: "https://life.aivora.cn",
+    tag: "内容库",
+    icon: "📚",
   },
   {
     title: "BioAI 导航",
