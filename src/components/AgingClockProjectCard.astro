@@ -1,0 +1,92 @@
+---
+import type { AgingClockProject } from "@/data/agingClockProjects";
+
+type Props = { project: AgingClockProject };
+const { project } = Astro.props;
+---
+
+<article
+  class="atlas-project-card rounded-xl border border-border bg-background p-5 shadow-sm"
+  data-project-card
+  data-project-id={project.id}
+  aria-labelledby={`${project.id}-title`}
+>
+  <div class="flex flex-wrap items-start justify-between gap-3">
+    <div>
+      <p class="text-sm font-medium text-accent">{project.category}</p>
+      <h3 id={`${project.id}-title`} class="mt-1 text-xl font-semibold">
+        {project.name}
+      </h3>
+    </div>
+    <span class="rounded-full border border-border px-3 py-1 text-xs">
+      许可证：{project.licenseStatus}
+    </span>
+  </div>
+
+  <p class="text-base-content/80 mt-4 leading-7">{project.summary}</p>
+
+  <dl class="mt-5 grid gap-4 text-sm sm:grid-cols-2">
+    <div>
+      <dt class="font-semibold">输入数据</dt>
+      <dd class="text-base-content/70 mt-1">{project.inputTypes.join("、")}</dd>
+    </div>
+    <div>
+      <dt class="font-semibold">核心算法</dt>
+      <dd class="text-base-content/70 mt-1">{project.algorithm}</dd>
+    </div>
+    <div>
+      <dt class="font-semibold">输出</dt>
+      <dd class="text-base-content/70 mt-1">{project.outputs.join("、")}</dd>
+    </div>
+    <div>
+      <dt class="font-semibold">本地运行</dt>
+      <dd class="text-base-content/70 mt-1">
+        {project.offline ? "可离线" : "完整流程需联网/外部服务"} · 难度{
+          project.difficulty
+        }
+      </dd>
+    </div>
+  </dl>
+
+  <div class="mt-5 flex flex-wrap gap-2" aria-label="风险标签">
+    {
+      project.riskTags.map(tag => (
+        <span class="rounded-full bg-muted/70 px-2.5 py-1 text-xs">{tag}</span>
+      ))
+    }
+  </div>
+
+  <p class="text-base-content/60 mt-4 text-xs leading-5">
+    最近核验：{project.lastVerifiedAt} · 风险级别：{project.riskLevel}
+  </p>
+
+  <div
+    class="mt-5 flex flex-wrap items-center gap-3 border-t border-border pt-4"
+  >
+    <label class="inline-flex items-center gap-2 text-sm font-medium">
+      <input
+        type="checkbox"
+        value={project.id}
+        data-compare-project
+        class="size-4 accent-[var(--accent)]"
+        aria-describedby="comparison-help"
+      />
+      加入比较
+    </label>
+    <button
+      type="button"
+      data-project-detail={project.id}
+      class="rounded-lg border border-border px-3 py-2 text-sm font-semibold hover:border-accent hover:text-accent"
+    >
+      查看详情
+    </button>
+    <a
+      href={project.repositoryUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="rounded-lg bg-accent px-3 py-2 text-sm font-semibold text-background"
+    >
+      原仓库 ↗
+    </a>
+  </div>
+</article>

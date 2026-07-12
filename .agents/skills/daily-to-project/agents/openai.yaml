@@ -1,0 +1,4 @@
+interface:
+  display_name: "Daily to Project"
+  short_description: "Turn verified daily-report ideas into web MVPs"
+  default_prompt: "Use $daily-to-project to turn the latest verified daily-report project into a deployable website MVP."
