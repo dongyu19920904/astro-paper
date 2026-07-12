@@ -1,0 +1,613 @@
+---
+import AgingClockProjectCard from "@/components/AgingClockProjectCard.astro";
+import Footer from "@/components/Footer.astro";
+import Header from "@/components/Header.astro";
+import {
+  AGING_CLOCK_CATEGORIES,
+  AGING_CLOCK_DIFFICULTIES,
+  AGING_CLOCK_LICENSE_STATUSES,
+  AGING_CLOCK_PROJECTS,
+} from "@/data/agingClockProjects";
+import Layout from "@/layouts/Layout.astro";
+import {
+  ATLAS_SORTS,
+  PROJECT_PLAN_DEPLOYMENTS,
+  PROJECT_PLAN_DEPLOYMENT_LABELS,
+  PROJECT_PLAN_DIRECTIONS,
+  PROJECT_PLAN_DIRECTION_LABELS,
+  PROJECT_PLAN_EXPERIENCE,
+  PROJECT_PLAN_EXPERIENCE_LABELS,
+  PROJECT_PLAN_GOAL_MAX_LENGTH,
+  PROJECT_PLAN_ROLES,
+  PROJECT_PLAN_ROLE_LABELS,
+  PROJECT_PLAN_TIME_BUDGETS,
+  PROJECT_PLAN_TIME_LABELS,
+} from "@/utils/agingClockAtlas";
+
+const title = "多维衰老时钟地图 | Aging Clock Atlas";
+const description =
+  "面向学习者与独立开发者的衰老时钟开源项目地图：比较数据、算法、许可证、风险与网站化改造方向。";
+const canonicalURL = new URL(
+  "/projects/aging-clock-atlas/",
+  Astro.site ?? Astro.url
+).toString();
+const categoryCount = new Set(
+  AGING_CLOCK_PROJECTS.map(project => project.category)
+).size;
+const lastVerifiedAt = AGING_CLOCK_PROJECTS.reduce(
+  (latest, project) =>
+    project.lastVerifiedAt > latest ? project.lastVerifiedAt : latest,
+  ""
+);
+const inputOptions = [
+  ...new Set(AGING_CLOCK_PROJECTS.flatMap(project => project.inputTypes)),
+].sort((left, right) => left.localeCompare(right, "zh-CN"));
+const remixOptions = [
+  ...new Set(AGING_CLOCK_PROJECTS.flatMap(project => project.remixIdeas)),
+].sort((left, right) => left.localeCompare(right, "zh-CN"));
+const apiBaseUrl = import.meta.env.PUBLIC_BIOAI_API_BASE_URL ?? "";
+const sortLabels = {
+  featured: "日报推荐顺序",
+  "name-asc": "名称 A-Z",
+  "difficulty-asc": "运行难度：低到高",
+  "verified-desc": "核验日期：新到旧",
+};
+---
+
+<Layout {title} {description} {canonicalURL}>
+  <Header />
+  <main id="main-content" class="app-layout pb-14">
+    <div id="aging-clock-atlas" data-api-base={apiBaseUrl}>
+      <section class="border-b border-border py-8 sm:py-12">
+        <p class="text-sm font-semibold tracking-widest text-accent uppercase">
+          Open-source research map
+        </p>
+        <h1 class="mt-3 text-3xl font-bold tracking-tight sm:text-5xl">
+          多维衰老时钟地图
+        </h1>
+        <p class="text-base-content/70 mt-2 text-lg">Aging Clock Atlas</p>
+        <p class="text-base-content/80 mt-5 max-w-2xl text-base leading-7">
+          从 AI
+          延续学日报出发，核对真实开源仓库，比较它们需要什么数据、使用什么算法、输出什么，以及适合改造成哪类学习网站。
+        </p>
+        <div
+          class="mt-6 rounded-xl border border-amber-500/50 bg-amber-500/10 p-4 text-sm leading-6"
+          role="note"
+          aria-label="研究与医疗边界"
+        >
+          <strong>研究与教育用途，不构成医学建议。</strong>
+          本站不测算个人生物年龄，不接收 DNA、甲基化、MRI、病例或患者资料，也不提供诊断与治疗建议。
+        </div>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a
+            href="#project-map"
+            class="rounded-lg bg-accent px-4 py-2.5 text-sm font-semibold text-background"
+          >
+            进入项目地图
+          </a>
+          <a
+            href="#project-plan-generator"
+            class="rounded-lg border border-border px-4 py-2.5 text-sm font-semibold hover:border-accent hover:text-accent"
+          >
+            生成改造路线
+          </a>
+        </div>
+        <dl class="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-3">
+          <div class="rounded-lg border border-border p-4">
+            <dt class="text-base-content/60 text-sm">已核验项目</dt>
+            <dd class="mt-1 text-2xl font-semibold">
+              {AGING_CLOCK_PROJECTS.length}
+            </dd>
+          </div>
+          <div class="rounded-lg border border-border p-4">
+            <dt class="text-base-content/60 text-sm">技术类别</dt>
+            <dd class="mt-1 text-2xl font-semibold">{categoryCount}</dd>
+          </div>
+          <div class="rounded-lg border border-border p-4">
+            <dt class="text-base-content/60 text-sm">最近核验</dt>
+            <dd class="mt-1 text-lg font-semibold">{lastVerifiedAt}</dd>
+          </div>
+        </dl>
+      </section>
+
+      <section
+        id="project-map"
+        class="scroll-mt-6 py-8"
+        aria-labelledby="atlas-heading"
+      >
+        <div>
+          <h2 id="atlas-heading" class="text-2xl font-semibold">项目地图</h2>
+          <p class="text-base-content/65 mt-2 text-sm leading-6">
+            数据来自官方仓库与注明日期的 AI
+            延续学日报。许可证不明确时只展示公开元数据，不复制实现与资源。
+          </p>
+        </div>
+
+        <form
+          id="atlas-filters"
+          class="mt-6 grid gap-4 rounded-xl border border-border bg-muted/20 p-4 sm:grid-cols-2 lg:grid-cols-3"
+          aria-label="筛选和排序项目"
+        >
+          <label>
+            <span>类别</span>
+            <select name="category">
+              <option value="all">全部类别</option>
+              {
+                AGING_CLOCK_CATEGORIES.map(value => (
+                  <option value={value}>{value}</option>
+                ))
+              }
+            </select>
+          </label>
+          <label>
+            <span>输入数据</span>
+            <select name="input">
+              <option value="all">全部输入</option>
+              {
+                inputOptions.map(value => (
+                  <option value={value}>{value}</option>
+                ))
+              }
+            </select>
+          </label>
+          <label>
+            <span>运行难度</span>
+            <select name="difficulty">
+              <option value="all">全部难度</option>
+              {
+                AGING_CLOCK_DIFFICULTIES.map(value => (
+                  <option value={value}>{value}</option>
+                ))
+              }
+            </select>
+          </label>
+          <label>
+            <span>离线能力</span>
+            <select name="offline">
+              <option value="all">全部</option>
+              <option value="yes">可离线</option>
+              <option value="no">完整流程需联网/外部服务</option>
+            </select>
+          </label>
+          <label>
+            <span>许可证状态</span>
+            <select name="license">
+              <option value="all">全部状态</option>
+              {
+                AGING_CLOCK_LICENSE_STATUSES.map(value => (
+                  <option value={value}>{value}</option>
+                ))
+              }
+            </select>
+          </label>
+          <label>
+            <span>改造方向</span>
+            <select name="remix">
+              <option value="all">全部方向</option>
+              {
+                remixOptions.map(value => (
+                  <option value={value}>{value}</option>
+                ))
+              }
+            </select>
+          </label>
+          <label>
+            <span>排序</span>
+            <select name="sort">
+              {
+                ATLAS_SORTS.map(value => (
+                  <option value={value}>{sortLabels[value]}</option>
+                ))
+              }
+            </select>
+          </label>
+          <div class="flex items-end">
+            <button
+              id="clear-atlas-filters"
+              type="button"
+              class="w-full rounded-lg border border-border px-4 py-2.5 text-sm font-semibold hover:border-accent hover:text-accent"
+            >
+              清除所有筛选
+            </button>
+          </div>
+        </form>
+
+        <div class="mt-5 flex flex-wrap items-center justify-between gap-3">
+          <p
+            id="atlas-result-count"
+            class="text-sm font-medium"
+            aria-live="polite"
+          >
+          </p>
+          <p id="comparison-help" class="text-base-content/60 text-xs">
+            可选择 2～4 个项目比较；筛选状态会保存到当前 URL。
+          </p>
+        </div>
+
+        <div id="atlas-project-grid" class="mt-5 grid gap-4">
+          {
+            AGING_CLOCK_PROJECTS.map(project => (
+              <AgingClockProjectCard {project} />
+            ))
+          }
+        </div>
+        <p
+          id="atlas-empty"
+          class="mt-5 rounded-lg border border-dashed border-border p-6 text-center text-sm"
+          hidden
+        >
+          没有符合当前筛选的项目，请清除部分条件。
+        </p>
+
+        <div
+          class="mt-5 flex flex-wrap items-center gap-3 rounded-xl border border-border p-4"
+        >
+          <p class="text-sm font-semibold">
+            已选 <span id="comparison-count">0 / 4</span>
+          </p>
+          <button
+            id="show-comparison"
+            type="button"
+            class="rounded-lg bg-accent px-4 py-2 text-sm font-semibold text-background disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            生成比较
+          </button>
+          <button
+            id="clear-comparison"
+            type="button"
+            class="rounded-lg border border-border px-4 py-2 text-sm font-semibold disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            清除选择
+          </button>
+          <p
+            id="comparison-status"
+            class="text-base-content/65 text-sm"
+            aria-live="polite"
+          >
+          </p>
+        </div>
+      </section>
+
+      <section
+        id="comparison-panel"
+        class="scroll-mt-6 border-t border-border py-8"
+        aria-labelledby="comparison-heading"
+        hidden
+      >
+        <h2 id="comparison-heading" class="text-2xl font-semibold">项目比较</h2>
+        <p class="text-base-content/65 mt-2 text-sm">
+          移动端采用可纵向阅读的项目卡，避免宽表格失去操作能力。
+        </p>
+        <div id="comparison-results" class="mt-5 grid gap-4 lg:grid-cols-2">
+        </div>
+      </section>
+
+      <section
+        id="project-plan-generator"
+        class="scroll-mt-6 border-t border-border py-8"
+        aria-labelledby="plan-heading"
+      >
+        <h2 id="plan-heading" class="text-2xl font-semibold">
+          AI 项目改造路线生成器
+        </h2>
+        <p class="text-base-content/65 mt-2 max-w-2xl text-sm leading-6">
+          生成的是开源项目网站化与技术教学路线。这里只接收产品偏好，不接收或分析任何生物、医学、病例或患者数据。
+        </p>
+        <form
+          id="project-plan-form"
+          class="mt-6 grid gap-4 rounded-xl border border-border p-4 sm:grid-cols-2"
+        >
+          <label>
+            <span>目标开源项目</span>
+            <select name="projectId" required>
+              {
+                AGING_CLOCK_PROJECTS.map(project => (
+                  <option value={project.id}>{project.name}</option>
+                ))
+              }
+            </select>
+          </label>
+          <label>
+            <span>用户身份</span>
+            <select name="role" required>
+              {
+                PROJECT_PLAN_ROLES.map(value => (
+                  <option value={value}>
+                    {PROJECT_PLAN_ROLE_LABELS[value]}
+                  </option>
+                ))
+              }
+            </select>
+          </label>
+          <label>
+            <span>产品方向</span>
+            <select name="direction" required>
+              {
+                PROJECT_PLAN_DIRECTIONS.map(value => (
+                  <option value={value}>
+                    {PROJECT_PLAN_DIRECTION_LABELS[value]}
+                  </option>
+                ))
+              }
+            </select>
+          </label>
+          <label>
+            <span>可投入时间</span>
+            <select name="timeBudget" required>
+              {
+                PROJECT_PLAN_TIME_BUDGETS.map(value => (
+                  <option value={value}>
+                    {PROJECT_PLAN_TIME_LABELS[value]}
+                  </option>
+                ))
+              }
+            </select>
+          </label>
+          <label>
+            <span>编程经验</span>
+            <select name="experience" required>
+              {
+                PROJECT_PLAN_EXPERIENCE.map(value => (
+                  <option value={value}>
+                    {PROJECT_PLAN_EXPERIENCE_LABELS[value]}
+                  </option>
+                ))
+              }
+            </select>
+          </label>
+          <label>
+            <span>部署偏好</span>
+            <select name="deployment" required>
+              {
+                PROJECT_PLAN_DEPLOYMENTS.map(value => (
+                  <option value={value}>
+                    {PROJECT_PLAN_DEPLOYMENT_LABELS[value]}
+                  </option>
+                ))
+              }
+            </select>
+          </label>
+          <label class="sm:col-span-2">
+            <span>简短项目目标（可选）</span>
+            <textarea
+              name="goal"
+              rows="3"
+              maxlength={PROJECT_PLAN_GOAL_MAX_LENGTH}
+              placeholder="例如：做一个让非专业读者看懂不同衰老时钟差异的教育页"
+            ></textarea>
+            <small
+              >最多 {PROJECT_PLAN_GOAL_MAX_LENGTH} 个字符；不要填写个人健康或生物数据。</small
+            >
+          </label>
+          <div class="sm:col-span-2">
+            <button
+              type="submit"
+              class="rounded-lg bg-accent px-5 py-2.5 text-sm font-semibold text-background disabled:cursor-wait disabled:opacity-60"
+            >
+              生成改造路线
+            </button>
+          </div>
+        </form>
+        <p
+          id="project-plan-status"
+          class="mt-4 text-sm font-medium"
+          aria-live="polite"
+        >
+        </p>
+        <div
+          id="project-plan-result"
+          class="mt-5 rounded-xl border border-border p-5 empty:hidden"
+          aria-live="polite"
+        >
+        </div>
+      </section>
+    </div>
+  </main>
+  <Footer />
+
+  <dialog
+    id="project-detail-dialog"
+    class="atlas-dialog m-auto max-h-[88vh] w-[min(92vw,46rem)] rounded-xl border border-border bg-background p-0 text-foreground shadow-2xl backdrop:bg-black/60"
+    aria-labelledby="project-detail-title"
+  >
+    <div
+      class="sticky top-0 z-10 flex justify-end border-b border-border bg-background p-3"
+    >
+      <button
+        type="button"
+        data-dialog-close
+        class="rounded-lg border border-border px-3 py-2 text-sm font-semibold"
+        aria-label="关闭项目详情"
+      >
+        关闭
+      </button>
+    </div>
+    <div data-detail-content class="p-5 sm:p-7"></div>
+  </dialog>
+</Layout>
+
+<script>
+  import "@/scripts/agingClockAtlas";
+</script>
+
+<style is:global>
+  #aging-clock-atlas label > span {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+  }
+
+  #aging-clock-atlas select,
+  #aging-clock-atlas textarea {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 0.55rem;
+    background: var(--background);
+    color: var(--foreground);
+    padding: 0.65rem 0.75rem;
+  }
+
+  #aging-clock-atlas select:focus-visible,
+  #aging-clock-atlas textarea:focus-visible {
+    outline: 2px dashed var(--accent);
+    outline-offset: 2px;
+  }
+
+  #aging-clock-atlas small {
+    display: block;
+    margin-top: 0.4rem;
+    color: color-mix(in srgb, var(--foreground) 62%, transparent);
+  }
+
+  .atlas-project-card[hidden],
+  #comparison-panel[hidden],
+  #atlas-empty[hidden] {
+    display: none;
+  }
+
+  .atlas-project-card {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .atlas-compare-card {
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+    padding: 1.1rem;
+    min-width: 0;
+  }
+
+  .atlas-compare-card h3,
+  .atlas-dialog-title,
+  .atlas-plan-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+  }
+
+  .atlas-compare-card dl {
+    margin-top: 1rem;
+  }
+
+  .atlas-compare-card dl > div {
+    border-top: 1px solid var(--border);
+    padding: 0.75rem 0;
+  }
+
+  .atlas-compare-card dt {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .atlas-compare-card dd {
+    margin-top: 0.25rem;
+    font-size: 0.88rem;
+    line-height: 1.55;
+    overflow-wrap: anywhere;
+  }
+
+  .atlas-dialog {
+    color-scheme: light dark;
+  }
+
+  .atlas-dialog[open] {
+    display: block;
+  }
+
+  .atlas-eyebrow {
+    color: var(--accent);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .atlas-dialog-summary,
+  .atlas-plan-positioning {
+    margin-top: 0.8rem;
+    line-height: 1.75;
+  }
+
+  .atlas-source-badge {
+    display: inline-flex;
+    border: 1px solid var(--accent);
+    border-radius: 999px;
+    color: var(--accent);
+    padding: 0.25rem 0.65rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  .atlas-detail-section,
+  .atlas-plan-section {
+    margin-top: 1.4rem;
+  }
+
+  .atlas-detail-section h3,
+  .atlas-plan-section h4 {
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  .atlas-detail-section p,
+  .atlas-detail-section li,
+  .atlas-plan-section li {
+    margin-top: 0.35rem;
+    font-size: 0.9rem;
+    line-height: 1.65;
+    overflow-wrap: anywhere;
+  }
+
+  .atlas-list {
+    list-style: disc;
+    padding-left: 1.25rem;
+  }
+
+  .atlas-dialog-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+
+  .atlas-dialog-links a {
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    padding: 0.55rem 0.75rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+  }
+
+  .atlas-day-grid {
+    display: grid;
+    gap: 0.75rem;
+    margin-top: 0.75rem;
+  }
+
+  .atlas-plan-day {
+    border: 1px solid var(--border);
+    border-radius: 0.65rem;
+    padding: 0.85rem;
+  }
+
+  .atlas-plan-day h5 {
+    margin-top: 0.25rem;
+    font-weight: 700;
+  }
+
+  .atlas-plan-disclaimer {
+    margin-top: 1.5rem;
+    border-left: 3px solid var(--accent);
+    padding-left: 0.85rem;
+    font-size: 0.85rem;
+    line-height: 1.65;
+  }
+
+  @media (min-width: 48rem) {
+    .atlas-day-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>

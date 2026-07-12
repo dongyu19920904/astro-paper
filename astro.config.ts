@@ -60,6 +60,11 @@ export default defineConfig({
         context: "client",
         optional: true,
       }),
+      PUBLIC_BIOAI_API_BASE_URL: envField.string({
+        access: "public",
+        context: "client",
+        optional: true,
+      }),
     },
   },
   experimental: {

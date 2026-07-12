@@ -24,6 +24,9 @@ export interface NavProject {
   url: string;
   tag: string;
   icon?: string;
+  status?: string;
+  technologies?: string[];
+  updatedAt?: string;
 }
 
 /** 首页导航区块 - 主要入口（显示在首页顶部） */
@@ -81,6 +84,16 @@ export const NAV_LINKS: NavProject[] = [
 
 /** 项目列表 - 显示在 /projects 页面（与首页导航一致） */
 export const PROJECTS: NavProject[] = [
+  {
+    title: "多维衰老时钟地图",
+    desc: "从 AI 延续学日报核验真实开源项目，对比衰老时钟、脑龄模型、古 DNA 与数字生物标志物的输入、算法、许可证和改造方向",
+    url: "/projects/aging-clock-atlas/",
+    tag: "延续学实验",
+    icon: "🗺️",
+    status: "实验性 MVP",
+    technologies: ["Astro", "TypeScript", "Cloudflare Worker"],
+    updatedAt: "2026-07-11",
+  },
   {
     title: "AI 账号小店",
     desc: "Cursor / Claude / ChatGPT 等 AI 工具账号，低价秒发，售后无忧",

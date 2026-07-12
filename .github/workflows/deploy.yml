@@ -61,6 +61,8 @@ jobs:
           pnpm astro build
           pnpm pagefind --site dist
         working-directory: ${{ env.BUILD_PATH }}
+        env:
+          PUBLIC_BIOAI_API_BASE_URL: ${{ vars.PUBLIC_BIOAI_API_BASE_URL }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
