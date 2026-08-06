@@ -14,8 +14,8 @@ export const SITE = {
   website: "https://yuyu.aivora.cn/", // 你的自定义域名
   // ===== 👇 修改这里的个人信息 =====
   author: "yuyu", // 你的名字
-  profile: "https://yuyu.aivora.cn/about", // 个人简介页面
-  desc: "yuyu 的个人主页 | 白天卖 AI 账号，晚上研究 AI 长生", // 站点描述
+  profile: "https://yuyu.aivora.cn/about/", // 个人简介页面
+  desc: "yuyu 的个人主页，记录 AI 账号店、AI 一人公司、AI 生命延续学日报和长期项目实验。", // 站点描述
   title: "yuyu", // 站点标题
   ogImage: "astropaper-og.jpg", // 默认 OG 图片
   lightAndDarkMode: true,
@@ -37,4 +37,9 @@ export const SITE = {
   dir: "ltr",
   lang: "zh-CN", // 中文站点
   timezone: "Asia/Shanghai", // 中国时区
+  brand: {
+    name: "爱窝啦·AI账号店",
+    website: "https://www.aivora.cn/",
+  },
+  sameAs: ["https://github.com/dongyu19920904"],
 } as const;

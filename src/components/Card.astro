@@ -2,6 +2,7 @@
 import type { CollectionEntry } from "astro:content";
 import { slugifyStr } from "@/utils/slugify";
 import { getPath } from "@/utils/getPath";
+import { cleanPostDescription } from "@/utils/postDescription";
 import Datetime from "./Datetime.astro";
 
 type Props = {
@@ -11,6 +12,10 @@ type Props = {
 const { variant: Heading = "h2", id, data, filePath } = Astro.props;
 
 const { title, description, ...props } = data;
+const displayDescription = cleanPostDescription(
+  description,
+  `${title} 的个人观察与项目记录。`
+);
 ---
 
 <li class="my-6">
@@ -27,5 +32,5 @@ const { title, description, ...props } = data;
     </Heading>
   </a>
   <Datetime {...props} />
-  <p>{description}</p>
+  <p>{displayDescription}</p>
 </li>

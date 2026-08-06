@@ -31,7 +31,16 @@ const months = [
 ];
 ---
 
-<Layout title={`归档 | ${SITE.title}`}>
+<Layout
+  title={`归档 | ${SITE.title}`}
+  description="按月份查看 yuyu 个人博客的所有文章。"
+  pageType="collection"
+  canonicalURL={new URL("/archives/", SITE.website).href}
+  breadcrumbs={[
+    { name: "首页", url: SITE.website },
+    { name: "归档", url: new URL("/archives/", SITE.website) },
+  ]}
+>
   <Header />
   <Main pageTitle="归档" pageDesc="按时间归档的所有文章">
     {

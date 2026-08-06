@@ -13,7 +13,16 @@ const posts = await getCollection("blog");
 let tags = getUniqueTags(posts);
 ---
 
-<Layout title={`标签 | ${SITE.title}`}>
+<Layout
+  title={`标签 | ${SITE.title}`}
+  description="按标签浏览 yuyu 个人博客内容。"
+  pageType="collection"
+  canonicalURL={new URL("/tags/", SITE.website).href}
+  breadcrumbs={[
+    { name: "首页", url: SITE.website },
+    { name: "标签", url: new URL("/tags/", SITE.website) },
+  ]}
+>
   <Header />
   <Main pageTitle="标签" pageDesc="文章中使用的所有标签">
     <ul class="flex flex-wrap gap-6">

@@ -23,24 +23,24 @@ const { project } = Astro.props;
     </span>
   </div>
 
-  <p class="text-base-content/80 mt-4 leading-7">{project.summary}</p>
+  <p class="mt-4 leading-7 text-foreground/80">{project.summary}</p>
 
   <dl class="mt-5 grid gap-4 text-sm sm:grid-cols-2">
     <div>
       <dt class="font-semibold">输入数据</dt>
-      <dd class="text-base-content/70 mt-1">{project.inputTypes.join("、")}</dd>
+      <dd class="mt-1 text-foreground/70">{project.inputTypes.join("、")}</dd>
     </div>
     <div>
       <dt class="font-semibold">核心算法</dt>
-      <dd class="text-base-content/70 mt-1">{project.algorithm}</dd>
+      <dd class="mt-1 text-foreground/70">{project.algorithm}</dd>
     </div>
     <div>
       <dt class="font-semibold">输出</dt>
-      <dd class="text-base-content/70 mt-1">{project.outputs.join("、")}</dd>
+      <dd class="mt-1 text-foreground/70">{project.outputs.join("、")}</dd>
     </div>
     <div>
       <dt class="font-semibold">本地运行</dt>
-      <dd class="text-base-content/70 mt-1">
+      <dd class="mt-1 text-foreground/70">
         {project.offline ? "可离线" : "完整流程需联网/外部服务"} · 难度{
           project.difficulty
         }
@@ -56,7 +56,7 @@ const { project } = Astro.props;
     }
   </div>
 
-  <p class="text-base-content/60 mt-4 text-xs leading-5">
+  <p class="mt-4 text-xs leading-5 text-foreground/60">
     最近核验：{project.lastVerifiedAt} · 风险级别：{project.riskLevel}
   </p>
 

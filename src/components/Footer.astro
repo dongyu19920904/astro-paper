@@ -1,7 +1,7 @@
 ﻿---
 import type { HTMLAttributes } from "astro/types";
 import Socials from "./Socials.astro";
-import { SITE } from "@/config";
+import VisitorStats from "./VisitorStats.astro";
 
 const currentYear = new Date().getFullYear();
 
@@ -34,27 +34,15 @@ const { noMarginTop = false, class: className, ...attrs } = Astro.props;
       </a>
     </div>
     <Socials />
-    <div class="my-2 flex flex-col items-center whitespace-nowrap sm:flex-row">
-      <span>Copyright &#169; {currentYear}</span>
-      <span class="hidden sm:inline">&nbsp;|&nbsp;</span>
-      <span>All rights reserved.</span>
+    <div class="my-2 flex flex-col items-center gap-2 whitespace-nowrap sm:flex-row">
+      <div class="flex flex-col items-center sm:flex-row">
+        <span>Copyright &#169; {currentYear}</span>
+        <span class="hidden sm:inline">&nbsp;|&nbsp;</span>
+        <span>All rights reserved.</span>
+      </div>
+      <VisitorStats />
     </div>
   </div>
 </footer>
-{
-  SITE.analytics.la51Id && (
-    <div
-      style="max-width: 900px; margin: 1rem auto 2rem; padding: 0 1rem; text-align: center;"
-    >
-      <script
-        is:inline
-        id="LA-DATA-WIDGET"
-        crossorigin="anonymous"
-        charset="UTF-8"
-        src={`https://v6-widget.51.la/v6/${SITE.analytics.la51Id}/quote.js?theme=0&f=12`}
-      />
-    </div>
-  )
-}
 
 

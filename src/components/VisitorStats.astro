@@ -1,0 +1,80 @@
+---
+const apiBaseUrl =
+  import.meta.env.PUBLIC_BIOAI_API_BASE_URL ||
+  "https://cloudflare-bioai-daily.sabrinamisan090.workers.dev";
+---
+
+<div
+  class="visitor-stats"
+  data-visitor-stats
+  data-api-base={apiBaseUrl}
+  data-state="loading"
+  aria-live="polite"
+>
+  <span>总访问 <strong data-total-pageviews>--</strong></span>
+  <span>总访客 <strong data-total-visitors>--</strong></span>
+  <span>今日 <strong data-today-pageviews>--</strong></span>
+  <span class="sr-only" data-stats-status>访客统计加载中</span>
+</div>
+
+<script is:inline data-astro-rerun>
+  function initVisitorStats() {
+    const root = document.querySelector("[data-visitor-stats]");
+    if (!root) return;
+
+    const apiBase = root.dataset.apiBase;
+    if (!apiBase) return;
+
+    const totalPageviews = root.querySelector("[data-total-pageviews]");
+    const totalVisitors = root.querySelector("[data-total-visitors]");
+    const todayPageviews = root.querySelector("[data-today-pageviews]");
+    const status = root.querySelector("[data-stats-status]");
+
+    function visitorId() {
+      const key = "aivora:yuyu-home:visitor-id";
+      try {
+        let value = localStorage.getItem(key);
+        if (!value) {
+          value = crypto.randomUUID
+            ? crypto.randomUUID()
+            : Math.random().toString(36).slice(2) + Date.now().toString(36);
+          localStorage.setItem(key, value);
+        }
+        return value;
+      } catch {
+        return Math.random().toString(36).slice(2) + Date.now().toString(36);
+      }
+    }
+
+    const url = new URL("/visitorStats", apiBase);
+    url.searchParams.set("site", "yuyu-home");
+    url.searchParams.set("visitor", visitorId());
+
+    fetch(url, { cache: "no-store", mode: "cors" })
+      .then(response => {
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        return response.json();
+      })
+      .then(data => {
+        if (totalPageviews)
+          totalPageviews.textContent = String(data.total?.pageviews ?? "--");
+        if (totalVisitors)
+          totalVisitors.textContent = String(data.total?.visitors ?? "--");
+        if (todayPageviews)
+          todayPageviews.textContent = String(data.today?.pageviews ?? "--");
+        root.dataset.state = "ready";
+        if (status) status.textContent = "访客统计已更新";
+      })
+      .catch(() => {
+        root.dataset.state = "error";
+        if (status) status.textContent = "访客统计暂不可用";
+      });
+  }
+
+  initVisitorStats();
+  const statsWindow = window;
+  if (!statsWindow.__yuyuVisitorStatsBound) {
+    statsWindow.__yuyuVisitorStatsBound = true;
+    document.addEventListener("astro:page-load", initVisitorStats);
+  }
+</script>

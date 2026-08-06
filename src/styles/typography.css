@@ -4,6 +4,7 @@
   /* ===== Override default Tailwind Typography styles ===== */
   .app-prose {
     @apply prose;
+    overflow-wrap: anywhere;
 
     h1,
     h2,
@@ -11,10 +12,7 @@
     h4,
     th {
       @apply mb-3 text-foreground;
-    }
-
-    h3 {
-      @apply italic;
+      overflow-wrap: anywhere;
     }
 
     p,
@@ -44,11 +42,19 @@
     }
 
     img {
-      @apply mx-auto border border-border;
+      @apply mx-auto rounded-md border border-border;
+    }
+
+    figure {
+      @apply my-8;
+    }
+
+    figure > img {
+      @apply my-0;
     }
 
     figcaption {
-      @apply opacity-75;
+      @apply mt-2 text-center text-sm text-foreground/65;
     }
 
     table {
@@ -75,7 +81,7 @@
     }
 
     blockquote {
-      @apply border-s-accent/80 wrap-break-word opacity-80;
+      @apply border-s-accent/80 wrap-break-word text-foreground/80;
     }
 
     details {

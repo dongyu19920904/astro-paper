@@ -31,7 +31,16 @@ const { tag } = params;
 const { page, tagName } = Astro.props;
 ---
 
-<Layout title={`标签: ${tagName} | ${SITE.title}`}>
+<Layout
+  title={`标签: ${tagName} | ${SITE.title}`}
+  description={`所有带有「${tagName}」标签的 yuyu 个人博客文章。`}
+  pageType="collection"
+  breadcrumbs={[
+    { name: "首页", url: SITE.website },
+    { name: "标签", url: new URL("/tags/", SITE.website) },
+    { name: tagName, url: Astro.url },
+  ]}
+>
   <Header />
   <Main
     pageTitle={[`标签:`, `${tagName}`]}

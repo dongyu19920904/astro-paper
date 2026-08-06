@@ -10,14 +10,24 @@ import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import { PROJECTS } from "@/data/navProjects";
+import { SITE } from "@/config";
 ---
 
-<Layout>
+<Layout
+  title={`项目 | ${SITE.title}`}
+  description="yuyu 正在维护的 AI 日报、BioAI 生命延续学、个人工具和项目导航。"
+  pageType="collection"
+  canonicalURL={new URL("/projects/", SITE.website).href}
+  breadcrumbs={[
+    { name: "首页", url: SITE.website },
+    { name: "项目", url: new URL("/projects/", SITE.website) },
+  ]}
+>
   <Header />
   <main id="main-content" class="app-layout">
     <section class="border-b border-border pt-8 pb-6">
       <h1 class="text-3xl font-bold sm:text-4xl">我的项目</h1>
-      <p class="text-base-content/70 mt-4">
+      <p class="mt-4 text-foreground/75">
         白天搞钱，晚上搞研究。这些是我正在运营的项目，点击卡片直接跳转。
       </p>
     </section>
@@ -28,7 +38,7 @@ import { PROJECTS } from "@/data/navProjects";
           PROJECTS.map(project => (
             <a
               href={project.url}
-              class="group bg-base-100 flex flex-col gap-2 rounded-xl border border-border p-5 transition-all hover:border-accent hover:shadow-lg"
+              class="group flex flex-col gap-2 rounded-xl border border-border bg-background/70 p-5 transition-all hover:border-accent hover:shadow-lg"
               target={project.url.startsWith("http") ? "_blank" : "_self"}
               rel={
                 project.url.startsWith("http")
@@ -42,18 +52,18 @@ import { PROJECTS } from "@/data/navProjects";
                   {project.title}
                 </span>
               </div>
-              <p class="text-base-content/70 flex-1 text-sm">{project.desc}</p>
+              <p class="flex-1 text-sm text-foreground/75">{project.desc}</p>
               {project.technologies && (
                 <div class="flex flex-wrap gap-1.5" aria-label="技术标签">
                   {project.technologies.map(technology => (
-                    <span class="text-base-content/60 rounded-full border border-border px-2 py-0.5 text-[0.7rem]">
+                    <span class="rounded-full border border-border px-2 py-0.5 text-[0.7rem] text-foreground/65">
                       {technology}
                     </span>
                   ))}
                 </div>
               )}
               {(project.status || project.updatedAt) && (
-                <p class="text-base-content/55 text-xs">
+                <p class="text-xs text-foreground/60">
                   {project.status}
                   {project.status && project.updatedAt ? " · " : ""}
                   {project.updatedAt ? `更新于 ${project.updatedAt}` : ""}
@@ -63,7 +73,7 @@ import { PROJECTS } from "@/data/navProjects";
                 <span class="inline-block rounded-full bg-accent/10 px-2 py-0.5 text-xs text-accent">
                   {project.tag}
                 </span>
-                <span class="text-base-content/50 text-xs group-hover:text-accent">
+                <span class="text-xs text-foreground/60 group-hover:text-accent">
                   {project.url.startsWith("http") ? "外部链接 ↗" : "站内 →"}
                 </span>
               </div>
@@ -74,7 +84,7 @@ import { PROJECTS } from "@/data/navProjects";
     </section>
 
     <section class="py-8 text-center">
-      <p class="text-base-content/60">
+      <p class="text-foreground/65">
         2029 年前，这个列表会越来越长。敬请期待。
       </p>
     </section>

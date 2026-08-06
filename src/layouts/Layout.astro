@@ -1,8 +1,12 @@
 ---
-import { Font } from "astro:assets";
 import { ClientRouter } from "astro:transitions";
 import { PUBLIC_GOOGLE_SITE_VERIFICATION } from "astro:env/client";
 import { SITE } from "@/config";
+import {
+  buildStructuredData,
+  type BreadcrumbItem,
+  type PageSchemaType,
+} from "@/utils/seoSchema";
 import "@/styles/global.css";
 
 type Props = {
@@ -14,6 +18,8 @@ type Props = {
   canonicalURL?: string;
   pubDatetime?: Date;
   modDatetime?: Date | null;
+  pageType?: PageSchemaType;
+  breadcrumbs?: BreadcrumbItem[];
   scrollSmooth?: boolean;
 };
 
@@ -23,29 +29,28 @@ const {
   profile = SITE.profile,
   description = SITE.desc,
   ogImage = SITE.ogImage ? `/${SITE.ogImage}` : "/og.png",
-  canonicalURL = new URL(Astro.url.pathname, Astro.url),
+  canonicalURL = new URL(Astro.url.pathname, SITE.website).href,
   pubDatetime,
   modDatetime,
+  pageType = pubDatetime ? "article" : "webpage",
+  breadcrumbs = [],
   scrollSmooth = false,
 } = Astro.props;
 
-const socialImageURL = new URL(ogImage, Astro.url);
-
-const structuredData = {
-  "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  headline: `${title}`,
-  image: `${socialImageURL}`,
-  datePublished: `${pubDatetime?.toISOString()}`,
-  ...(modDatetime && { dateModified: modDatetime.toISOString() }),
-  author: [
-    {
-      "@type": "Person",
-      name: `${author}`,
-      ...(profile && { url: profile }),
-    },
-  ],
-};
+const resolvedCanonicalURL = new URL(String(canonicalURL), SITE.website);
+const socialImageURL = new URL(ogImage, resolvedCanonicalURL);
+const structuredData = buildStructuredData({
+  pageType,
+  title,
+  description,
+  canonicalURL: resolvedCanonicalURL,
+  imageURL: socialImageURL,
+  author,
+  profile,
+  pubDatetime,
+  modDatetime,
+  breadcrumbs,
+});
 
 const la51InitScript = SITE.analytics.la51Id
   ? `LA.init({id:${JSON.stringify(SITE.analytics.la51Id)},ck:${JSON.stringify(
@@ -64,14 +69,8 @@ const la51InitScript = SITE.analytics.la51Id
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="canonical" href={canonicalURL} />
+    <link rel="canonical" href={resolvedCanonicalURL} />
     <meta name="generator" content={Astro.generator} />
-
-    <!-- Load Font -->
-    <Font
-      cssVariable="--font-google-sans-code"
-      preload={[{ subset: "latin", weight: 400, style: "normal" }]}
-    />
 
     <!-- General Meta Tags -->
     <title>{title}</title>
@@ -83,7 +82,7 @@ const la51InitScript = SITE.analytics.la51Id
     <!-- Open Graph / Facebook -->
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:url" content={resolvedCanonicalURL} />
     <meta property="og:image" content={socialImageURL} />
 
     <!-- Article Published/Modified time -->
@@ -106,7 +105,7 @@ const la51InitScript = SITE.analytics.la51Id
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content={canonicalURL} />
+    <meta property="twitter:url" content={resolvedCanonicalURL} />
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content={socialImageURL} />

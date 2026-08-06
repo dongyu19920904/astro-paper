@@ -18,7 +18,16 @@ export const getStaticPaths = (async ({ paginate }) => {
 const { page } = Astro.props;
 ---
 
-<Layout title={`博客 | ${SITE.title}`}>
+<Layout
+  title={`博客 | ${SITE.title}`}
+  description="yuyu 关于 AI 账号店、AI 一人公司、AI 日报和 BioAI 生命延续学的文章归档。"
+  pageType="collection"
+  canonicalURL={new URL("/posts/", SITE.website).href}
+  breadcrumbs={[
+    { name: "首页", url: SITE.website },
+    { name: "博客", url: new URL("/posts/", SITE.website) },
+  ]}
+>
   <Header />
   <Main pageTitle="博客" pageDesc="我写的所有文章">
     <ul>

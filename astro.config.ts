@@ -1,4 +1,4 @@
-import { defineConfig, envField, fontProviders } from "astro/config";
+import { defineConfig, envField } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
 import sitemap from "@astrojs/sitemap";
 import remarkToc from "remark-toc";
@@ -10,6 +10,8 @@ import {
 } from "@shikijs/transformers";
 import { transformerFileName } from "./src/utils/transformers/fileName";
 import { remarkProxyImages } from "./src/utils/remarkProxyImages";
+import { remarkRemoveToc } from "./src/utils/remarkRemoveToc";
+import { rehypeFigures } from "./src/utils/rehypeFigures";
 import { SITE } from "./src/config";
 
 // https://astro.build/config
@@ -22,10 +24,12 @@ export default defineConfig({
   ],
   markdown: {
     remarkPlugins: [
+      remarkRemoveToc,
       remarkProxyImages,
       remarkToc,
       [remarkCollapse, { test: "Table of contents" }],
     ],
+    rehypePlugins: [rehypeFigures],
     shikiConfig: {
       // For more themes, visit https://shiki.style/themes
       themes: { light: "min-light", dark: "night-owl" },
@@ -69,15 +73,5 @@ export default defineConfig({
   },
   experimental: {
     preserveScriptOrder: true,
-    fonts: [
-      {
-        name: "Google Sans Code",
-        cssVariable: "--font-google-sans-code",
-        provider: fontProviders.google(),
-        fallbacks: ["monospace"],
-        weights: [300, 400, 500, 600, 700],
-        styles: ["normal", "italic"],
-      },
-    ],
   },
 });

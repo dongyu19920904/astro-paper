@@ -20,7 +20,12 @@ const featuredPosts = sortedPosts.filter(({ data }) => data.featured);
 const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
 ---
 
-<Layout>
+<Layout
+  pageType="website"
+  title={`${SITE.title} | AI 账号店、AI 一人公司与生命延续学实验`}
+  description={SITE.desc}
+  canonicalURL={SITE.website}
+>
   <Header />
   <main id="main-content" data-layout="index" class="app-layout">
     {/* ===== Launchpad 首屏：项目入口矩阵 ===== */}
@@ -89,12 +94,12 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
     <section id="about" class="pt-10 pb-8 border-b border-border">
       <div class="flex flex-wrap items-end justify-between gap-3">
         <h2 class="text-2xl font-semibold tracking-wide">关于我</h2>
-        <span class="text-xs uppercase tracking-[0.3em] text-base-content/50">
+        <span class="text-xs uppercase tracking-[0.22em] text-foreground/60">
           Operator Notes
         </span>
       </div>
       <div class="mt-6 grid gap-6 lg:grid-cols-[1.2fr_1fr]">
-        <div class="space-y-3 text-base-content/80">
+        <div class="space-y-3 text-foreground/78">
           <p class="text-lg text-foreground">
             一个在 AI 圈摸爬滚打的普通人，白天卖工具账号，晚上死磕
             AI × 生命科学。

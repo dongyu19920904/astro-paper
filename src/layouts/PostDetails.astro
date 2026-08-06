@@ -10,6 +10,7 @@ import ShareLinks from "@/components/ShareLinks.astro";
 import BackButton from "@/components/BackButton.astro";
 import BackToTopButton from "@/components/BackToTopButton.astro";
 import { getPath } from "@/utils/getPath";
+import { cleanPostDescription } from "@/utils/postDescription";
 import { slugifyStr } from "@/utils/slugify";
 import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
 import IconChevronRight from "@/assets/icons/IconChevronRight.svg";
@@ -36,6 +37,10 @@ const {
 } = post.data;
 
 const { Content } = await render(post);
+const displayDescription = cleanPostDescription(
+  description,
+  `${title} 的个人观察与项目记录。`
+);
 
 let ogImageUrl: string | undefined;
 
@@ -59,11 +64,17 @@ const ogImage = ogImageUrl
 const layoutProps = {
   title: `${title} | ${SITE.title}`,
   author,
-  description,
+  description: displayDescription,
   pubDatetime,
   modDatetime,
   canonicalURL,
   ogImage,
+  pageType: "article" as const,
+  breadcrumbs: [
+    { name: "首页", url: SITE.website },
+    { name: "博客", url: new URL("/posts/", SITE.website) },
+    { name: title, url: canonicalURL || getPath(post.id, post.filePath) },
+  ],
   scrollSmooth: true,
 };
 
@@ -105,7 +116,7 @@ const displayPosts = [...relatedPosts, ...fallbackPosts];
   >
     <h1
       transition:name={slugifyStr(title)}
-      class="inline-block text-2xl font-bold text-accent sm:text-3xl"
+      class="block max-w-full break-words text-2xl font-bold text-accent sm:text-3xl"
     >
       {title}
     </h1>
@@ -154,7 +165,10 @@ const displayPosts = [...relatedPosts, ...fallbackPosts];
                   </div>
                   {item.data.description && (
                     <p class="mt-2 text-sm text-foreground/70">
-                      {item.data.description}
+                      {cleanPostDescription(
+                        item.data.description,
+                        `${item.data.title} 的个人观察与项目记录。`
+                      )}
                     </p>
                   )}
                 </a>
