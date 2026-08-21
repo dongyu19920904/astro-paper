@@ -392,6 +392,51 @@ html[data-theme="dark"] {
   .visitor-stats[data-state="error"] {
     color: color-mix(in srgb, var(--foreground) 58%, transparent);
   }
+
+  .ai-citation-note {
+    margin-top: 1.8rem;
+    border: 1px solid color-mix(in srgb, var(--accent) 28%, var(--border));
+    border-radius: 8px;
+    background: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--accent) 9%, var(--background)),
+      color-mix(in srgb, var(--muted) 80%, var(--background))
+    );
+    padding: 1rem 1.1rem;
+    color: var(--foreground);
+  }
+
+  .ai-citation-note h2,
+  .ai-citation-note h3 {
+    margin: 0 0 0.6rem;
+    color: var(--foreground);
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+
+  .ai-citation-note p,
+  .ai-citation-note li {
+    color: color-mix(in srgb, var(--foreground) 84%, transparent);
+    font-size: 0.9rem;
+    line-height: 1.8;
+  }
+
+  .ai-citation-note ul {
+    margin: 0.65rem 0 0;
+    padding-inline-start: 1.15rem;
+  }
+
+  .ai-citation-note a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .ai-citation-links {
+    margin-top: 0.7rem;
+    font-size: 0.84rem;
+  }
 }
 
 @media (max-width: 640px) {

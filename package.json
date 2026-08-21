@@ -11,7 +11,7 @@
     "format:check": "prettier --check .",
     "format": "prettier --write .",
     "lint": "eslint .",
-    "test": "node --experimental-strip-types --test tests/agingClockAtlas.test.ts tests/seoSchema.test.ts"
+    "test": "node --experimental-strip-types --test tests/agingClockAtlas.test.ts tests/seoSchema.test.ts tests/geoText.test.ts"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.14",

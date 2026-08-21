@@ -6,6 +6,7 @@ import Footer from "@/components/Footer.astro";
 import Socials from "@/components/Socials.astro";
 import LinkButton from "@/components/LinkButton.astro";
 import Card from "@/components/Card.astro";
+import AiCitationNote from "@/components/AiCitationNote.astro";
 import getSortedPosts from "@/utils/getSortedPosts";
 import IconRss from "@/assets/icons/IconRss.svg";
 import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
@@ -50,9 +51,7 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
               <span class="sr-only">RSS Feed</span>
             </a>
           </div>
-          <p class="launchpad-tagline">
-            AI × 生命科学 · 日更情报 · 产品化实验
-          </p>
+          <p class="launchpad-tagline">AI × 生命科学 · 日更情报 · 产品化实验</p>
           <p class="launchpad-sub">
             从这里开始，选一个入口，直接进入项目与日报。
           </p>
@@ -62,7 +61,9 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
             <span class="launchpad-chip">Build · 工具 / 内容</span>
           </div>
         </div>
-        <div class="launchpad-grid launchpad-panel grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+        <div
+          class="launchpad-grid launchpad-panel grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3"
+        >
           {
             NAV_LINKS.map((link, index) => (
               <a
@@ -71,7 +72,9 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
                 style={`--delay: ${index * 90}ms`}
                 target={link.url.startsWith("http") ? "_blank" : "_self"}
                 rel={
-                  link.url.startsWith("http") ? "noopener noreferrer" : undefined
+                  link.url.startsWith("http")
+                    ? "noopener noreferrer"
+                    : undefined
                 }
               >
                 <div class="flex items-center gap-3">
@@ -88,36 +91,33 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
           }
         </div>
       </div>
+      <AiCitationNote variant="site" />
     </section>
 
     {/* ===== 个人介绍：移至下方，结构化呈现 ===== */}
-    <section id="about" class="pt-10 pb-8 border-b border-border">
+    <section id="about" class="border-b border-border pt-10 pb-8">
       <div class="flex flex-wrap items-end justify-between gap-3">
         <h2 class="text-2xl font-semibold tracking-wide">关于我</h2>
-        <span class="text-xs uppercase tracking-[0.22em] text-foreground/60">
+        <span class="text-xs tracking-[0.22em] text-foreground/60 uppercase">
           Operator Notes
         </span>
       </div>
       <div class="mt-6 grid gap-6 lg:grid-cols-[1.2fr_1fr]">
         <div class="space-y-3 text-foreground/78">
           <p class="text-lg text-foreground">
-            一个在 AI 圈摸爬滚打的普通人，白天卖工具账号，晚上死磕
-            AI × 生命科学。
+            一个在 AI 圈摸爬滚打的普通人，白天卖工具账号，晚上死磕 AI ×
+            生命科学。
           </p>
           <p>
             我在研究一个问题：<strong>怎么让 AI 让人活得更久</strong>。
             这不是口号，是一条明确的产品路线。
           </p>
-          <p>
-            这里是我的大本营——项目、日报、学习笔记与实验记录，都在这里。
-          </p>
+          <p>这里是我的大本营——项目、日报、学习笔记与实验记录，都在这里。</p>
           {
             // only display if at least one social link is enabled
             SOCIALS.length > 0 && (
               <div class="mt-4 flex max-sm:flex-col sm:items-center">
-                <div class="me-2 mb-1 whitespace-nowrap sm:mb-0">
-                  找我聊聊
-                </div>
+                <div class="me-2 mb-1 whitespace-nowrap sm:mb-0">找我聊聊</div>
                 <Socials />
               </div>
             )

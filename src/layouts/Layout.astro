@@ -20,6 +20,8 @@ type Props = {
   modDatetime?: Date | null;
   pageType?: PageSchemaType;
   breadcrumbs?: BreadcrumbItem[];
+  keywords?: string[];
+  citations?: string[];
   scrollSmooth?: boolean;
 };
 
@@ -34,6 +36,8 @@ const {
   modDatetime,
   pageType = pubDatetime ? "article" : "webpage",
   breadcrumbs = [],
+  keywords = [],
+  citations = [],
   scrollSmooth = false,
 } = Astro.props;
 
@@ -50,6 +54,8 @@ const structuredData = buildStructuredData({
   pubDatetime,
   modDatetime,
   breadcrumbs,
+  keywords,
+  citations,
 });
 
 const la51InitScript = SITE.analytics.la51Id
@@ -78,6 +84,14 @@ const la51InitScript = SITE.analytics.la51Id
     <meta name="description" content={description} />
     <meta name="author" content={author} />
     <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="alternate" type="text/plain" title="llms.txt" href="/llms.txt" />
+    <link
+      rel="alternate"
+      type="text/markdown"
+      title="AI citation guide"
+      href="/ai-citation.md"
+    />
+    <link rel="author" href="/about/" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:title" content={title} />

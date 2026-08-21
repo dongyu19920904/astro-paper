@@ -1,4 +1,5 @@
 import { SITE } from "../config.ts";
+import { GEO_PROFILE } from "../data/geoProfile.ts";
 
 export type PageSchemaType =
   | "website"
@@ -23,6 +24,8 @@ type SchemaInput = {
   pubDatetime?: Date;
   modDatetime?: Date | null;
   breadcrumbs?: BreadcrumbItem[];
+  keywords?: readonly string[];
+  citations?: readonly (string | URL)[];
 };
 
 function compactObject<T extends Record<string, unknown>>(value: T) {
@@ -35,14 +38,31 @@ function compactObject<T extends Record<string, unknown>>(value: T) {
   ) as Partial<T>;
 }
 
-function buildPerson(author: string = SITE.author, profile: string = SITE.profile) {
+function buildPerson(
+  author: string = SITE.author,
+  profile: string = SITE.profile
+) {
   return compactObject({
     "@type": "Person",
     "@id": `${SITE.website}#person`,
     name: author,
     url: profile,
     sameAs: SITE.sameAs,
+    knowsAbout: GEO_PROFILE.topics,
+    subjectOf: GEO_PROFILE.primaryPages.map(page => ({
+      "@type": "WebPage",
+      name: page.title,
+      url: page.url,
+      description: page.description,
+    })),
   });
+}
+
+function buildTopicThings(topics: readonly string[]) {
+  return topics.map(topic => ({
+    "@type": "Thing",
+    name: topic,
+  }));
 }
 
 function buildBreadcrumbs(items: BreadcrumbItem[], canonicalURL: URL) {
@@ -78,11 +98,18 @@ export function buildStructuredData(input: SchemaInput) {
     pubDatetime,
     modDatetime,
     breadcrumbs = [],
+    keywords = [],
+    citations = [],
   } = input;
 
   const person = buildPerson(author, profile);
   const image = imageURL?.href;
   const graph: Record<string, unknown>[] = [person];
+  const pageTopics =
+    keywords.length > 0 ? keywords : GEO_PROFILE.topics.slice(0, 6);
+  const citationUrls = citations.map(
+    citation => new URL(String(citation), SITE.website).href
+  );
 
   if (pageType === "website") {
     graph.push({
@@ -91,7 +118,9 @@ export function buildStructuredData(input: SchemaInput) {
       name: SITE.title,
       url: SITE.website,
       description,
+      inLanguage: SITE.lang,
       publisher: person,
+      about: buildTopicThings(GEO_PROFILE.topics.slice(0, 8)),
     });
   } else if (pageType === "profile") {
     graph.push(
@@ -102,6 +131,8 @@ export function buildStructuredData(input: SchemaInput) {
         name: title,
         description,
         mainEntity: person,
+        inLanguage: SITE.lang,
+        about: buildTopicThings(GEO_PROFILE.topics.slice(0, 8)),
         image,
       })
     );
@@ -114,7 +145,8 @@ export function buildStructuredData(input: SchemaInput) {
         name: title,
         description,
         isPartOf: { "@id": `${SITE.website}#website` },
-        about: person,
+        inLanguage: SITE.lang,
+        about: buildTopicThings(pageTopics),
         image,
       })
     );
@@ -129,6 +161,10 @@ export function buildStructuredData(input: SchemaInput) {
         image,
         datePublished: pubDatetime?.toISOString(),
         dateModified: (modDatetime || pubDatetime)?.toISOString(),
+        inLanguage: SITE.lang,
+        keywords: pageTopics.join(", "),
+        about: buildTopicThings(pageTopics),
+        citation: citationUrls,
         author: person,
         publisher: person,
       })
@@ -142,7 +178,8 @@ export function buildStructuredData(input: SchemaInput) {
         name: title,
         description,
         isPartOf: { "@id": `${SITE.website}#website` },
-        about: person,
+        inLanguage: SITE.lang,
+        about: buildTopicThings(pageTopics),
         image,
       })
     );

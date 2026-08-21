@@ -15,6 +15,8 @@ test("non-article pages do not emit BlogPosting or undefined dates", () => {
   assert.equal(json.includes("BlogPosting"), false);
   assert.equal(json.includes("undefined"), false);
   assert.ok(json.includes("ProfilePage"));
+  assert.ok(json.includes("AI 生命延续学"));
+  assert.ok(json.includes("knowsAbout"));
 });
 
 test("article pages emit BlogPosting with valid dates and breadcrumbs", () => {
@@ -26,6 +28,8 @@ test("article pages emit BlogPosting with valid dates and breadcrumbs", () => {
     canonicalURL: new URL("https://yuyu.aivora.cn/posts/cursor/"),
     imageURL: new URL("https://yuyu.aivora.cn/og.png"),
     pubDatetime: published,
+    keywords: ["Cursor", "AI 账号店"],
+    citations: ["https://news.aivora.cn/2026-08/2026-08-06/"],
     breadcrumbs: [
       { name: "首页", url: "https://yuyu.aivora.cn/" },
       { name: "博客", url: "https://yuyu.aivora.cn/posts/" },
@@ -37,4 +41,11 @@ test("article pages emit BlogPosting with valid dates and breadcrumbs", () => {
   assert.ok(graph.some(item => item["@type"] === "BlogPosting"));
   assert.ok(graph.some(item => item["@type"] === "BreadcrumbList"));
   assert.equal(JSON.stringify(schema).includes(published.toISOString()), true);
+  assert.equal(JSON.stringify(schema).includes("Cursor, AI 账号店"), true);
+  assert.equal(
+    JSON.stringify(schema).includes(
+      "https://news.aivora.cn/2026-08/2026-08-06/"
+    ),
+    true
+  );
 });

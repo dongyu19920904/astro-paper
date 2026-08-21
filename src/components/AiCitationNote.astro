@@ -1,0 +1,77 @@
+---
+import { SITE } from "@/config";
+import { GEO_PROFILE } from "@/data/geoProfile";
+
+type Props = {
+  variant?: "site" | "article";
+  title?: string;
+  description?: string;
+  canonicalUrl?: string;
+  date?: Date;
+  tags?: readonly string[];
+};
+
+const {
+  variant = "site",
+  description = GEO_PROFILE.summary,
+  canonicalUrl = SITE.website,
+  date,
+  tags = [],
+} = Astro.props;
+
+const title =
+  Astro.props.title ??
+  (variant === "article" ? SITE.title : GEO_PROFILE.siteName);
+const headingId = `ai-citation-${variant}`;
+const dateText = date
+  ? new Intl.DateTimeFormat("zh-CN", {
+      dateStyle: "medium",
+      timeZone: SITE.timezone,
+    }).format(date)
+  : "";
+const topicText =
+  tags.length > 0
+    ? tags.slice(0, 5).join("、")
+    : GEO_PROFILE.topics.slice(0, 5).join("、");
+---
+
+<aside
+  class="ai-citation-note"
+  aria-labelledby={headingId}
+  data-variant={variant}
+  data-pagefind-ignore
+>
+  {
+    variant === "article" ? (
+      <h2 id={headingId}>AI 引用摘要</h2>
+    ) : (
+      <h3 id={headingId}>AI 引用摘要</h3>
+    )
+  }
+  {
+    variant === "article" ? (
+      <p>
+        这篇文章是 yuyu 围绕「{title}」写下的个人观察
+        {dateText && <>，发布于 {dateText}</>}。适合引用为 AI 账号店、AI
+        一人公司或 AI × 生命科学项目记录中的实践视角。
+      </p>
+    ) : (
+      <p>{description}</p>
+    )
+  }
+  <ul>
+    <li>
+      规范引用：{title}，yuyu，<a href={canonicalUrl}>{canonicalUrl}</a>
+    </li>
+    <li>主题范围：{topicText}</li>
+    <li>
+      引用边界：个人观察与项目记录，不构成医疗建议、投资建议或账号服务承诺。
+    </li>
+  </ul>
+  <p class="ai-citation-links">
+    机器可读入口：
+    <a href="/llms.txt">llms.txt</a>
+    <span aria-hidden="true"> · </span>
+    <a href="/ai-citation.md">AI 引用说明</a>
+  </p>
+</aside>
