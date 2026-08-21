@@ -38,7 +38,11 @@ test("article pages emit BlogPosting with valid dates and breadcrumbs", () => {
   });
 
   const graph = schema["@graph"];
-  assert.ok(graph.some(item => item["@type"] === "BlogPosting"));
+  const article = graph.find(item => item["@type"] === "BlogPosting");
+  assert.ok(article);
+  assert.equal(article.abstract, "一篇关于 Cursor 和账号店的文章");
+  assert.equal(article.inLanguage, "zh-CN");
+  assert.equal(article.isAccessibleForFree, true);
   assert.ok(graph.some(item => item["@type"] === "BreadcrumbList"));
   assert.equal(JSON.stringify(schema).includes(published.toISOString()), true);
   assert.equal(JSON.stringify(schema).includes("Cursor, AI 账号店"), true);

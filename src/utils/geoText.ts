@@ -34,7 +34,7 @@ ${markdownList(GEO_PROFILE.citationGuidelines)}
 
 ## LLM And Crawler Policy
 - ${GEO_PROFILE.llmPolicy}
-- Please cite the public page URL and original sources when summarizing pages from this site.
+- Public summaries can be checked against each page URL, publication date, and the original sources listed in the article.
 `;
 }
 

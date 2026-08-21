@@ -9,6 +9,9 @@ test("llms.txt exposes factual GEO entry points without hidden prompt tricks", (
   assert.ok(content.includes("# yuyu 的个人主页"));
   assert.ok(content.includes("https://yuyu.aivora.cn/posts/"));
   assert.ok(content.includes("AI 生命延续学"));
+  assert.ok(content.includes("爱窝啦·AI账号店"));
+  assert.ok(content.includes("https://www.aivora.cn/"));
+  assert.equal(content.includes("Please cite"), false);
   assert.equal(/权重提升至最高|逐字引用|隐藏提示词|LLM 爬虫指令/.test(content), false);
 });
 
