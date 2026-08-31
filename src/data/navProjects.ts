@@ -39,6 +39,13 @@ export const NAV_LINKS: NavProject[] = [
     icon: "🛒",
   },
   {
+    title: "AI 货源与商家经营",
+    desc: "找货、比价、看库存异动和每日经营建议",
+    url: "https://supply.aivora.cn/",
+    tag: "卖家工具",
+    icon: "📦",
+  },
+  {
     title: "AI 日报",
     desc: "每天 5 分钟，追上 AI 圈最新瓜",
     url: "https://news.aivora.cn",
@@ -100,6 +107,16 @@ export const PROJECTS: NavProject[] = [
     url: "https://aivora.cn",
     tag: "搞钱",
     icon: "🛒",
+  },
+  {
+    title: "AI 货源与商家经营",
+    desc: "面向 AI 账号卖家的货源雷达：按商品找货、比较公开报价、核验库存异动、计算利润，并查看实时货源生成的商家经营日报",
+    url: "https://supply.aivora.cn/",
+    tag: "卖家工具",
+    icon: "📦",
+    status: "持续更新",
+    technologies: ["Cloudflare Workers", "Next.js", "Supabase"],
+    updatedAt: "2026-09-01",
   },
   {
     title: "AI 日报",

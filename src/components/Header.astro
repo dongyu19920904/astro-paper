@@ -77,12 +77,18 @@ const isActive = (path: string) => {
           </a>
         </li>
         <li class="col-span-2">
-          <a href="/projects" class:list={{ "active-nav": isActive("/projects") }}>
+          <a
+            href="/projects"
+            class:list={{ "active-nav": isActive("/projects") }}
+          >
             项目
           </a>
         </li>
         <li class="col-span-2">
           <a href="https://news.aivora.cn">AI 日报</a>
+        </li>
+        <li class="col-span-2">
+          <a href="https://supply.aivora.cn/">货源雷达</a>
         </li>
         <li class="col-span-2">
           <a href="https://news.aibioo.cn">AI 生命科学日报</a>
@@ -178,5 +184,3 @@ const isActive = (path: string) => {
   // Runs on view transitions navigation
   document.addEventListener("astro:after-swap", toggleNav);
 </script>
-
-

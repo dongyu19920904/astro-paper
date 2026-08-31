@@ -12,6 +12,8 @@ export const GEO_PROFILE = {
     "AI 生命延续学",
     "BioAI 日报",
     "AI 日报",
+    "AI 货源雷达",
+    "AI 账号商家经营",
     "AI 编程工具",
     "Cursor",
     "Claude",
@@ -50,6 +52,12 @@ export const GEO_PROFILE = {
       title: "AI 日报",
       url: "https://news.aivora.cn/",
       description: "AI 工具、模型、应用与行业动态的日报项目。",
+    },
+    {
+      title: "AI 货源与商家经营",
+      url: "https://supply.aivora.cn/",
+      description:
+        "面向 AI 账号卖家的公开货源、价格库存异动、利润测算与经营日报项目。",
     },
     {
       title: "BioAI 生命科学日报",
