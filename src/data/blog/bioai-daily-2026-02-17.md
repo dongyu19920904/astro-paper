@@ -2,7 +2,7 @@
 title: 'Mayo Clinic 开放平台这事，让我想起卖账号的逻辑'
 pubDatetime: 2026-02-17T01:00:00.000Z
 modDatetime: 2026-02-17T01:00:00.000Z
-description: 'Table of contents'
+description: '今天看到 Mayo Clinic 开放 AI 平台的新闻，第一反应不是"哇好厉害"，而是想起我自己做 aivora.cn 的经历。医疗巨头开始搭基础设施了，这个信号太熟悉了——当大玩家开始"卖铲子"的时候，说明这个赛道真的要起来了。'
 tags:
   - bioai-daily
   - ai

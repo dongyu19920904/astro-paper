@@ -2,7 +2,7 @@
 title: 'BioAI 观察 | 2026/01/21'
 pubDatetime: 2026-01-21T01:00:00.000Z
 modDatetime: 2026-01-21T01:00:00.000Z
-description: 'Table of contents'
+description: '今天刷日报的时候，满眼都是"AI智能体"、"自主推理"、"自动分析"。Medea 能自己读文献做分析，BiOmics 能推理致病变异，PersonaAI 能自动提假设还能验证……'
 tags:
   - bioai-daily
   - ai

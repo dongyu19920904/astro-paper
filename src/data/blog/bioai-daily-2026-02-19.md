@@ -2,7 +2,7 @@
 title: 'BioAI 观察 | 2026/02/19'
 pubDatetime: 2026-02-19T01:00:00.000Z
 modDatetime: 2026-02-19T01:00:00.000Z
-description: 'Table of contents'
+description: 'PocketXMol 登上 Cell 这条新闻，让我想起自己卖账号的逻辑。'
 tags:
   - bioai-daily
   - ai

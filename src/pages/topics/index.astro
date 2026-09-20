@@ -1,0 +1,52 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import { TOPIC_HUBS } from "@/data/topicHubs";
+import { SITE } from "@/config";
+---
+
+<Layout
+  title={`主题 | ${SITE.title}`}
+  description="按 AI 一人公司、AI 生命延续学和 AI 账号经营三个方向阅读 yuyu 的文章、资料与项目记录。"
+  pageType="collection"
+  canonicalURL={new URL("/topics/", SITE.website).href}
+  breadcrumbs={[
+    { name: "首页", url: SITE.website },
+    { name: "主题", url: new URL("/topics/", SITE.website) },
+  ]}
+>
+  <Header />
+  <main id="main-content" class="app-layout pb-12">
+    <header class="border-b border-border pt-8 pb-7">
+      <p class="text-sm font-semibold text-accent">TOPIC HUBS</p>
+      <h1 class="mt-2 text-3xl font-bold sm:text-4xl">三个长期方向</h1>
+      <p class="mt-4 max-w-2xl text-foreground/75">
+        这里把日更文章从时间流重新组织成可持续阅读的主题。每个主题同时说明内容边界、核心问题和相关项目入口。
+      </p>
+    </header>
+
+    <div class="grid gap-5 py-8 sm:grid-cols-2">
+      {
+        TOPIC_HUBS.map(topic => (
+          <article class="rounded-lg border border-border bg-background p-5 sm:last:col-span-2">
+            <h2 class="text-xl font-semibold">
+              <a href={`/topics/${topic.slug}/`} class="hover:text-accent">
+                {topic.title}
+              </a>
+            </h2>
+            <p class="mt-3 text-foreground/78">{topic.description}</p>
+            <p class="mt-3 text-sm text-foreground/65">{topic.scope}</p>
+            <a
+              href={`/topics/${topic.slug}/`}
+              class="mt-4 inline-block font-medium text-accent"
+            >
+              进入主题 →
+            </a>
+          </article>
+        ))
+      }
+    </div>
+  </main>
+  <Footer />
+</Layout>

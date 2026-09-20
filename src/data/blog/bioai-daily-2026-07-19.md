@@ -2,7 +2,7 @@
 title: 'BioAI 观察 | 2026/07/19'
 pubDatetime: 2026-07-19T01:00:00.000Z
 modDatetime: 2026-07-19T01:00:00.000Z
-description: 'Table of contents'
+description: '说实话，抗衰老领域的新闻我看了快一年，大部分时候看完的感觉是：哦，又一篇论文，又一只活得更长的老鼠，离我大概还有二十年。'
 tags:
   - bioai-daily
   - ai

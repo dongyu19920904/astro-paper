@@ -2,7 +2,7 @@
 title: 'BioAI 观察 | 2026/03/02'
 pubDatetime: 2026-03-02T01:00:00.000Z
 modDatetime: 2026-03-02T01:00:00.000Z
-description: 'Table of contents'
+description: '三月了，大理的天气开始暖起来。早上在洱海边散步的时候刷到今天的 BioAI 日报，看到 MolX 那篇论文提到"可解释性"，突然有点感慨。做 AI 账号生意这一年多，我越来越觉得"可解释性"这三个字，不只是学术圈的事。'
 tags:
   - bioai-daily
   - ai

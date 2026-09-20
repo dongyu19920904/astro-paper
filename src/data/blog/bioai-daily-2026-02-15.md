@@ -2,7 +2,7 @@
 title: '开源健康 AI 扎堆冒出来，我却在想另一件事'
 pubDatetime: 2026-02-15T01:00:00.000Z
 modDatetime: 2026-02-15T01:00:00.000Z
-description: 'Table of contents'
+description: '今天刷日报的时候，看到 OpenHealth、SparkyFitness、WellAlly 这些开源健康 AI 项目一下子冒出来好几个，Star 数都不低。按理说我应该很兴奋——毕竟我的 5 年目标是借 AI 长生不老嘛。但说实话，我的第一反应是：这些东西，我妈能用吗？'
 tags:
   - bioai-daily
   - ai

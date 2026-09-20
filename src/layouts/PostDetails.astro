@@ -12,6 +12,7 @@ import BackToTopButton from "@/components/BackToTopButton.astro";
 import AiCitationNote from "@/components/AiCitationNote.astro";
 import { getPath } from "@/utils/getPath";
 import { cleanPostDescription } from "@/utils/postDescription";
+import { scoreRelatedPost } from "@/utils/postTopics";
 import { slugifyStr } from "@/utils/slugify";
 import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
 import IconChevronRight from "@/assets/icons/IconChevronRight.svg";
@@ -38,6 +39,9 @@ const {
 } = post.data;
 
 const { Content } = await render(post);
+const hasEmbeddedArticleSummary = /^##\s+(?:AI\s*)?引用摘要\s*$/im.test(
+  post.body ?? ""
+);
 const displayDescription = cleanPostDescription(
   description,
   `${title} 的个人观察与项目记录。`
@@ -95,10 +99,12 @@ const nextPost =
   currentPostIndex !== allPosts.length ? allPosts[currentPostIndex + 1] : null;
 
 /* ========== Related Posts ========== */
-const currentTags = new Set((tags ?? []).map(tag => slugifyStr(tag)));
 const relatedPosts = posts
   .filter(p => p.id !== post.id)
-  .filter(p => p.data.tags?.some(tag => currentTags.has(slugifyStr(tag))))
+  .map(candidate => ({ candidate, score: scoreRelatedPost(post, candidate) }))
+  .filter(({ score }) => score > 0)
+  .sort((a, b) => b.score - a.score)
+  .map(({ candidate }) => candidate)
   .slice(0, 3);
 
 const fallbackPosts = posts
@@ -144,14 +150,18 @@ const articleCanonicalURL = new URL(
       <Content />
     </article>
 
-    <AiCitationNote
-      variant="article"
-      title={title}
-      description={displayDescription}
-      canonicalUrl={articleCanonicalURL}
-      date={pubDatetime}
-      tags={tags}
-    />
+    {
+      !hasEmbeddedArticleSummary && (
+        <AiCitationNote
+          variant="article"
+          title={title}
+          description={displayDescription}
+          canonicalUrl={articleCanonicalURL}
+          date={pubDatetime}
+          tags={tags}
+        />
+      )
+    }
 
     <hr class="my-8 border-dashed" />
 

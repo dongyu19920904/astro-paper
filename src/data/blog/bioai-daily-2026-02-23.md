@@ -2,7 +2,7 @@
 title: 'BioAI 观察 | 2026/02/23'
 pubDatetime: 2026-02-23T01:00:00.000Z
 modDatetime: 2026-02-23T01:00:00.000Z
-description: 'Table of contents'
+description: '今天新闻不多，就两条值得聊的。但其中一条直接戳到我了——无监督学习从蛋白质组数据里挖出"隐藏款"疾病相关蛋白。'
 tags:
   - bioai-daily
   - ai

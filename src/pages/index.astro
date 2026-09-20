@@ -13,6 +13,7 @@ import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
 import { SITE } from "@/config";
 import { SOCIALS } from "@/constants";
 import { NAV_LINKS } from "@/data/navProjects";
+import { TOPIC_HUBS } from "@/data/topicHubs";
 
 const posts = await getCollection("blog");
 
@@ -92,6 +93,32 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
         </div>
       </div>
       <AiCitationNote variant="site" />
+    </section>
+
+    <section class="border-b border-border py-9">
+      <div class="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <p class="text-sm font-semibold text-accent">长期主题</p>
+          <h2 class="mt-1 text-2xl font-semibold">从日更信息进入持续研究</h2>
+        </div>
+        <a href="/topics/" class="text-sm font-medium text-accent">查看全部 →</a
+        >
+      </div>
+      <div class="mt-5 grid gap-4 sm:grid-cols-3">
+        {
+          TOPIC_HUBS.map(topic => (
+            <a
+              href={`/topics/${topic.slug}/`}
+              class="rounded-lg border border-border bg-background p-4 transition hover:border-accent"
+            >
+              <h3 class="font-semibold">{topic.shortTitle}</h3>
+              <p class="mt-2 text-sm leading-6 text-foreground/70">
+                {topic.description}
+              </p>
+            </a>
+          ))
+        }
+      </div>
     </section>
 
     {/* ===== 个人介绍：移至下方，结构化呈现 ===== */}

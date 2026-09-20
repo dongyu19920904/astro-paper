@@ -9,6 +9,7 @@ import Card from "@/components/Card.astro";
 import Pagination from "@/components/Pagination.astro";
 import getUniqueTags from "@/utils/getUniqueTags";
 import getPostsByTag from "@/utils/getPostsByTag";
+import { buildPaginationSeo } from "@/utils/paginationSeo";
 import { SITE } from "@/config";
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
@@ -29,12 +30,20 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
 const params = Astro.params;
 const { tag } = params;
 const { page, tagName } = Astro.props;
+const seo = buildPaginationSeo({
+  title: `标签: ${tagName}`,
+  description: `所有带有「${tagName}」标签的 yuyu 个人博客文章。`,
+  canonicalBase: new URL(`/tags/${tag}/`, SITE.website),
+  currentPage: page.currentPage,
+  siteTitle: SITE.title,
+});
 ---
 
 <Layout
-  title={`标签: ${tagName} | ${SITE.title}`}
-  description={`所有带有「${tagName}」标签的 yuyu 个人博客文章。`}
+  title={seo.title}
+  description={seo.description}
   pageType="collection"
+  canonicalURL={seo.canonicalURL}
   breadcrumbs={[
     { name: "首页", url: SITE.website },
     { name: "标签", url: new URL("/tags/", SITE.website) },
@@ -43,7 +52,12 @@ const { page, tagName } = Astro.props;
 >
   <Header />
   <Main
-    pageTitle={[`标签:`, `${tagName}`]}
+    pageTitle={[
+      `标签:`,
+      page.currentPage === 1
+        ? `${tagName}`
+        : `${tagName} · 第 ${page.currentPage} 页`,
+    ]}
     titleTransition={tag}
     pageDesc={`所有带有「${tagName}」标签的文章`}
   >

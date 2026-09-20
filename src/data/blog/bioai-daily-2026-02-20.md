@@ -2,7 +2,7 @@
 title: 'BioAI 观察 | 2026/02/20'
 pubDatetime: 2026-02-20T01:00:00.000Z
 modDatetime: 2026-02-20T01:00:00.000Z
-description: 'Table of contents'
+description: '今天的 BioAI 日报素材少得可怜，只有四条，真正和 AI+生命科学沾边的就两三条。但 Demis Hassabis 跑去印度站台"AI for Science"这事，让我想起了一些东西。'
 tags:
   - bioai-daily
   - ai

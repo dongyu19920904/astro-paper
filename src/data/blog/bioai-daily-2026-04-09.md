@@ -2,7 +2,7 @@
 title: 'BioAI 观察 | 2026/04/09'
 pubDatetime: 2026-04-09T01:00:00.000Z
 modDatetime: 2026-04-09T01:00:00.000Z
-description: 'Table of contents'
+description: '看到这条柏林老化研究：16种生物学衰老标志物的横断面与纵向比较，我其实没有那种“哇，人类要永生了”的兴奋。'
 tags:
   - bioai-daily
   - ai

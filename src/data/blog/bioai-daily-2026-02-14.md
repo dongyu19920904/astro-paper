@@ -2,7 +2,7 @@
 title: '线粒体 DNA 追踪细胞谱系，这思路让我想起卖账号的溯源问题'
 pubDatetime: 2026-02-14T01:00:00.000Z
 modDatetime: 2026-02-14T01:00:00.000Z
-description: 'Table of contents'
+description: '今天看到 MitoDrift 那篇论文，用线粒体 DNA 的自然突变追踪细胞"家谱"，第一反应是——这不就是我卖账号时最头疼的问题吗？搞清楚一个东西从哪来、经过了谁的手、现在是什么状态。只不过人家是追踪癌细胞演化，我是追踪账号来源。'
 tags:
   - bioai-daily
   - ai

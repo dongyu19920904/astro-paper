@@ -43,17 +43,18 @@ const topicText =
 >
   {
     variant === "article" ? (
-      <h2 id={headingId}>AI 引用摘要</h2>
+      <h2 id={headingId}>文章信息卡</h2>
     ) : (
-      <h3 id={headingId}>AI 引用摘要</h3>
+      <h3 id={headingId}>站点信息卡</h3>
     )
   }
   {
     variant === "article" ? (
       <p>
-        这篇文章是 yuyu 围绕「{title}」写下的个人观察
-        {dateText && <>，发布于 {dateText}</>}。适合引用为 AI 账号店、AI
-        一人公司或 AI × 生命科学项目记录中的实践视角。
+        这篇文章由 yuyu 围绕「{title}」整理
+        {dateText && <>，发布于 {dateText}</>}
+        。内容属于个人观察、资料整理或项目记录，
+        具体结论与时效性信息请结合正文来源核验。
       </p>
     ) : (
       <p>{description}</p>

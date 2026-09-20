@@ -2,7 +2,7 @@
 title: 'BioAI 观察 | 2026/02/27'
 pubDatetime: 2026-02-27T01:00:00.000Z
 modDatetime: 2026-02-27T01:00:00.000Z
-description: 'Table of contents'
+description: '刷完今天的日报，我的第一反应是——嗯，没什么让我心跳加速的。'
 tags:
   - bioai-daily
   - ai

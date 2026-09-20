@@ -2,7 +2,7 @@
 title: 'Gemini 当科研搭子这事，让我想起去年写 AI 课程的血泪史'
 pubDatetime: 2026-02-13T01:00:00.000Z
 modDatetime: 2026-02-13T01:00:00.000Z
-description: 'Table of contents'
+description: '今天刷日报看到 DeepMind 老板亲自发推，说 Gemini Deep Think 正在帮科学家攻克数学物理难题。我第一反应不是"哇好厉害"，而是想起去年我写 AI 课程的经历——三个课程，加起来几十万字，总共卖了不到 30 块。AI 能当科研搭子了，但我连让它帮我写个能卖钱的课程都做不到。'
 tags:
   - bioai-daily
   - ai

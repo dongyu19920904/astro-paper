@@ -2,7 +2,7 @@
 title: 'BioAI 观察 | 2026/02/04'
 pubDatetime: 2026-02-04T01:00:00.000Z
 modDatetime: 2026-02-04T01:00:00.000Z
-description: 'Table of contents'
+description: '今天最让我有感觉的是那个DNABERT预测转录因子结合位点的框架。'
 tags:
   - bioai-daily
   - ai

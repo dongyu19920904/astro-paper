@@ -2,7 +2,7 @@
 title: 'BioAI 观察 | 2026/02/10'
 pubDatetime: 2026-02-10T01:00:00.000Z
 modDatetime: 2026-02-10T01:00:00.000Z
-description: 'Table of contents'
+description: '今天刷完日报，看到一堆开源健康管理工具扎堆冒出来，OpenHealth 3800 星，SparkyFitness 2200 星，Lotti 1000 星……突然有点恍惚。去年这个时候，我也是个健康焦虑重度患者，天天盯着手环数据看，睡眠质量 78 分还是 82 分能纠结半天。'
 tags:
   - bioai-daily
   - ai

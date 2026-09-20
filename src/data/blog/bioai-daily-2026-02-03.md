@@ -2,7 +2,7 @@
 title: 'BioAI 观察 | 2026/02/03'
 pubDatetime: 2026-02-03T01:00:00.000Z
 modDatetime: 2026-02-03T01:00:00.000Z
-description: 'Table of contents'
+description: '今天大理下雨，我窝在咖啡馆看日报，看到斯坦福那条"AI意识"的新闻时愣了一下。不是因为内容多震撼，而是突然意识到——我天天喊着"借AI长生不老"，但连AI有没有意识都说不清，我这目标是不是有点魔幻？'
 tags:
   - bioai-daily
   - ai

@@ -2,7 +2,7 @@
 title: 'AI 自己开实验室了，我这个卖账号的突然有点慌'
 pubDatetime: 2026-02-25T01:00:00.000Z
 modDatetime: 2026-02-25T01:00:00.000Z
-description: 'Table of contents'
+description: '今天看到 LUMI-lab 登上 Cell 的消息，说实话，第一反应不是"哇好厉害"，而是一种说不清的焦虑。AI 现在不只是帮人写代码、画图了，它开始自己设计实验、自己做实验、自己迭代优化。'
 tags:
   - bioai-daily
   - ai

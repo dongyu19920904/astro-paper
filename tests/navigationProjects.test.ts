@@ -14,3 +14,14 @@ test("personal homepage exposes a distinct seller-facing supply entry", () => {
   assert.equal(NAV_LINKS.filter(item => item.url === "https://supply.aivora.cn/").length, 1);
   assert.equal(PROJECTS.filter(item => item.url === "https://supply.aivora.cn/").length, 1);
 });
+
+test("navigation uses the local longevity topic hub instead of the broken host", () => {
+  assert.equal(
+    [...NAV_LINKS, ...PROJECTS].some(item => item.url.includes("life.aivora.cn")),
+    false
+  );
+  assert.equal(
+    NAV_LINKS.some(item => item.url === "/topics/ai-longevity/"),
+    true
+  );
+});

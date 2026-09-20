@@ -2,7 +2,7 @@
 title: 'BioAI 观察 | 2026/02/07'
 pubDatetime: 2026-02-07T01:00:00.000Z
 modDatetime: 2026-02-07T01:00:00.000Z
-description: 'Table of contents'
+description: '看完今天的 BioAI 日报，第一反应是——RNA 适配体设计从几个月压缩到一轮实验，这个效率提升太夸张了。但转念一想，这种"十倍效率"的故事我听过太多次了，每次都让我既兴奋又焦虑。'
 tags:
   - bioai-daily
   - ai

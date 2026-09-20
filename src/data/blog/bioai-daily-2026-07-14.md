@@ -2,7 +2,7 @@
 title: '量子计算和阿尔茨海默症药物筛选撞在一起，让我想到了一个困扰我很久的问题：这些突破，到底什么时候才能真正用上？'
 pubDatetime: 2026-07-14T01:00:00.000Z
 modDatetime: 2026-07-14T01:00:00.000Z
-description: 'Table of contents'
+description: '今天日报里最让我眼前一亮的，是那篇量子机器学习的论文——Q²SAR 框架预测阿尔茨海默靶点 AUC 达到 0.875，比经典模型高出 7 个百分点。'
 tags:
   - bioai-daily
   - ai

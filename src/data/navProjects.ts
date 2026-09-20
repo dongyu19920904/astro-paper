@@ -67,10 +67,10 @@ export const NAV_LINKS: NavProject[] = [
     icon: "🧠",
   },
   {
-    title: "AI 延续学内容库",
-    desc: "把日报商机做成文章、资料包和轻工具",
-    url: "https://life.aivora.cn",
-    tag: "内容库",
+    title: "AI 生命延续学主题库",
+    desc: "研究来源、项目实验和阶段性认识",
+    url: "/topics/ai-longevity/",
+    tag: "主题库",
     icon: "📚",
   },
   {
@@ -140,10 +140,10 @@ export const PROJECTS: NavProject[] = [
     icon: "🧠",
   },
   {
-    title: "AI 延续学内容库",
-    desc: "把 AI 延续学商机日报里的灵感沉淀成文章、资料包和自动化内容产品",
-    url: "https://life.aivora.cn",
-    tag: "内容库",
+    title: "AI 生命延续学主题库",
+    desc: "汇总 AI 与衰老研究、脑健康、数字生物标志物和生命科学工具的来源、项目实验与阶段性认识",
+    url: "/topics/ai-longevity/",
+    tag: "主题库",
     icon: "📚",
   },
   {

@@ -2,7 +2,7 @@
 title: '蛋白质会跳舞这件事，让我想起了卖账号的日常'
 pubDatetime: 2026-02-26T01:00:00.000Z
 modDatetime: 2026-02-26T01:00:00.000Z
-description: 'Table of contents'
+description: '今天的日报蛋白质组学扎堆，说实话我大部分技术细节看不太懂。但有一条让我眼前一亮：扩散模型能预测蛋白质的动态构象了，从"看照片"变成"看视频"。这个比喻太妙了，让我这个外行瞬间理解了它的意义。'
 tags:
   - bioai-daily
   - ai

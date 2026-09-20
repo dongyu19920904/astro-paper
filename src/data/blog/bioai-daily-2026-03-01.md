@@ -2,7 +2,7 @@
 title: 'BioAI 观察 | 2026/03/01'
 pubDatetime: 2026-03-01T01:00:00.000Z
 modDatetime: 2026-03-01T01:00:00.000Z
-description: 'Table of contents'
+description: '今天在大理的咖啡馆刷完日报，发现全是学术论文，没有大厂搞事情。说实话，这种日子我反而更喜欢——没有那种"卧槽又要降价了"的焦虑感。作为一个想靠 AI 长生不老的人，今天这几篇论文让我有点小兴奋，虽然大部分技术细节我看不太懂。'
 tags:
   - bioai-daily
   - ai

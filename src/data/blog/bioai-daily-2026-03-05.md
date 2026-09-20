@@ -2,7 +2,7 @@
 title: 'AI 设计的酶比天然的还猛，这让我一个卖账号的开始想些有的没的'
 pubDatetime: 2026-03-05T01:00:00.000Z
 modDatetime: 2026-03-05T01:00:00.000Z
-description: 'Table of contents'
+description: '今天大理下雨，咖啡馆里坐着一堆数字游民对着电脑敲键盘，我也是其中之一。本来在处理几个 Cursor 换号器的售后，顺手刷了下今天的 BioAI 日报，结果看到第一条就愣住了——AI 从头设计的酶，催化活性超过天然酶。'
 tags:
   - bioai-daily
   - ai

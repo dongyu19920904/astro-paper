@@ -2,7 +2,7 @@
 title: 'BioAI 观察 | 2026/08/04'
 pubDatetime: 2026-08-04T01:00:00.000Z
 modDatetime: 2026-08-04T01:00:00.000Z
-description: 'Table of contents'
+description: 'LeDXA 这篇论文的核心结论是：一个专门训练、参数量少 40 倍的视觉 AI，在骨密度图像分析上碾压了谷歌的通用大模型 DINOv3。'
 tags:
   - bioai-daily
   - ai

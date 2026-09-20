@@ -2,7 +2,7 @@
 title: 'AlphaFold3 设计的正交 IL-2，和我卖账号有什么关系'
 pubDatetime: 2026-03-22T01:00:00.000Z
 modDatetime: 2026-03-22T01:00:00.000Z
-description: 'Table of contents'
+description: '看完今天的 BioAI 日报，第一反应是：卧槽，AlphaFold3 已经能设计"只认 CAR-T"的免疫激活剂了？'
 tags:
   - bioai-daily
   - ai

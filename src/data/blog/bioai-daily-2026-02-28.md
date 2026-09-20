@@ -2,7 +2,7 @@
 title: 'BioAI 观察 | 2026/02/28'
 pubDatetime: 2026-02-28T01:00:00.000Z
 modDatetime: 2026-02-28T01:00:00.000Z
-description: 'Table of contents'
+description: '翻了一圈，发现"联邦学习"这个词出现了好几次——血栓分割用它，健康公平用它，好像突然之间，所有做医疗 AI 的人都在聊这个。'
 tags:
   - bioai-daily
   - ai

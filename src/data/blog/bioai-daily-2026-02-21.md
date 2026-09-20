@@ -2,7 +2,7 @@
 title: 'BioAI 观察 | 2026/02/21'
 pubDatetime: 2026-02-21T01:00:00.000Z
 modDatetime: 2026-02-21T01:00:00.000Z
-description: 'Table of contents'
+description: '今天看完日报，说实话没什么特别让我兴奋的。单细胞批次校正、空间转录组对齐、蛋白质分析工具——都是很专业的东西，我大部分看不太懂技术细节。'
 tags:
   - bioai-daily
   - ai

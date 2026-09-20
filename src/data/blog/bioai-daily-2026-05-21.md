@@ -2,7 +2,7 @@
 title: 'BioAI 观察 | 2026/05/21'
 pubDatetime: 2026-05-21T01:00:00.000Z
 modDatetime: 2026-05-21T01:00:00.000Z
-description: 'Table of contents'
+description: '今天有一条新闻让我多看了几眼——儿童败血症肾损伤预测研究，用尿液代谢组学加上"可解释机器学习"来提前预测哪些孩子会出问题。'
 tags:
   - bioai-daily
   - ai

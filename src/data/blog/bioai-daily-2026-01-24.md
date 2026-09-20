@@ -2,7 +2,7 @@
 title: 'BioAI 观察 | 2026/01/24'
 pubDatetime: 2026-01-24T01:00:00.000Z
 modDatetime: 2026-01-24T01:00:00.000Z
-description: 'Table of contents'
+description: '今天看完日报，第一反应是：Nature 子刊这篇给临床 AI 泼冷水的文章，说的不就是我这种人吗？我天天关注 AI 生命科学，幻想着哪天能用上什么黑科技延长寿命，但说实话，从论文到我能用上，中间隔着的可能不是一条河，是太平洋。'
 tags:
   - bioai-daily
   - ai

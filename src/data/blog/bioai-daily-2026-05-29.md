@@ -2,7 +2,7 @@
 title: 'BioAI 观察 | 2026/05/29'
 pubDatetime: 2026-05-29T01:00:00.000Z
 modDatetime: 2026-05-29T01:00:00.000Z
-description: 'Table of contents'
+description: '今天最让我有感觉的，是第二条——可解释机器学习预测儿童脓毒症肾损伤。'
 tags:
   - bioai-daily
   - ai

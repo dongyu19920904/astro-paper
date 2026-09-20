@@ -8,6 +8,7 @@ import Footer from "@/components/Footer.astro";
 import Card from "@/components/Card.astro";
 import Pagination from "@/components/Pagination.astro";
 import getSortedPosts from "@/utils/getSortedPosts";
+import { buildPaginationSeo } from "@/utils/paginationSeo";
 import { SITE } from "@/config";
 
 export const getStaticPaths = (async ({ paginate }) => {
@@ -16,20 +17,33 @@ export const getStaticPaths = (async ({ paginate }) => {
 }) satisfies GetStaticPaths;
 
 const { page } = Astro.props;
+const seo = buildPaginationSeo({
+  title: "博客",
+  description:
+    "yuyu 关于 AI 账号店、AI 一人公司、AI 日报和 BioAI 生命延续学的文章归档。",
+  canonicalBase: new URL("/posts/", SITE.website),
+  currentPage: page.currentPage,
+  siteTitle: SITE.title,
+});
 ---
 
 <Layout
-  title={`博客 | ${SITE.title}`}
-  description="yuyu 关于 AI 账号店、AI 一人公司、AI 日报和 BioAI 生命延续学的文章归档。"
+  title={seo.title}
+  description={seo.description}
   pageType="collection"
-  canonicalURL={new URL("/posts/", SITE.website).href}
+  canonicalURL={seo.canonicalURL}
   breadcrumbs={[
     { name: "首页", url: SITE.website },
     { name: "博客", url: new URL("/posts/", SITE.website) },
   ]}
 >
   <Header />
-  <Main pageTitle="博客" pageDesc="我写的所有文章">
+  <Main
+    pageTitle={page.currentPage === 1
+      ? "博客"
+      : `博客 · 第 ${page.currentPage} 页`}
+    pageDesc="我写的所有文章"
+  >
     <ul>
       {page.data.map(data => <Card {...data} />)}
     </ul>

@@ -1,0 +1,98 @@
+---
+import { getCollection } from "astro:content";
+import type { GetStaticPaths } from "astro";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import Card from "@/components/Card.astro";
+import { TOPIC_HUBS, type TopicHub } from "@/data/topicHubs";
+import getSortedPosts from "@/utils/getSortedPosts";
+import { getPostTopicSlugs } from "@/utils/postTopics";
+import { SITE } from "@/config";
+
+export const getStaticPaths = (() =>
+  TOPIC_HUBS.map(topic => ({
+    params: { slug: topic.slug },
+    props: { topic },
+  }))) satisfies GetStaticPaths;
+
+const { topic } = Astro.props as { topic: TopicHub };
+const posts = getSortedPosts(await getCollection("blog")).filter(post =>
+  getPostTopicSlugs(post).includes(topic.slug)
+);
+const canonicalURL = new URL(`/topics/${topic.slug}/`, SITE.website);
+---
+
+<Layout
+  title={`${topic.title} | ${SITE.title}`}
+  description={topic.description}
+  pageType="collection"
+  canonicalURL={canonicalURL.href}
+  keywords={[topic.title, ...topic.questions]}
+  breadcrumbs={[
+    { name: "首页", url: SITE.website },
+    { name: "主题", url: new URL("/topics/", SITE.website) },
+    { name: topic.title, url: canonicalURL },
+  ]}
+>
+  <Header />
+  <main id="main-content" class="app-layout pb-12">
+    <header class="border-b border-border pt-8 pb-7">
+      <p class="text-sm font-semibold text-accent">主题资料库</p>
+      <h1 class="mt-2 text-3xl font-bold sm:text-4xl">{topic.title}</h1>
+      <p class="mt-4 text-lg text-foreground/80">{topic.description}</p>
+      <p class="mt-3 text-sm leading-7 text-foreground/65">{topic.scope}</p>
+    </header>
+
+    <section class="border-b border-border py-7">
+      <h2 class="text-xl font-semibold">持续追踪的问题</h2>
+      <ul class="mt-4 grid gap-3 sm:grid-cols-3">
+        {
+          topic.questions.map(question => (
+            <li class="rounded-lg border border-border bg-muted/35 p-4 text-sm leading-6">
+              {question}
+            </li>
+          ))
+        }
+      </ul>
+      <div class="mt-5 flex flex-wrap gap-3">
+        {
+          topic.links.map(link => (
+            <a
+              href={link.href}
+              target={link.href.startsWith("http") ? "_blank" : undefined}
+              rel={
+                link.href.startsWith("http") ? "noopener noreferrer" : undefined
+              }
+              class="rounded-md border border-border px-3 py-2 text-sm font-medium hover:border-accent hover:text-accent"
+            >
+              {link.label}
+              {link.href.startsWith("http") ? " ↗" : " →"}
+            </a>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="pt-8">
+      <div class="flex items-end justify-between gap-4">
+        <h2 class="text-xl font-semibold">相关文章</h2>
+        <span class="text-sm text-foreground/60">{posts.length} 篇</span>
+      </div>
+      {
+        posts.length > 0 ? (
+          <ul class="mt-3">
+            {posts.map(post => (
+              <Card {...post} />
+            ))}
+          </ul>
+        ) : (
+          <p class="mt-5 text-foreground/65">
+            这个主题正在整理，后续文章会自动汇入。
+          </p>
+        )
+      }
+    </section>
+  </main>
+  <Footer />
+</Layout>
