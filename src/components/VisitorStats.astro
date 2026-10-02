@@ -1,167 +1,69 @@
 ---
 import { SITE } from "@/config";
-const apiBaseUrl =
-  import.meta.env.PUBLIC_BIOAI_API_BASE_URL ||
-  "https://cloudflare-bioai-daily.sabrinamisan090.workers.dev";
 ---
 
-<div
-  class="visitor-stats-panel"
-  data-visitor-stats
-  data-api-base={apiBaseUrl}
-  data-state="loading"
->
-  <div class="visitor-stats" aria-live="polite">
-    <span>总访问 <strong data-total-pageviews>--</strong></span>
-    <span>总访客 <strong data-total-visitors>--</strong></span>
-    <span>今日访问 <strong data-today-pageviews>--</strong></span>
-    <span>今日访客 <strong data-today-visitors>--</strong></span>
-    <span data-stats-status class="sr-only">访客统计加载中</span>
-  </div>
-  <details class="visitor-details" data-visitor-details>
-    <summary>详细访问统计</summary>
-    <div class="visitor-details-content">
-      {
-        SITE.analytics.la51WidgetUrl ? (
-          <>
-            <p>51LA：最近活跃、今日与昨日访客及访问量、本月和累计访问量。</p>
-            <iframe
-              data-visitor-widget
-              title="个人主页 51LA 访问统计"
-              loading="lazy"
-              referrerpolicy="no-referrer"
-            />
-          </>
-        ) : (
-          <p>
-            51LA 新应用已接入采集；公开数据挂件尚未启用，请先在后台生成挂件。
-          </p>
-        )
-      }
-      <p class="visitor-source-note">
-        上方简易计数保留本站历史数据并持续累计。51LA
-        从新应用接入后独立统计，数值不直接相加，避免重复计数。
-      </p>
-      <a
-        href="https://v6.51.la/user/application"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        在 51LA 后台查看来源、页面与设备报表
-      </a>
+{
+  SITE.analytics.la51WidgetUrl && (
+    <div class="visitor-stats-panel" aria-label="51LA 访问统计">
+      <script
+        is:inline
+        data-astro-rerun
+        id="LA-DATA-WIDGET"
+        crossorigin="anonymous"
+        charset="UTF-8"
+        src={SITE.analytics.la51WidgetUrl}
+      />
     </div>
-  </details>
-</div>
+  )
+}
 <style>
   .visitor-stats-panel {
     width: 100%;
     min-width: 0;
     text-align: center;
   }
-  .visitor-details {
-    margin-top: 0.65rem;
+  .visitor-stats-panel :global(.la-widget) {
+    display: flex !important;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem 0.75rem;
+    max-width: 100%;
+    background: var(--background) !important;
+    color: var(--foreground) !important;
   }
-  summary {
-    width: fit-content;
-    margin-inline: auto;
-    color: var(--accent);
-    cursor: pointer;
+  .visitor-stats-panel :global(.la-widget span),
+  .visitor-stats-panel :global(.la-widget p) {
+    color: var(--foreground) !important;
   }
-  .visitor-details-content {
-    max-width: 36rem;
-    margin: 1rem auto 0;
-    text-align: left;
-  }
-  .visitor-details-content p {
-    line-height: 1.7;
-    margin-bottom: 0.65rem;
-  }
-  iframe {
-    width: 100%;
-    height: 350px;
-    border: 0;
-    display: block;
-  }
-  .visitor-source-note {
-    font-size: 0.8125rem;
-  }
-  a {
-    color: var(--accent);
-    text-decoration: underline;
-    text-underline-offset: 0.2rem;
+  .visitor-stats-panel :global(.la-widget > span) {
+    display: inline-flex !important;
+    align-items: baseline;
   }
 </style>
 <script>
-  import { formatVisitorMetric } from "@/utils/visitorStats";
-  function visitorId() {
-    const key = "aivora:yuyu-home:visitor-id";
-    try {
-      let value = localStorage.getItem(key);
-      if (!value) {
-        value = crypto.randomUUID();
-        localStorage.setItem(key, value);
+  let widgetObserver: MutationObserver | undefined;
+  function initWidgetTheme() {
+    widgetObserver?.disconnect();
+    const root = document.querySelector<HTMLElement>(".visitor-stats-panel");
+    if (!root) return;
+    function applyTheme() {
+      // The provider's inline !important palette otherwise overrides site themes.
+      for (const element of root!.querySelectorAll<HTMLElement>(
+        ".la-widget, .la-widget span, .la-widget p"
+      )) {
+        element.style.removeProperty("color");
       }
-      return value;
-    } catch {
-      return crypto.randomUUID();
+      root!
+        .querySelector<HTMLElement>(".la-widget")
+        ?.style.removeProperty("background-color");
     }
+    applyTheme();
+    widgetObserver = new MutationObserver(applyTheme);
+    widgetObserver.observe(root, { childList: true, subtree: true });
   }
-  function initVisitorStats() {
-    const root = document.querySelector<HTMLElement>("[data-visitor-stats]");
-    if (!root || root.dataset.initialized) return;
-    root.dataset.initialized = "true";
-    const details = root.querySelector<HTMLDetailsElement>(
-      "[data-visitor-details]"
-    );
-    const frame = root.querySelector<HTMLIFrameElement>(
-      "[data-visitor-widget]"
-    );
-    details?.addEventListener("toggle", () => {
-      if (details.open && frame && !frame.getAttribute("src")) {
-        frame.src = "/visitor-stats/widget/";
-      }
-    });
-    const status = root.querySelector<HTMLElement>("[data-stats-status]");
-    const controller = new AbortController();
-    const timeout = window.setTimeout(() => controller.abort(), 8000);
-    function showError() {
-      root!.dataset.state = "error";
-      if (status) {
-        status.classList.remove("sr-only");
-        status.textContent = "简易统计暂不可用";
-      }
-    }
-    try {
-      const url = new URL("/visitorStats", root.dataset.apiBase);
-      url.searchParams.set("site", "yuyu-home");
-      url.searchParams.set("visitor", visitorId());
-      fetch(url, { cache: "no-store", mode: "cors", signal: controller.signal })
-        .then(response => {
-          if (!response.ok) throw new Error("Statistics request failed");
-          return response.json();
-        })
-        .then(data => {
-          if (data.success !== true) throw new Error("Statistics unavailable");
-          const metrics = [
-            ["[data-total-pageviews]", data.total?.pageviews],
-            ["[data-total-visitors]", data.total?.visitors],
-            ["[data-today-pageviews]", data.today?.pageviews],
-            ["[data-today-visitors]", data.today?.visitors],
-          ] as const;
-          for (const [selector, value] of metrics) {
-            const element = root.querySelector(selector);
-            if (element) element.textContent = formatVisitorMetric(value);
-          }
-          root.dataset.state = "ready";
-          if (status) status.textContent = "访客统计已更新";
-        })
-        .catch(showError)
-        .finally(() => window.clearTimeout(timeout));
-    } catch {
-      window.clearTimeout(timeout);
-      showError();
-    }
-  }
-  initVisitorStats();
-  document.addEventListener("astro:page-load", initVisitorStats);
+  initWidgetTheme();
+  document.addEventListener("astro:page-load", initWidgetTheme);
+  document.addEventListener("astro:before-swap", () =>
+    widgetObserver?.disconnect()
+  );
 </script>
