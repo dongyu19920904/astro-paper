@@ -1,7 +1,30 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import { existsSync, readFileSync } from "node:fs";
 
 import { HOME_PROJECTS, NAV_LINKS, PROJECTS } from "../src/data/navProjects.ts";
+
+test("workbench keeps SEO, analytics and reveal behavior outside the redesign", () => {
+  const page = readFileSync(new URL("../src/pages/index.astro", import.meta.url), "utf8");
+  const css = readFileSync(new URL("../src/styles/home-studio.css", import.meta.url), "utf8");
+  assert.equal((page.match(/<h1\b/g) || []).length, 1);
+  assert.ok(page.includes("canonicalURL={SITE.website}"));
+  assert.ok(page.includes('<Footer class="studio-footer" />'));
+  assert.ok(page.includes("TOPIC_HUBS.map"));
+  assert.ok(css.includes("prefers-reduced-motion: reduce"));
+  assert.ok(css.includes(".home-studio {"));
+  assert.doesNotMatch(page + css, /IntersectionObserver|opacity:\s*0(?:\s|;)|setInterval|hex2077\.dev\/_next/);
+});
+
+test("homepage previews are local real-project assets with stable dimensions", () => {
+  for (const project of HOME_PROJECTS) {
+    assert.match(project.preview.src, /^\/images\/projects\/[a-z0-9-]+\.webp$/);
+    assert.ok(existsSync(new URL("../public" + project.preview.src, import.meta.url)));
+    assert.ok(project.preview.alt.includes("公开"));
+    assert.match(project.preview.capturedAt, /^\d{4}-\d{2}-\d{2}$/);
+    assert.ok(project.preview.width > 0 && project.preview.height > 0);
+  }
+});
 
 test("homepage highlights two existing projects without changing the directory", () => {
   assert.equal(HOME_PROJECTS.length, 2);

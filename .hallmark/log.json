@@ -1,0 +1,19 @@
+[
+  {
+    "date": "2026-10-02",
+    "macrostructure": "Personal Workbench",
+    "theme": "custom Signal Terminal",
+    "theme_axes": "neutral light / charcoal dark / yellow actions / cyan links",
+    "reference": "https://hex2077.dev/",
+    "enrichment": "real project screenshots; functional numbered topic navigation",
+    "brief": "Reference-inspired homepage only; no copied code, identity, telemetry or continuous glitches"
+  },
+  {
+    "date": "2026-10-02",
+    "macrostructure": "Project-Led Portfolio",
+    "theme": "custom",
+    "theme_axes": "light neutral / system sans / teal",
+    "enrichment": "real public project screenshots",
+    "brief": "yuyu personal AI studio: real projects, compact topic navigation and recent writing"
+  }
+]

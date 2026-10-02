@@ -161,6 +161,19 @@ export const HOME_PROJECTS = [
   PROJECTS.find(project => project.url === "/projects/aging-clock-atlas/")!,
 ].map(project => ({
   ...project,
+  preview: {
+    src:
+      project.url === "https://supply.aivora.cn/"
+        ? "/images/projects/supply-radar-20261002.webp"
+        : "/images/projects/aging-clock-atlas-20261002.webp",
+    alt:
+      project.url === "https://supply.aivora.cn/"
+        ? "爱窝啦货源雷达的公开卖家找货与经营入口界面"
+        : "多维衰老时钟地图的公开研究工具界面",
+    capturedAt: "2026-10-02",
+    width: project.url === "https://supply.aivora.cn/" ? 1271 : 1265,
+    height: project.url === "https://supply.aivora.cn/" ? 715 : 712,
+  },
   desc:
     project.url === "https://supply.aivora.cn/"
       ? "比较公开货源与报价，查看库存变化和经营日报。"
