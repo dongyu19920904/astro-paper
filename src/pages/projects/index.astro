@@ -9,7 +9,7 @@
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
-import { PROJECTS } from "@/data/navProjects";
+import { PRIMARY_PROJECTS, SECONDARY_PROJECTS } from "@/data/navProjects";
 import { SITE } from "@/config";
 ---
 
@@ -35,7 +35,7 @@ import { SITE } from "@/config";
     <section class="pt-8 pb-6">
       <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
         {
-          PROJECTS.map(project => (
+          PRIMARY_PROJECTS.map(project => (
             <a
               href={project.url}
               class="group flex flex-col gap-2 rounded-xl border border-border bg-background/70 p-5 transition-all hover:border-accent hover:shadow-lg"
@@ -82,6 +82,41 @@ import { SITE } from "@/config";
         }
       </div>
     </section>
+
+    {
+      SECONDARY_PROJECTS.length > 0 && (
+        <details
+          class="my-6 border-y border-border py-2"
+          data-secondary-projects
+        >
+          <summary class="min-h-11 cursor-pointer py-3 text-sm text-foreground/75">
+            其他工具 · 面向商家
+          </summary>
+          <ul class="space-y-4 py-3">
+            {SECONDARY_PROJECTS.map(project => (
+              <li>
+                <a
+                  href={project.url}
+                  class="inline-flex min-h-11 items-center gap-2 text-sm underline underline-offset-4 hover:text-accent"
+                  target={project.url.startsWith("http") ? "_blank" : undefined}
+                  rel={
+                    project.url.startsWith("http")
+                      ? "noopener noreferrer"
+                      : undefined
+                  }
+                >
+                  {project.title}
+                  <span aria-hidden="true">↗</span>
+                </a>
+                <p class="mt-1 text-sm leading-7 text-foreground/75">
+                  {project.desc}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </details>
+      )
+    }
 
     <section class="py-8 text-center">
       <p class="text-foreground/65">

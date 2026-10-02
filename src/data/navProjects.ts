@@ -27,6 +27,7 @@ export interface NavProject {
   status?: string;
   technologies?: string[];
   updatedAt?: string;
+  placement?: "secondary";
 }
 
 /** 首页导航区块 - 主要入口（显示在首页顶部） */
@@ -37,13 +38,6 @@ export const NAV_LINKS: NavProject[] = [
     url: "https://aivora.cn",
     tag: "搞钱",
     icon: "🛒",
-  },
-  {
-    title: "AI 货源与商家经营",
-    desc: "找货、比价、看库存异动和每日经营建议",
-    url: "https://supply.aivora.cn/",
-    tag: "卖家工具",
-    icon: "📦",
   },
   {
     title: "AI 日报",
@@ -117,6 +111,7 @@ export const PROJECTS: NavProject[] = [
     status: "持续更新",
     technologies: ["Cloudflare Workers", "Next.js", "Supabase"],
     updatedAt: "2026-09-01",
+    placement: "secondary",
   },
   {
     title: "AI 日报",
@@ -155,27 +150,37 @@ export const PROJECTS: NavProject[] = [
   },
 ];
 
-/** Selected homepage entries; the full project directory stays unchanged. */
+export const PRIMARY_PROJECTS = PROJECTS.filter(
+  project => project.placement !== "secondary"
+);
+export const SECONDARY_PROJECTS = PROJECTS.filter(
+  project => project.placement === "secondary"
+);
+
+/** Homepage showcases longevity experiments, not seller-facing sourcing tools. */
 export const HOME_PROJECTS = [
-  PROJECTS.find(project => project.url === "https://supply.aivora.cn/")!,
   PROJECTS.find(project => project.url === "/projects/aging-clock-atlas/")!,
+  PROJECTS.find(
+    project =>
+      project.url === "https://dongyu19920904.github.io/Brain-Nutrient-Map-Web/"
+  )!,
 ].map(project => ({
   ...project,
   preview: {
     src:
-      project.url === "https://supply.aivora.cn/"
-        ? "/images/projects/supply-radar-20261002.webp"
-        : "/images/projects/aging-clock-atlas-20261002.webp",
+      project.url === "/projects/aging-clock-atlas/"
+        ? "/images/projects/aging-clock-atlas-20261002.webp"
+        : "/images/projects/brain-nutrient-map-20261002.webp",
     alt:
-      project.url === "https://supply.aivora.cn/"
-        ? "爱窝啦货源雷达的公开卖家找货与经营入口界面"
-        : "多维衰老时钟地图的公开研究工具界面",
+      project.url === "/projects/aging-clock-atlas/"
+        ? "多维衰老时钟地图的公开研究工具界面"
+        : "脑健康成分地图的公开信息观察卡与工具界面",
     capturedAt: "2026-10-02",
-    width: project.url === "https://supply.aivora.cn/" ? 1271 : 1265,
-    height: project.url === "https://supply.aivora.cn/" ? 715 : 712,
+    width: 1265,
+    height: 712,
   },
   desc:
-    project.url === "https://supply.aivora.cn/"
-      ? "比较公开货源与报价，查看库存变化和经营日报。"
-      : "对比开源衰老时钟与数字生物标志物，核验输入、算法和许可证。",
+    project.url === "/projects/aging-clock-atlas/"
+      ? "对比开源衰老时钟与数字生物标志物，核验输入、算法和许可证。"
+      : "整理食物来源与研究线索，生成可分享的脑健康信息观察卡。",
 }));

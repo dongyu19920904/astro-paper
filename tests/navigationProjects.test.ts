@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { existsSync, readFileSync } from "node:fs";
 
-import { HOME_PROJECTS, NAV_LINKS, PROJECTS } from "../src/data/navProjects.ts";
+import { HOME_PROJECTS, NAV_LINKS, PROJECTS, PRIMARY_PROJECTS, SECONDARY_PROJECTS } from "../src/data/navProjects.ts";
 
 test("workbench keeps SEO, analytics and reveal behavior outside the redesign", () => {
   const page = readFileSync(new URL("../src/pages/index.astro", import.meta.url), "utf8");
@@ -26,7 +26,7 @@ test("homepage previews are local real-project assets with stable dimensions", (
   }
 });
 
-test("homepage highlights two existing projects without changing the directory", () => {
+test("homepage highlights two existing longevity experiments", () => {
   assert.equal(HOME_PROJECTS.length, 2);
   assert.equal(new Set(HOME_PROJECTS.map(project => project.url)).size, 2);
   assert.ok(
@@ -35,9 +35,10 @@ test("homepage highlights two existing projects without changing the directory",
     )
   );
   assert.ok(HOME_PROJECTS.every(project => project.desc.length < 60));
+  assert.deepEqual(HOME_PROJECTS.map(project => project.title), ["多维衰老时钟地图", "脑健康成分地图"]);
 });
 
-test("personal homepage exposes a distinct seller-facing supply entry", () => {
+test("supply remains accessible only as a secondary directory entry", () => {
   const navigationEntry = NAV_LINKS.find(
     item => item.url === "https://supply.aivora.cn/"
   );
@@ -45,14 +46,22 @@ test("personal homepage exposes a distinct seller-facing supply entry", () => {
     item => item.url === "https://supply.aivora.cn/"
   );
 
-  assert.equal(navigationEntry?.title, "AI 货源与商家经营");
-  assert.equal(navigationEntry?.tag, "卖家工具");
+  assert.equal(navigationEntry, undefined);
+  assert.equal(PRIMARY_PROJECTS.some(item => item.url === "https://supply.aivora.cn/"), false);
+  assert.equal(HOME_PROJECTS.some(item => item.url === "https://supply.aivora.cn/"), false);
+  assert.equal(SECONDARY_PROJECTS.length, 1);
+  assert.equal(SECONDARY_PROJECTS[0], projectEntry);
   assert.match(projectEntry?.desc || "", /找货|货源/);
   assert.match(projectEntry?.desc || "", /经营日报/);
   assert.equal(
     NAV_LINKS.filter(item => item.url === "https://supply.aivora.cn/").length,
-    1
+    0
   );
+  const directory = readFileSync(new URL("../src/pages/projects/index.astro", import.meta.url), "utf8");
+  assert.match(directory, /<details[^>]*data-secondary-projects/);
+  assert.doesNotMatch(directory, /<details[^>]*\bopen\b/);
+  assert.ok(directory.includes("PRIMARY_PROJECTS.map"));
+  assert.ok(directory.includes("SECONDARY_PROJECTS.map"));
   assert.equal(
     PROJECTS.filter(item => item.url === "https://supply.aivora.cn/").length,
     1
