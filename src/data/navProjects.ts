@@ -154,3 +154,15 @@ export const PROJECTS: NavProject[] = [
     icon: "🧭",
   },
 ];
+
+/** Selected homepage entries; the full project directory stays unchanged. */
+export const HOME_PROJECTS = [
+  PROJECTS.find(project => project.url === "https://supply.aivora.cn/")!,
+  PROJECTS.find(project => project.url === "/projects/aging-clock-atlas/")!,
+].map(project => ({
+  ...project,
+  desc:
+    project.url === "https://supply.aivora.cn/"
+      ? "比较公开货源与报价，查看库存变化和经营日报。"
+      : "对比开源衰老时钟与数字生物标志物，核验输入、算法和许可证。",
+}));

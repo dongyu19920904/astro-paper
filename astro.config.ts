@@ -19,7 +19,9 @@ export default defineConfig({
   site: SITE.website,
   integrations: [
     sitemap({
-      filter: page => SITE.showArchives || !page.endsWith("/archives"),
+      filter: page =>
+        !page.includes("/visitor-stats/") &&
+        (SITE.showArchives || !page.endsWith("/archives")),
     }),
   ],
   markdown: {

@@ -3,217 +3,287 @@ import { getCollection } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
-import Socials from "@/components/Socials.astro";
-import LinkButton from "@/components/LinkButton.astro";
-import Card from "@/components/Card.astro";
-import AiCitationNote from "@/components/AiCitationNote.astro";
+import Datetime from "@/components/Datetime.astro";
 import getSortedPosts from "@/utils/getSortedPosts";
-import IconRss from "@/assets/icons/IconRss.svg";
-import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
+import { getPath } from "@/utils/getPath";
+import { cleanPostDescription } from "@/utils/postDescription";
 import { SITE } from "@/config";
-import { SOCIALS } from "@/constants";
-import { NAV_LINKS } from "@/data/navProjects";
+import { HOME_PROJECTS } from "@/data/navProjects";
 import { TOPIC_HUBS } from "@/data/topicHubs";
+import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
 
-const posts = await getCollection("blog");
-
-const sortedPosts = getSortedPosts(posts);
-const featuredPosts = sortedPosts.filter(({ data }) => data.featured);
-const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
+const posts = getSortedPosts(await getCollection("blog")).slice(0, 3);
+const topicDescriptions = [
+  "让 AI 承担重复工作，保留人的判断与验收。",
+  "整理研究来源，探索工具与可验证的项目。",
+  "记录产品变化、客服效率与经营实践。",
+];
+function briefDescription(description: string, title: string) {
+  const value = cleanPostDescription(
+    description,
+    title + "的个人观察与项目记录。"
+  );
+  const sentence = value.match(/^.*?[。！？]/u)?.[0] || value;
+  return sentence.length > 88 ? sentence.slice(0, 88) + "…" : sentence;
+}
 ---
 
 <Layout
   pageType="website"
-  title={`${SITE.title} | AI 账号店、AI 一人公司与生命延续学实验`}
+  title={SITE.title + " | AI 账号店、AI 一人公司与生命延续学实验"}
   description={SITE.desc}
   canonicalURL={SITE.website}
 >
   <Header />
-  <main id="main-content" data-layout="index" class="app-layout">
-    {/* ===== Launchpad 首屏：项目入口矩阵 ===== */}
-    <section id="launchpad" class="launchpad">
-      <div class="launchpad-shell">
-        <div class="launchpad-heading launchpad-panel">
-          <span class="launchpad-eyebrow">PROJECT LAUNCHPAD</span>
-          <div class="launchpad-title-row">
-            <h1 class="launchpad-name">yuyu</h1>
-            <a
-              target="_blank"
-              href="/rss.xml"
-              class="launchpad-rss"
-              aria-label="rss feed"
-              title="RSS Feed"
-            >
-              <IconRss
-                width={20}
-                height={20}
-                class="scale-125 stroke-accent stroke-3 rtl:-rotate-90"
-              />
-              <span class="sr-only">RSS Feed</span>
-            </a>
-          </div>
-          <p class="launchpad-tagline">AI × 生命科学 · 日更情报 · 产品化实验</p>
-          <p class="launchpad-sub">
-            从这里开始，选一个入口，直接进入项目与日报。
-          </p>
-          <div class="launchpad-chips">
-            <span class="launchpad-chip">Focus · AI × Bio</span>
-            <span class="launchpad-chip">Daily · AI / BioAI</span>
-            <span class="launchpad-chip">Build · 工具 / 内容</span>
-          </div>
-        </div>
-        <div
-          class="launchpad-grid launchpad-panel grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3"
+  <main id="main-content" data-layout="index" class="home app-layout">
+    <section class="home-intro" aria-labelledby="home-title">
+      <h1 id="home-title">yuyu</h1>
+      <p class="home-positioning">
+        经营 AI 账号店，实践 AI 一人公司，探索 AI 生命延续学。
+      </p>
+      <p class="home-muted">这里记录我的项目、工具实践和长期观察。</p>
+      <div class="home-actions">
+        <a href="/projects/" class="home-primary"
+          >看我的项目 <IconArrowRight /></a
         >
-          {
-            NAV_LINKS.map((link, index) => (
-              <a
-                href={link.url}
-                class="project-card"
-                style={`--delay: ${index * 90}ms`}
-                target={link.url.startsWith("http") ? "_blank" : "_self"}
-                rel={
-                  link.url.startsWith("http")
-                    ? "noopener noreferrer"
-                    : undefined
-                }
-              >
-                <div class="flex items-center gap-3">
-                  <span class="project-icon">{link.icon}</span>
-                  <span class="project-title">{link.title}</span>
-                </div>
-                <p class="project-desc">{link.desc}</p>
-                <div class="project-footer">
-                  <span class="project-tag">{link.tag}</span>
-                  <span class="project-arrow">↗</span>
-                </div>
-              </a>
-            ))
-          }
-        </div>
+        <a href="/posts/">读文章 <IconArrowRight /></a>
+        <a href={SITE.brand.website} target="_blank" rel="noopener noreferrer">
+          爱窝啦·AI账号店 <span aria-hidden="true">↗</span>
+        </a>
       </div>
-      <AiCitationNote variant="site" />
     </section>
 
-    <section class="border-b border-border py-9">
-      <div class="flex flex-wrap items-end justify-between gap-3">
-        <div>
-          <p class="text-sm font-semibold text-accent">长期主题</p>
-          <h2 class="mt-1 text-2xl font-semibold">从日更信息进入持续研究</h2>
-        </div>
-        <a href="/topics/" class="text-sm font-medium text-accent">查看全部 →</a
-        >
+    <section class="home-topics" aria-label="长期关注的三个方向">
+      {
+        TOPIC_HUBS.map((topic, index) => (
+          <a href={"/topics/" + topic.slug + "/"}>
+            <h2>{topic.shortTitle}</h2>
+            <p class="home-muted">{topicDescriptions[index]}</p>
+          </a>
+        ))
+      }
+    </section>
+
+    <section class="home-section" aria-labelledby="home-projects-title">
+      <div class="home-section-heading">
+        <h2 id="home-projects-title">项目与实验</h2>
+        <a href="/projects/">全部项目 <IconArrowRight /></a>
       </div>
-      <div class="mt-5 grid gap-4 sm:grid-cols-3">
+      <div class="home-projects">
         {
-          TOPIC_HUBS.map(topic => (
-            <a
-              href={`/topics/${topic.slug}/`}
-              class="rounded-lg border border-border bg-background p-4 transition hover:border-accent"
-            >
-              <h3 class="font-semibold">{topic.shortTitle}</h3>
-              <p class="mt-2 text-sm leading-6 text-foreground/70">
-                {topic.description}
-              </p>
-            </a>
+          HOME_PROJECTS.map(project => (
+            <article class="home-project">
+              <p class="home-project-category">{project.tag}</p>
+              <h3>
+                <a
+                  href={project.url}
+                  target={project.url.startsWith("http") ? "_blank" : undefined}
+                  rel={
+                    project.url.startsWith("http")
+                      ? "noopener noreferrer"
+                      : undefined
+                  }
+                >
+                  {project.title}
+                  <IconArrowRight />
+                </a>
+              </h3>
+              <p class="home-muted">{project.desc}</p>
+            </article>
           ))
         }
       </div>
     </section>
 
-    {/* ===== 个人介绍：移至下方，结构化呈现 ===== */}
-    <section id="about" class="border-b border-border pt-10 pb-8">
-      <div class="flex flex-wrap items-end justify-between gap-3">
-        <h2 class="text-2xl font-semibold tracking-wide">关于我</h2>
-        <span class="text-xs tracking-[0.22em] text-foreground/60 uppercase">
-          Operator Notes
-        </span>
-      </div>
-      <div class="mt-6 grid gap-6 lg:grid-cols-[1.2fr_1fr]">
-        <div class="space-y-3 text-foreground/78">
-          <p class="text-lg text-foreground">
-            一个在 AI 圈摸爬滚打的普通人，白天卖工具账号，晚上死磕 AI ×
-            生命科学。
-          </p>
-          <p>
-            我在研究一个问题：<strong>怎么让 AI 让人活得更久</strong>。
-            这不是口号，是一条明确的产品路线。
-          </p>
-          <p>这里是我的大本营——项目、日报、学习笔记与实验记录，都在这里。</p>
-          {
-            // only display if at least one social link is enabled
-            SOCIALS.length > 0 && (
-              <div class="mt-4 flex max-sm:flex-col sm:items-center">
-                <div class="me-2 mb-1 whitespace-nowrap sm:mb-0">找我聊聊</div>
-                <Socials />
-              </div>
-            )
-          }
-        </div>
-        <div class="about-panel">
-          <div class="about-row">
-            <span class="about-label">正在做</span>
-            <span class="about-value">AI 日报 / BioAI 日报</span>
-          </div>
-          <div class="about-row">
-            <span class="about-label">航向</span>
-            <span class="about-value">AI 长生赛道</span>
-          </div>
-          <div class="about-row">
-            <span class="about-label">目标</span>
-            <span class="about-value">2029 前做出真东西</span>
-          </div>
-        </div>
-      </div>
-    </section>
     {
-      featuredPosts.length > 0 && (
-        <section
-          id="featured"
-          class:list={[
-            "pt-12 pb-6",
-            { "border-b border-border": recentPosts.length > 0 },
-          ]}
-        >
-          <h2 class="text-2xl font-semibold tracking-wide">⭐ 精选文章</h2>
-          <ul>
-            {featuredPosts.map(data => (
-              <Card variant="h3" {...data} />
+      posts.length > 0 && (
+        <section class="home-section" aria-labelledby="home-posts-title">
+          <div class="home-section-heading">
+            <h2 id="home-posts-title">最近的记录</h2>
+            <a href="/posts/">
+              全部文章 <IconArrowRight />
+            </a>
+          </div>
+          <ul class="home-posts">
+            {posts.map(post => (
+              <li>
+                <h3>
+                  <a href={getPath(post.id, post.filePath)}>
+                    {post.data.title}
+                  </a>
+                </h3>
+                <Datetime pubDatetime={post.data.pubDatetime} />
+                <p class="home-muted">
+                  {briefDescription(post.data.description, post.data.title)}
+                </p>
+              </li>
             ))}
           </ul>
         </section>
       )
     }
-
-    {
-      recentPosts.length > 0 && (
-        <section id="recent-posts" class="pt-12 pb-6">
-          <h2 class="text-2xl font-semibold tracking-wide">📝 最新文章</h2>
-          <ul>
-            {recentPosts.map(
-              (data, index) =>
-                index < SITE.postPerIndex && <Card variant="h3" {...data} />
-            )}
-          </ul>
-        </section>
-      )
-    }
-
-    <div class="my-8 text-center">
-      <LinkButton href="/posts/">
-        查看全部文章
-        <IconArrowRight class="inline-block rtl:-rotate-180" />
-      </LinkButton>
-    </div>
   </main>
   <Footer />
 </Layout>
 
+<style>
+  /* Hallmark: personal editorial, introduction -> topics -> projects -> records.
+     Reuses the site's existing colors and fonts; no new design dependencies. */
+  .home {
+    letter-spacing: 0;
+  }
+  .home-intro {
+    padding-block: 2.5rem 2rem;
+  }
+  h1 {
+    margin-bottom: 1rem;
+    font-size: 2.75rem;
+    font-weight: 650;
+    line-height: 1.15;
+  }
+  .home-positioning {
+    max-width: 36rem;
+    margin-bottom: 0.75rem;
+    font-size: 1.25rem;
+    line-height: 1.8;
+  }
+  .home-muted {
+    color: var(--foreground);
+    line-height: 1.8;
+  }
+  .home-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 1.5rem;
+    margin-top: 1.5rem;
+  }
+  .home-actions a,
+  .home-section-heading a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+  .home-actions .home-primary {
+    padding: 0.65rem 0.9rem;
+    border: 1px solid var(--accent);
+    border-radius: 4px;
+    font-weight: 600;
+  }
+  a:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.25rem;
+  }
+  .home-topics {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+    padding-block: 1.5rem;
+    border-block: 1px solid var(--border);
+  }
+  .home-topics h2 {
+    margin-bottom: 0.4rem;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .home-topics p {
+    font-size: 0.875rem;
+  }
+  .home-section {
+    padding-block: 2rem;
+  }
+  .home-section + .home-section {
+    border-top: 1px solid var(--border);
+  }
+  .home-section-heading {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+  .home-section-heading h2 {
+    font-size: 1.4rem;
+    font-weight: 600;
+  }
+  .home-section-heading a {
+    font-size: 0.875rem;
+  }
+  .home-projects {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+  .home-project {
+    min-width: 0;
+    padding: 1.25rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+  .home-project-category {
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+  }
+  .home-project h3 {
+    margin-bottom: 0.5rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+  }
+  .home-project h3 a {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.5rem;
+    color: var(--accent);
+  }
+  .home-project p:last-child {
+    font-size: 0.9375rem;
+  }
+  .home-posts li + li {
+    margin-top: 1.25rem;
+  }
+  .home-posts h3 {
+    margin-bottom: 0.3rem;
+    color: var(--accent);
+    font-size: 1.125rem;
+    font-weight: 600;
+  }
+  .home-posts p {
+    margin-top: 0.35rem;
+    font-size: 0.9375rem;
+  }
+  .home :global(svg) {
+    width: 1.1rem;
+    height: 1.1rem;
+    flex-shrink: 0;
+  }
+  @media (max-width: 639px) {
+    .home-intro {
+      padding-block: 2rem 1.5rem;
+    }
+    .home-topics,
+    .home-projects {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .home-topics {
+      gap: 1rem;
+    }
+    .home-section {
+      padding-block: 1.5rem;
+    }
+    .home-section-heading {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+</style>
+
 <script>
   document.addEventListener("astro:page-load", () => {
-    const indexLayout = (document.querySelector("#main-content") as HTMLElement)
-      ?.dataset?.layout;
-    if (indexLayout) {
+    if (document.querySelector('[data-layout="index"]')) {
       sessionStorage.setItem("backUrl", "/");
     }
   });

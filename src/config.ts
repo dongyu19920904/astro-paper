@@ -31,8 +31,10 @@ export const SITE = {
   },
   dynamicOgImage: true,
   analytics: {
-    la51Id: "3PMbujTBSvRv3c5i",
-    hashMode: false,
+    la51Id: "3RNfNDP1ET9rlhHi",
+    la51WidgetUrl:
+      "https://v6-widget.51.la/v6/3RNfNDP1ET9rlhHi/quote.js?theme=0&f=12",
+    hashMode: true,
   },
   dir: "ltr",
   lang: "zh-CN", // 中文站点

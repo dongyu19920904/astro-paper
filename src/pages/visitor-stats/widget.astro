@@ -1,0 +1,114 @@
+---
+import { SITE } from "@/config";
+import { buildVisitorWidgetUrl } from "@/utils/visitorStats";
+const widgetUrl = buildVisitorWidgetUrl(SITE.analytics.la51WidgetUrl);
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>yuyu 访问统计</title>
+  </head>
+  <body data-widget-url={widgetUrl}>
+    <div id="widget"></div>
+    <p id="status" role="status">正在读取 51LA 统计…</p>
+    <script>
+      const status = document.querySelector<HTMLElement>("#status")!;
+      const widget = document.querySelector<HTMLElement>("#widget")!;
+      function initWidget() {
+        if (!document.body.dataset.widgetUrl) {
+          status.textContent = "51LA 公开数据挂件尚未启用。";
+          return;
+        }
+        function syncTheme() {
+          const dark =
+            window.parent.document.documentElement.dataset.theme === "dark";
+          document.documentElement.dataset.theme = dark ? "dark" : "light";
+          // The provider injects inline !important colors; remove only its palette.
+          for (const element of widget.querySelectorAll<HTMLElement>(
+            ".la-widget, .la-widget p, .la-widget span"
+          )) {
+            element.style.removeProperty("color");
+          }
+          const container = widget.querySelector<HTMLElement>(".la-widget");
+          container?.style.removeProperty("background-color");
+          container?.style.removeProperty("border");
+        }
+        syncTheme();
+        const observer = new MutationObserver(syncTheme);
+        observer.observe(window.parent.document.documentElement, {
+          attributes: true,
+          attributeFilter: ["data-theme"],
+        });
+        window.addEventListener("pagehide", () => observer.disconnect(), {
+          once: true,
+        });
+        const script = document.createElement("script");
+        script.id = "LA-DATA-WIDGET";
+        script.src = document.body.dataset.widgetUrl!;
+        const timeout = window.setTimeout(() => {
+          status.textContent = "51LA 暂不可用，可稍后刷新重试。";
+        }, 10000);
+        script.onload = () => {
+          window.clearTimeout(timeout);
+          syncTheme();
+          const hasData = [...widget.querySelectorAll("p")]
+            .slice(1)
+            .some(row => {
+              const value = row
+                .querySelector("span")
+                ?.textContent?.replace(/,/g, "");
+              return value && Number(value) > 0;
+            });
+          status.textContent = hasData
+            ? "数据由个人主页的 51LA 独立统计提供。"
+            : "51LA 暂未返回有效累计数据，请核对后台站点与数据挂件配置。";
+        };
+        script.onerror = () => {
+          window.clearTimeout(timeout);
+          status.textContent = "51LA 暂不可用，不影响上方简易计数。";
+        };
+        widget.appendChild(script);
+      }
+      initWidget();
+    </script>
+  </body>
+</html>
+<style is:global>
+  :root {
+    color-scheme: light;
+    --widget-background: #fbfcfe;
+    --widget-ink: #111827;
+    --widget-border: #d8e0ea;
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --widget-background: #212737;
+    --widget-ink: #eaedf3;
+    --widget-border: #ab4b08;
+  }
+  body {
+    margin: 0;
+    background: var(--widget-background);
+    color: var(--widget-ink);
+    font-family: "Microsoft YaHei UI", system-ui, sans-serif;
+    font-size: 14px;
+  }
+  #widget .la-widget {
+    box-sizing: border-box !important;
+    width: 100% !important;
+    background: var(--widget-background) !important;
+    border: 1px solid var(--widget-border) !important;
+  }
+  #widget .la-widget p,
+  #widget .la-widget span {
+    color: var(--widget-ink) !important;
+  }
+  #status {
+    margin: 0.75rem 0;
+    line-height: 1.6;
+  }
+</style>

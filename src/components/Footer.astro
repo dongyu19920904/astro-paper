@@ -1,55 +1,52 @@
-﻿---
+---
 import type { HTMLAttributes } from "astro/types";
 import Socials from "./Socials.astro";
 import VisitorStats from "./VisitorStats.astro";
-
-const currentYear = new Date().getFullYear();
-
-type Props = {
-  noMarginTop?: boolean;
-} & HTMLAttributes<"footer">;
-
+type Props = { noMarginTop?: boolean } & HTMLAttributes<"footer">;
 const { noMarginTop = false, class: className, ...attrs } = Astro.props;
+const currentYear = new Date().getFullYear();
 ---
 
 <footer
   class:list={["app-layout", { "mt-auto": !noMarginTop }, className]}
   {...attrs}
 >
-  <div
-    class:list={[
-      "py-6 sm:py-4",
-      "border-t border-border",
-      "flex flex-col items-center justify-between sm:flex-row-reverse",
-    ]}
-  >
-    <div
-      class="mb-3 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm text-foreground/70 sm:mb-0"
-    >
-      <a href="/posts" class="transition hover:text-accent">博客</a>
-      <a href="/archives" class="transition hover:text-accent">归档</a>
-      <a href="/tags" class="transition hover:text-accent">标签</a>
-      <a href="/about" class="transition hover:text-accent">关于</a>
-      <a href="https://news.aivora.cn" class="transition hover:text-accent"
-        >AI 日报</a
-      >
-      <a href="https://supply.aivora.cn/" class="transition hover:text-accent">
-        AI 货源与商家经营
-      </a>
-      <a href="https://news.aibioo.cn" class="transition hover:text-accent">
-        AI 生命科学日报
-      </a>
-    </div>
+  <div class="footer-content">
+    <nav aria-label="页脚导航">
+      <a href="/projects/">全部项目</a>
+      <a href="/archives/">归档</a>
+      <a href="/tags/">标签</a>
+      <a href="/about/">关于与联系</a>
+      <a href="/rss.xml">RSS</a>
+      <a href="/ai-citation.md">引用说明</a>
+      <a href="/llms.txt">llms.txt</a>
+    </nav>
     <Socials />
-    <div
-      class="my-2 flex flex-col items-center gap-2 whitespace-nowrap sm:flex-row"
-    >
-      <div class="flex flex-col items-center sm:flex-row">
-        <span>Copyright &#169; {currentYear}</span>
-        <span class="hidden sm:inline">&nbsp;|&nbsp;</span>
-        <span>All rights reserved.</span>
-      </div>
-      <VisitorStats />
-    </div>
+    <VisitorStats />
+    <p>Copyright &#169; {currentYear} yuyu</p>
   </div>
 </footer>
+<style>
+  .footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding-block: 1.5rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.875rem;
+  }
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.6rem 1rem;
+  }
+  nav a {
+    white-space: nowrap;
+  }
+  nav a:hover {
+    color: var(--accent);
+    text-decoration: underline;
+  }
+</style>
