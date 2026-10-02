@@ -1,6 +1,15 @@
 [
   {
     "date": "2026-10-02",
+    "macrostructure": "Ecosystem Index",
+    "theme": "personal field notes",
+    "theme_axes": "neutral paper / charcoal dark / green accent / local serif wordmark and Chinese sans",
+    "reference": "https://www.lennysnewsletter.com/p/how-to-turn-your-ai-into-a-world",
+    "enrichment": "existing real project previews, compact journal rail and public profile snapshot",
+    "brief": "Homepage-only refinement; screenshot self-review, no invented evidence or independent-review claim; 51LA remains directly visible"
+  },
+  {
+    "date": "2026-10-02",
     "macrostructure": "Personal Workbench",
     "theme": "custom Signal Terminal",
     "theme_axes": "neutral light / charcoal dark / yellow actions / cyan links",

@@ -3,24 +3,27 @@ import { getCollection } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
-import Datetime from "@/components/Datetime.astro";
 import getSortedPosts from "@/utils/getSortedPosts";
 import { getPath } from "@/utils/getPath";
-import { cleanPostDescription } from "@/utils/postDescription";
 import { SITE } from "@/config";
 import { HOME_PROJECTS } from "@/data/navProjects";
 import { TOPIC_HUBS } from "@/data/topicHubs";
+import authorKnowledge from "@/data/authorKnowledge.json";
 import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
 import "@/styles/home-studio.css";
 
 const posts = getSortedPosts(await getCollection("blog")).slice(0, 3);
-function briefDescription(description: string, title: string) {
-  const value = cleanPostDescription(
-    description,
-    title + "的个人观察与项目记录。"
-  );
-  const sentence = value.match(/^.*?[。！？]/u)?.[0] || value;
-  return sentence.length > 88 ? sentence.slice(0, 88) + "…" : sentence;
+const dateFormatter = new Intl.DateTimeFormat("zh-CN", {
+  timeZone: SITE.timezone,
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit",
+});
+function formatPostDate(date: Date) {
+  const parts = dateFormatter.formatToParts(date);
+  return ["year", "month", "day"]
+    .map(type => parts.find(part => part.type === type)?.value)
+    .join("-");
 }
 ---
 
@@ -33,17 +36,15 @@ function briefDescription(description: string, title: string) {
   <div class="home-studio">
     <Header wide />
     <main id="main-content" data-layout="index" class="studio-main">
-      <div class="studio-mastline" aria-hidden="true">
-        <span>YUYU / PERSONAL WORKSPACE</span>
-        <span>AI · BUSINESS · BIOAI</span>
-      </div>
       <section class="studio-intro" aria-labelledby="home-title">
+        <div class="studio-identity">
+          <h1 id="home-title">yuyu</h1>
+          <a href="/about/">关于我 <IconArrowRight /></a>
+        </div>
         <div class="studio-intro-copy">
-          <div class="studio-identity">
-            <h1 id="home-title">yuyu</h1>
-            <a href="/about/">关于我 <span aria-hidden="true">↗</span></a>
-          </div>
-          <p class="studio-lead">用 AI 做事，把时间留给长期探索。</p>
+          <p class="studio-lead">
+            <span>用 AI 做事，</span><span>把时间留给长期探索。</span>
+          </p>
           <p class="studio-summary">
             经营爱窝啦 AI 账号店，实践 AI 一人公司，探索 AI 生命延续学。
           </p>
@@ -62,120 +63,120 @@ function briefDescription(description: string, title: string) {
             </a>
           </div>
         </div>
-        <nav class="studio-focus" aria-label="长期关注的三个方向">
-          <h2><span aria-hidden="true">//</span> 长期关注</h2>
-          {
-            TOPIC_HUBS.map((topic, index) => (
-              <a href={"/topics/" + topic.slug + "/"}>
-                <span class="studio-index" aria-hidden="true">
-                  0{index + 1}
-                </span>
-                <span>{topic.shortTitle}</span>
-                <IconArrowRight />
-              </a>
-            ))
-          }
-        </nav>
       </section>
 
-      <section aria-labelledby="home-projects-title">
-        <div class="studio-heading">
-          <h2 id="home-projects-title">
-            <span class="studio-section-index" aria-hidden="true">01 /</span> 正在做的项目
-          </h2>
-          <a href="/projects/">全部项目 <IconArrowRight /></a>
-        </div>
-        <div class="studio-projects">
-          {
-            HOME_PROJECTS.map((project, index) => (
-              <article class="studio-project">
-                <a
-                  class="studio-preview"
-                  href={project.url}
-                  aria-label={"打开项目：" + project.title}
-                  target={project.url.startsWith("http") ? "_blank" : undefined}
-                  rel={
-                    project.url.startsWith("http")
-                      ? "noopener noreferrer"
-                      : undefined
-                  }
-                >
-                  <img
-                    src={project.preview.src}
-                    alt={project.preview.alt}
-                    width={project.preview.width}
-                    height={project.preview.height}
-                    loading={index === 0 ? "eager" : "lazy"}
-                    fetchpriority={index === 0 ? "high" : "auto"}
-                    decoding="async"
-                  />
-                </a>
-                <div class="studio-project-content">
-                  <p class="studio-project-meta">
-                    <span>{project.tag}</span>
-                    {project.status && <span>{project.status}</span>}
-                  </p>
-                  <h3>
-                    <a
-                      href={project.url}
-                      target={
-                        project.url.startsWith("http") ? "_blank" : undefined
-                      }
-                      rel={
-                        project.url.startsWith("http")
-                          ? "noopener noreferrer"
-                          : undefined
-                      }
-                    >
-                      {project.title}
-                      <IconArrowRight />
-                    </a>
-                  </h3>
-                  <p>{project.desc}</p>
-                </div>
-              </article>
-            ))
-          }
-        </div>
-        <p class="studio-snapshot-note">
-          项目界面快照 · {HOME_PROJECTS[0].preview.capturedAt} · 数据以项目当前页面为准
-        </p>
-      </section>
-
-      {
-        posts.length > 0 && (
-          <section class="studio-records" aria-labelledby="home-posts-title">
-            <div class="studio-heading">
-              <h2 id="home-posts-title">
-                <span class="studio-section-index" aria-hidden="true">
-                  02 /
-                </span>{" "}
-                最近的记录
-              </h2>
-              <a href="/posts/">
-                全部文章 <IconArrowRight />
-              </a>
-            </div>
-            <ul class="studio-posts">
-              {posts.map(post => (
-                <li>
-                  <h3>
-                    <a href={getPath(post.id, post.filePath)}>
-                      {post.data.title}
-                    </a>
-                  </h3>
-                  <div class="studio-date">
-                    <Datetime pubDatetime={post.data.pubDatetime} />
+      <div class="studio-workspace">
+        <section aria-labelledby="home-projects-title">
+          <div class="studio-heading">
+            <h2 id="home-projects-title">正在做的项目</h2>
+            <a href="/projects/">全部项目 <IconArrowRight /></a>
+          </div>
+          <div class="studio-projects">
+            {
+              HOME_PROJECTS.map((project, index) => (
+                <article class="studio-project">
+                  <a
+                    class="studio-preview"
+                    href={project.url}
+                    aria-label={"打开项目：" + project.title}
+                    target={
+                      project.url.startsWith("http") ? "_blank" : undefined
+                    }
+                    rel={
+                      project.url.startsWith("http")
+                        ? "noopener noreferrer"
+                        : undefined
+                    }
+                  >
+                    <img
+                      src={project.preview.src}
+                      alt={project.preview.alt}
+                      width={project.preview.width}
+                      height={project.preview.height}
+                      loading={index === 0 ? "eager" : "lazy"}
+                      fetchpriority={index === 0 ? "high" : "auto"}
+                      decoding="async"
+                    />
+                  </a>
+                  <div class="studio-project-content">
+                    <p class="studio-project-meta">
+                      <span>{project.tag}</span>
+                      {project.status && <span>{project.status}</span>}
+                    </p>
+                    <h3>
+                      <a
+                        href={project.url}
+                        target={
+                          project.url.startsWith("http") ? "_blank" : undefined
+                        }
+                        rel={
+                          project.url.startsWith("http")
+                            ? "noopener noreferrer"
+                            : undefined
+                        }
+                      >
+                        {project.title}
+                        <IconArrowRight />
+                      </a>
+                    </h3>
+                    <p>{project.desc}</p>
                   </div>
-                  <p>
-                    {briefDescription(post.data.description, post.data.title)}
-                  </p>
-                </li>
-              ))}
-            </ul>
-          </section>
-        )
-      }
+                </article>
+              ))
+            }
+          </div>
+          <p class="studio-snapshot-note">
+            界面快照 · {HOME_PROJECTS[0].preview.capturedAt} · 以项目当前页面为准
+          </p>
+        </section>
+
+        <aside class="studio-journal" aria-label="文章与近况">
+          {
+            posts.length > 0 && (
+              <section
+                class="studio-records"
+                aria-labelledby="home-posts-title"
+              >
+                <div class="studio-heading">
+                  <h2 id="home-posts-title">最近的记录</h2>
+                  <a href="/posts/">
+                    全部文章 <IconArrowRight />
+                  </a>
+                </div>
+                <ul class="studio-posts">
+                  {posts.map(post => (
+                    <li>
+                      <time datetime={post.data.pubDatetime.toISOString()}>
+                        {formatPostDate(post.data.pubDatetime)}
+                      </time>
+                      <h3>
+                        <a href={getPath(post.id, post.filePath)}>
+                          {post.data.title}
+                        </a>
+                      </h3>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )
+          }
+          <nav class="studio-focus" aria-label="长期关注的三个方向">
+            <h2>长期关注</h2>
+            {
+              TOPIC_HUBS.map(topic => (
+                <a href={"/topics/" + topic.slug + "/"}>
+                  <span>{topic.shortTitle}</span>
+                  <IconArrowRight />
+                </a>
+              ))
+            }
+          </nav>
+          <div class="studio-now">
+            <a href="/now/">最近在忙什么 <IconArrowRight /></a>
+            <span>资料更新 · {authorKnowledge.updatedAt}</span>
+          </div>
+        </aside>
+      </div>
     </main>
     <Footer class="studio-footer" />
   </div>

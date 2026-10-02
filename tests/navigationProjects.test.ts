@@ -2,24 +2,68 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { existsSync, readFileSync } from "node:fs";
 
-import { HOME_PROJECTS, NAV_LINKS, PROJECTS, PRIMARY_PROJECTS, SECONDARY_PROJECTS } from "../src/data/navProjects.ts";
+import {
+  HOME_PROJECTS,
+  NAV_LINKS,
+  PROJECTS,
+  PRIMARY_PROJECTS,
+  SECONDARY_PROJECTS,
+} from "../src/data/navProjects.ts";
 
-test("workbench keeps SEO, analytics and reveal behavior outside the redesign", () => {
-  const page = readFileSync(new URL("../src/pages/index.astro", import.meta.url), "utf8");
-  const css = readFileSync(new URL("../src/styles/home-studio.css", import.meta.url), "utf8");
+test("homepage keeps SEO, analytics and reveal behavior outside the redesign", () => {
+  const page = readFileSync(
+    new URL("../src/pages/index.astro", import.meta.url),
+    "utf8"
+  );
+  const css = readFileSync(
+    new URL("../src/styles/home-studio.css", import.meta.url),
+    "utf8"
+  );
   assert.equal((page.match(/<h1\b/g) || []).length, 1);
   assert.ok(page.includes("canonicalURL={SITE.website}"));
   assert.ok(page.includes('<Footer class="studio-footer" />'));
   assert.ok(page.includes("TOPIC_HUBS.map"));
   assert.ok(css.includes("prefers-reduced-motion: reduce"));
   assert.ok(css.includes(".home-studio {"));
-  assert.doesNotMatch(page + css, /IntersectionObserver|opacity:\s*0(?:\s|;)|setInterval|hex2077\.dev\/_next/);
+  assert.doesNotMatch(
+    page + css,
+    /IntersectionObserver|opacity:\s*0(?:\s|;)|setInterval|hex2077\.dev\/_next/
+  );
+});
+
+test("field notes keep real content while reducing homepage duplication", () => {
+  const page = readFileSync(
+    new URL("../src/pages/index.astro", import.meta.url),
+    "utf8"
+  );
+  const css = readFileSync(
+    new URL("../src/styles/home-studio.css", import.meta.url),
+    "utf8"
+  );
+  assert.match(page, /class="studio-workspace"/);
+  assert.match(page, /<aside[^>]+aria-label="文章与近况"/);
+  assert.match(
+    page,
+    /<time datetime=\{post\.data\.pubDatetime\.toISOString\(\)\}/
+  );
+  assert.match(page, /timeZone: SITE\.timezone/);
+  assert.match(page, /formatToParts\(date\)/);
+  assert.match(page, /href="\/now\/"/);
+  assert.match(page, /authorKnowledge\.updatedAt/);
+  assert.doesNotMatch(
+    page,
+    /briefDescription|post\.data\.description|studio-mastline|studio-section-index/
+  );
+  assert.doesNotMatch(css, /text-shadow|scale\(1\.015\)/);
+  assert.match(css, /minmax\(0, 1\.85fr\) minmax\(0, 1fr\)/);
 });
 
 test("homepage previews are local real-project assets with stable dimensions", () => {
   for (const project of HOME_PROJECTS) {
     assert.match(project.preview.src, /^\/images\/projects\/[a-z0-9-]+\.webp$/);
-    assert.ok(existsSync(new URL("../public" + project.preview.src, import.meta.url)));
+    assert.ok(
+      existsSync(new URL("../public" + project.preview.src, import.meta.url))
+    );
     assert.ok(project.preview.alt.includes("公开"));
     assert.match(project.preview.capturedAt, /^\d{4}-\d{2}-\d{2}$/);
     assert.ok(project.preview.width > 0 && project.preview.height > 0);
@@ -35,7 +79,10 @@ test("homepage highlights two existing longevity experiments", () => {
     )
   );
   assert.ok(HOME_PROJECTS.every(project => project.desc.length < 60));
-  assert.deepEqual(HOME_PROJECTS.map(project => project.title), ["多维衰老时钟地图", "脑健康成分地图"]);
+  assert.deepEqual(
+    HOME_PROJECTS.map(project => project.title),
+    ["多维衰老时钟地图", "脑健康成分地图"]
+  );
 });
 
 test("supply remains accessible only as a secondary directory entry", () => {
@@ -47,8 +94,14 @@ test("supply remains accessible only as a secondary directory entry", () => {
   );
 
   assert.equal(navigationEntry, undefined);
-  assert.equal(PRIMARY_PROJECTS.some(item => item.url === "https://supply.aivora.cn/"), false);
-  assert.equal(HOME_PROJECTS.some(item => item.url === "https://supply.aivora.cn/"), false);
+  assert.equal(
+    PRIMARY_PROJECTS.some(item => item.url === "https://supply.aivora.cn/"),
+    false
+  );
+  assert.equal(
+    HOME_PROJECTS.some(item => item.url === "https://supply.aivora.cn/"),
+    false
+  );
   assert.equal(SECONDARY_PROJECTS.length, 1);
   assert.equal(SECONDARY_PROJECTS[0], projectEntry);
   assert.match(projectEntry?.desc || "", /找货|货源/);
@@ -57,7 +110,10 @@ test("supply remains accessible only as a secondary directory entry", () => {
     NAV_LINKS.filter(item => item.url === "https://supply.aivora.cn/").length,
     0
   );
-  const directory = readFileSync(new URL("../src/pages/projects/index.astro", import.meta.url), "utf8");
+  const directory = readFileSync(
+    new URL("../src/pages/projects/index.astro", import.meta.url),
+    "utf8"
+  );
   assert.match(directory, /<details[^>]*data-secondary-projects/);
   assert.doesNotMatch(directory, /<details[^>]*\bopen\b/);
   assert.ok(directory.includes("PRIMARY_PROJECTS.map"));
