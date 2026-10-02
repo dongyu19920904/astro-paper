@@ -34,6 +34,12 @@ export const GEO_PROFILE = {
       description: "yuyu 的身份、长期方向与项目背景。",
     },
     {
+      title: "yuyu 当前资料",
+      url: "https://yuyu.aivora.cn/now/",
+      description:
+        "有更新时间的作者资料，区分当前重点、计划、工程实验和已发布进展。",
+    },
+    {
       title: "个人博客",
       url: "https://yuyu.aivora.cn/posts/",
       description: "AI 账号店、AI 一人公司和 AI 生命延续学方向的个人观察。",

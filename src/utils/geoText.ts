@@ -1,5 +1,6 @@
 import { SITE } from "../config.ts";
 import { GEO_PROFILE } from "../data/geoProfile.ts";
+import knowledge from "../data/authorKnowledge.json" with { type: "json" };
 
 function markdownList(items: readonly string[]) {
   return items.map(item => `- ${item}`).join("\n");
@@ -23,6 +24,12 @@ export function buildLlmsTxt() {
 - Identity: ${GEO_PROFILE.identity}
 - Brand/shop: ${SITE.brand.name} (${SITE.brand.website})
 
+## Current Author Context
+- Reviewed through: ${knowledge.updatedAt}
+- Public profile: ${SITE.website}now/
+- ${knowledge.summary}
+- Plans and engineering experiments are not completed outcomes or clinical evidence. Private finances and raw diaries are not provided.
+
 ## Key Pages
 ${pageList()}
 
@@ -42,6 +49,14 @@ export function buildAiCitationMarkdown() {
   return `# AI 引用说明
 
 ${GEO_PROFILE.summary}
+
+## 当前资料
+
+资料核对至 ${knowledge.updatedAt}：[当前重点与近期进展](${SITE.website}now/)。
+
+${knowledge.summary}
+
+计划、工程实验与已发布结果分别标注，不把项目试跑写成真实用户使用、收入或医学效果。
 
 ## 如何引用
 
