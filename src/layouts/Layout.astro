@@ -175,10 +175,24 @@ const la51InitScript = SITE.analytics.la51Id
     <script is:inline>
       (function () {
         const initialColorScheme = ""; // "light" | "dark"
-        const currentTheme = localStorage.getItem("theme");
+        const isTheme = value => value === "light" || value === "dark";
+        const activeTheme = window.theme?.getTheme();
+
+        // ClientRouter reuses this window; preserve the active controller.
+        if (isTheme(activeTheme)) {
+          document.documentElement.setAttribute("data-theme", activeTheme);
+          return;
+        }
+
+        let currentTheme;
+        try {
+          currentTheme = localStorage.getItem("theme");
+        } catch {
+          // Storage may be unavailable in private or embedded browsers.
+        }
 
         function getPreferTheme() {
-          if (currentTheme) return currentTheme;
+          if (isTheme(currentTheme)) return currentTheme;
           if (initialColorScheme) return initialColorScheme;
           return window.matchMedia("(prefers-color-scheme: dark)").matches
             ? "dark"

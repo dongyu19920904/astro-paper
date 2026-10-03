@@ -7,9 +7,19 @@ const DARK = "dark";
 // Can be "light", "dark", or empty string for system's prefers-color-scheme
 const initialColorScheme = "";
 
+function readStoredTheme(): string | null {
+  try {
+    const saved = localStorage.getItem(THEME);
+    return saved === LIGHT || saved === DARK ? saved : null;
+  } catch {
+    return null;
+  }
+}
+
+let hasExplicitPreference = readStoredTheme() !== null;
+
 function getPreferTheme(): string {
-  // get theme data from local storage (user's explicit choice)
-  const currentTheme = localStorage.getItem(THEME);
+  const currentTheme = readStoredTheme();
   if (currentTheme) return currentTheme;
 
   // return initial color scheme if it is set (site default)
@@ -22,11 +32,21 @@ function getPreferTheme(): string {
 }
 
 // Use existing theme value from inline script if available, otherwise detect
-let themeValue = window.theme?.themeValue ?? getPreferTheme();
+const activeTheme = window.theme?.getTheme();
+let themeValue =
+  activeTheme === LIGHT || activeTheme === DARK
+    ? activeTheme
+    : getPreferTheme();
 
 function setPreference(): void {
-  localStorage.setItem(THEME, themeValue);
+  hasExplicitPreference = true;
+  // Rendering must not depend on storage access succeeding.
   reflectPreference();
+  try {
+    localStorage.setItem(THEME, themeValue);
+  } catch {
+    // The current tab remains usable even if persistence is blocked.
+  }
 }
 
 function reflectPreference(): void {
@@ -55,31 +75,34 @@ function reflectPreference(): void {
   }
 }
 
-// Update the global theme API
-if (window.theme) {
-  window.theme.setPreference = setPreference;
-  window.theme.reflectPreference = reflectPreference;
-} else {
-  window.theme = {
-    themeValue,
-    setPreference,
-    reflectPreference,
-    getTheme: () => themeValue,
-    setTheme: (val: string) => {
+// Keep the early bootstrap and navigation on one active theme controller.
+window.theme = {
+  themeValue,
+  setPreference,
+  reflectPreference,
+  getTheme: () => themeValue,
+  setTheme: (val: string) => {
+    if (val === LIGHT || val === DARK) {
       themeValue = val;
-    },
-  };
-}
+      if (window.theme) window.theme.themeValue = val;
+    }
+  },
+};
 
 // Ensure theme is reflected (in case body wasn't ready when inline script ran)
 reflectPreference();
+
+const boundThemeButtons = new WeakSet<Element>();
 
 function setThemeFeature(): void {
   // set on load so screen readers can get the latest value on the button
   reflectPreference();
 
   // now this script can find and listen for clicks on the control
-  document.querySelector("#theme-btn")?.addEventListener("click", () => {
+  const button = document.querySelector("#theme-btn");
+  if (!button || boundThemeButtons.has(button)) return;
+  boundThemeButtons.add(button);
+  button.addEventListener("click", () => {
     themeValue = themeValue === LIGHT ? DARK : LIGHT;
     window.theme?.setTheme(themeValue);
     setPreference();
@@ -111,7 +134,8 @@ document.addEventListener("astro:before-swap", event => {
 window
   .matchMedia("(prefers-color-scheme: dark)")
   .addEventListener("change", ({ matches: isDark }) => {
+    if (hasExplicitPreference) return;
     themeValue = isDark ? DARK : LIGHT;
     window.theme?.setTheme(themeValue);
-    setPreference();
+    reflectPreference();
   });
