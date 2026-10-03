@@ -14,6 +14,35 @@ import { getTopicPage } from "../src/utils/topicPagination.ts";
 
 const source = (path: string) =>
   readFileSync(new URL(`../${path}`, import.meta.url), "utf8");
+
+test("article typography inherits the active theme instead of fixed gray defaults", () => {
+  const css = source("src/styles/typography.css");
+  const articleRule = css.slice(
+    css.indexOf(".app-prose {"),
+    css.indexOf("    h1,")
+  );
+  for (const property of ["body", "headings", "bold", "quotes", "code"]) {
+    assert.match(
+      articleRule,
+      new RegExp(`--tw-prose-${property}: var\\(--foreground\\)`)
+    );
+  }
+  for (const property of ["lead", "captions", "counters"]) {
+    assert.match(
+      articleRule,
+      new RegExp(`--tw-prose-${property}: var\\(--secondary\\)`)
+    );
+  }
+  assert.match(articleRule, /--tw-prose-links: var\(--accent\)/);
+  assert.match(articleRule, /--tw-prose-bullets: var\(--accent\)/);
+});
+
+test("articles isolate document state while other pages keep client navigation", () => {
+  assert.match(source("src/layouts/PostDetails.astro"), /clientRouter: false/);
+  const layout = source("src/layouts/Layout.astro");
+  assert.match(layout, /clientRouter = true/);
+  assert.match(layout, /\{clientRouter && <ClientRouter \/>\}/);
+});
 test("series and automated disclosure are deterministic, not invented reviews", () => {
   assert.equal(getArticleSeries(["bioai-daily", "ai"]), "生命科学观察");
   assert.equal(isAutomatedArticle(["ai-daily"]), true);

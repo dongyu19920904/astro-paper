@@ -23,6 +23,7 @@ type Props = {
   keywords?: string[];
   citations?: string[];
   scrollSmooth?: boolean;
+  clientRouter?: boolean;
 };
 
 const {
@@ -39,6 +40,7 @@ const {
   keywords = [],
   citations = [],
   scrollSmooth = false,
+  clientRouter = true,
 } = Astro.props;
 
 const resolvedCanonicalURL = new URL(String(canonicalURL), SITE.website);
@@ -155,7 +157,7 @@ const la51InitScript = SITE.analytics.la51Id
       )
     }
 
-    <ClientRouter />
+    {clientRouter && <ClientRouter />}
 
     {
       SITE.analytics.la51Id && (

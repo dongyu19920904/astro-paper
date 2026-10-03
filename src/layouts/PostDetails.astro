@@ -76,6 +76,8 @@ const layoutProps = {
     { name: title, url: articleCanonicalURL },
   ],
   scrollSmooth: true,
+  // Article pages use a fresh document instead of inheriting router state.
+  clientRouter: false,
 };
 const currentPostIndex = posts.findIndex(candidate => candidate.id === post.id);
 const prevPost = currentPostIndex > 0 ? posts[currentPostIndex - 1] : null;
