@@ -1,0 +1,29 @@
+---
+import { getCollection } from "astro:content";
+import type { GetStaticPaths } from "astro";
+import TopicDetails from "@/layouts/TopicDetails.astro";
+import { TOPIC_HUBS } from "@/data/topicHubs";
+import getSortedPosts from "@/utils/getSortedPosts";
+import { getPostTopicSlugs } from "@/utils/postTopics";
+import { getTopicPage, TOPIC_PAGE_SIZE } from "@/utils/topicPagination";
+
+export const getStaticPaths = (async () => {
+  const posts = getSortedPosts(await getCollection("blog"));
+  return TOPIC_HUBS.flatMap(topic => {
+    const matches = posts.filter(post =>
+      getPostTopicSlugs(post).includes(topic.slug)
+    );
+    const count = Math.max(1, Math.ceil(matches.length / TOPIC_PAGE_SIZE));
+    return Array.from({ length: count - 1 }, (_, index) => {
+      const currentPage = index + 2;
+      return {
+        params: { slug: topic.slug, page: String(currentPage) },
+        props: { topic, page: getTopicPage(matches, topic.slug, currentPage) },
+      };
+    });
+  });
+}) satisfies GetStaticPaths;
+const { topic, page } = Astro.props;
+---
+
+<TopicDetails {topic} {page} />

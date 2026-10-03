@@ -44,6 +44,7 @@ function getSearchText(post: BlogPost) {
 }
 
 export function getPostTopicSlugs(post: BlogPost): TopicSlug[] {
+  if (post.data.topics !== undefined) return [...new Set(post.data.topics)];
   const text = getSearchText(post);
   return (Object.entries(TOPIC_PATTERNS) as [TopicSlug, RegExp[]][])
     .filter(([, patterns]) => patterns.some(pattern => pattern.test(text)))

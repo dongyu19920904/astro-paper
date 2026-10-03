@@ -10,6 +10,7 @@ import Pagination from "@/components/Pagination.astro";
 import getSortedPosts from "@/utils/getSortedPosts";
 import { buildPaginationSeo } from "@/utils/paginationSeo";
 import { SITE } from "@/config";
+import { TOPIC_HUBS } from "@/data/topicHubs";
 
 export const getStaticPaths = (async ({ paginate }) => {
   const posts = await getCollection("blog", ({ data }) => !data.draft);
@@ -42,8 +43,16 @@ const seo = buildPaginationSeo({
     pageTitle={page.currentPage === 1
       ? "博客"
       : `博客 · 第 ${page.currentPage} 页`}
-    pageDesc="我写的所有文章"
+    pageDesc="AI 工具、经营实践与生命科学观察，按发布时间排列。"
   >
+    <nav aria-label="按主题阅读" class="archive-index">
+      {
+        TOPIC_HUBS.map(topic => (
+          <a href={`/topics/${topic.slug}/`}>{topic.shortTitle}</a>
+        ))
+      }
+      <a href="/rss.xml">RSS</a>
+    </nav>
     <ul>
       {page.data.map(data => <Card {...data} />)}
     </ul>

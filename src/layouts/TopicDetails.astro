@@ -1,0 +1,110 @@
+---
+import type { Page } from "astro";
+import type { CollectionEntry } from "astro:content";
+import type { TopicHub } from "@/data/topicHubs";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import Card from "@/components/Card.astro";
+import Pagination from "@/components/Pagination.astro";
+import { buildPaginationSeo } from "@/utils/paginationSeo";
+import { SITE } from "@/config";
+
+type Props = { topic: TopicHub; page: Page<CollectionEntry<"blog">> };
+const { topic, page } = Astro.props;
+const canonicalBase = new URL(`/topics/${topic.slug}/`, SITE.website);
+const seo = buildPaginationSeo({
+  title: topic.title,
+  description: topic.description,
+  canonicalBase,
+  currentPage: page.currentPage,
+  siteTitle: SITE.title,
+});
+---
+
+<Layout
+  title={seo.title}
+  description={seo.description}
+  pageType="collection"
+  canonicalURL={seo.canonicalURL}
+  keywords={[topic.title, ...topic.questions]}
+  breadcrumbs={[
+    { name: "首页", url: SITE.website },
+    { name: "主题", url: new URL("/topics/", SITE.website) },
+    { name: topic.title, url: canonicalBase },
+  ]}
+>
+  <Header />
+  <main id="main-content" class="app-layout pb-8">
+    <header class="border-b border-border pt-8 pb-6">
+      <h1 class="text-3xl font-bold">
+        {topic.title}{page.currentPage > 1 && ` · 第 ${page.currentPage} 页`}
+      </h1>
+      {
+        page.currentPage === 1 && (
+          <>
+            <>
+              <p class="mt-4 leading-7">{topic.description}</p>
+              <p class="mt-3 text-sm leading-7 text-foreground/80">
+                {topic.scope}
+              </p>
+            </>
+          </>
+        )
+      }
+    </header>
+    {
+      page.currentPage === 1 && (
+        <section class="border-b border-border py-5">
+          <h2 class="text-lg font-semibold">持续追踪的问题</h2>
+          <ul class="mt-3 list-disc space-y-2 ps-5 text-sm leading-7">
+            {topic.questions.map(question => (
+              <li>{question}</li>
+            ))}
+          </ul>
+          <nav class="archive-index" aria-label="相关资料与项目">
+            {topic.links.map(link => (
+              <a
+                href={link.href}
+                target={link.href.startsWith("http") ? "_blank" : undefined}
+                rel={
+                  link.href.startsWith("http")
+                    ? "noopener noreferrer"
+                    : undefined
+                }
+              >
+                {link.label}
+              </a>
+            ))}
+          </nav>
+        </section>
+      )
+    }
+    <section class="pt-6">
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <h2 class="text-lg font-semibold">按发布时间阅读</h2><span
+          class="text-sm text-foreground/80">共 {page.total} 篇</span
+        >
+      </div>
+      {
+        page.data.length ? (
+          <ul>
+            {page.data.map(post => (
+              <Card {...post} />
+            ))}
+          </ul>
+        ) : (
+          <p class="mt-5">
+            这个主题正在整理，
+            <a href="/posts/" class="text-accent underline">
+              查看全部文章
+            </a>
+            。
+          </p>
+        )
+      }
+    </section>
+  </main>
+  <Pagination {page} />
+  <Footer noMarginTop={page.lastPage > 1} />
+</Layout>

@@ -1,19 +1,23 @@
 @import "tailwindcss";
 @import "./typography.css";
+@import "../../tokens.css";
+@import "./reading.css";
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 :root,
 html[data-theme="light"] {
-  --background: #fbfcfe;
-  --foreground: #111827;
-  --accent: #0b5cad;
-  --muted: #eef3f8;
-  --border: #d8e0ea;
-  --font-display: var(--font-google-sans-code, "Microsoft YaHei UI"),
-    "PingFang SC", "Noto Sans CJK SC", "Noto Sans SC", system-ui, sans-serif;
-  --font-body: "Microsoft YaHei UI", "PingFang SC", "Noto Sans CJK SC",
-    "Noto Sans SC", "Source Han Sans SC", system-ui, sans-serif;
+  --background: var(--color-studio-paper);
+  --foreground: var(--color-studio-ink);
+  --accent: var(--color-studio-accent);
+  --muted: var(--color-studio-accent-soft);
+  --border: var(--color-studio-line);
+  --font-display:
+    var(--font-google-sans-code, "Microsoft YaHei UI"), "PingFang SC",
+    "Noto Sans CJK SC", "Noto Sans SC", system-ui, sans-serif;
+  --font-body:
+    "Microsoft YaHei UI", "PingFang SC", "Noto Sans CJK SC", "Noto Sans SC",
+    "Source Han Sans SC", system-ui, sans-serif;
   --metal-base: #f3f7fb;
   --metal-panel: #ffffff;
   --metal-grid: rgba(15, 23, 42, 0.1);
@@ -30,15 +34,17 @@ html[data-theme="light"] {
 }
 
 html[data-theme="dark"] {
-  --background: #212737;
-  --foreground: #eaedf3;
-  --accent: #ff6b01;
-  --muted: #343f60;
-  --border: #ab4b08;
-  --font-display: var(--font-google-sans-code, "Microsoft YaHei UI"),
-    "PingFang SC", "Noto Sans CJK SC", "Noto Sans SC", system-ui, sans-serif;
-  --font-body: "Microsoft YaHei UI", "PingFang SC", "Noto Sans CJK SC",
-    "Noto Sans SC", "Source Han Sans SC", system-ui, sans-serif;
+  --background: var(--color-studio-paper);
+  --foreground: var(--color-studio-ink);
+  --accent: var(--color-studio-accent);
+  --muted: var(--color-studio-accent-soft);
+  --border: var(--color-studio-line);
+  --font-display:
+    var(--font-google-sans-code, "Microsoft YaHei UI"), "PingFang SC",
+    "Noto Sans CJK SC", "Noto Sans SC", system-ui, sans-serif;
+  --font-body:
+    "Microsoft YaHei UI", "PingFang SC", "Noto Sans CJK SC", "Noto Sans SC",
+    "Source Han Sans SC", system-ui, sans-serif;
   --metal-base: #0e131a;
   --metal-panel: #151b24;
   --metal-grid: rgba(255, 255, 255, 0.08);
@@ -76,10 +82,10 @@ html[data-theme="dark"] {
     scrollbar-color: var(--color-muted) transparent;
   }
   html {
-    @apply overflow-x-clip overflow-y-scroll scroll-smooth;
+    @apply overflow-y-scroll scroll-smooth;
   }
   body {
-    @apply flex min-h-svh overflow-x-clip flex-col bg-background font-app text-foreground selection:bg-accent/75 selection:text-background;
+    @apply flex min-h-svh flex-col bg-background font-app text-foreground selection:bg-accent/75 selection:text-background;
   }
   a,
   button {
@@ -117,15 +123,11 @@ html[data-theme="dark"] {
     min-width: 0;
     max-width: 100%;
     margin: 1rem 0 1.6rem;
-    padding: clamp(1.6rem, 3.2vw, 2.6rem)
-      clamp(1.4rem, 3.5vw, 2.4rem);
+    padding: clamp(1.6rem, 3.2vw, 2.6rem) clamp(1.4rem, 3.5vw, 2.4rem);
     border-radius: clamp(24px, 3vw, 36px);
     border: 1px solid var(--glass-border);
-    background: radial-gradient(
-        circle at 15% 20%,
-        var(--metal-glow),
-        transparent 55%
-      ),
+    background:
+      radial-gradient(circle at 15% 20%, var(--metal-glow), transparent 55%),
       linear-gradient(140deg, var(--metal-base), transparent 50%),
       linear-gradient(180deg, var(--metal-panel), var(--metal-base));
     box-shadow: 0 45px 90px -60px rgba(15, 23, 42, 0.4);
@@ -136,11 +138,8 @@ html[data-theme="dark"] {
     position: absolute;
     inset: 0;
     border-radius: inherit;
-    background-image: linear-gradient(
-        to right,
-        var(--metal-grid) 1px,
-        transparent 1px
-      ),
+    background-image:
+      linear-gradient(to right, var(--metal-grid) 1px, transparent 1px),
       linear-gradient(to bottom, var(--metal-grid) 1px, transparent 1px);
     background-size: 36px 36px;
     opacity: 0.22;
@@ -255,11 +254,14 @@ html[data-theme="dark"] {
     gap: 0.6rem;
     border-radius: 18px;
     border: 1px solid var(--metal-border);
-    background: linear-gradient(135deg, var(--metal-gloss), transparent),
+    background:
+      linear-gradient(135deg, var(--metal-gloss), transparent),
       var(--metal-panel);
     padding: 1.15rem 1.2rem;
     box-shadow: 0 18px 40px -30px rgba(0, 0, 0, 0.45);
-    transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out),
+    transition:
+      transform 0.25s var(--ease-out),
+      box-shadow 0.25s var(--ease-out),
       border-color 0.25s var(--ease-out);
     overflow: hidden;
     animation: launchpad-in 0.55s var(--ease-out) both;
@@ -278,7 +280,9 @@ html[data-theme="dark"] {
     );
     opacity: 0;
     transform: translateX(-120%);
-    transition: transform 0.45s var(--ease-out), opacity 0.45s var(--ease-out);
+    transition:
+      transform 0.45s var(--ease-out),
+      opacity 0.45s var(--ease-out);
   }
 
   .project-card:hover {
@@ -340,7 +344,8 @@ html[data-theme="dark"] {
     min-width: 0;
     border-radius: 18px;
     border: 1px solid var(--metal-border);
-    background: linear-gradient(160deg, var(--metal-gloss), transparent),
+    background:
+      linear-gradient(160deg, var(--metal-gloss), transparent),
       var(--metal-panel);
     padding: 1.2rem 1.4rem;
     box-shadow: 0 18px 36px -32px rgba(0, 0, 0, 0.45);

@@ -1,7 +1,10 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { getPostTopicSlugs, scoreRelatedPost } from "../src/utils/postTopics.ts";
+import {
+  getPostTopicSlugs,
+  scoreRelatedPost,
+} from "../src/utils/postTopics.ts";
 
 function post(
   id: string,
@@ -48,4 +51,18 @@ test("generic AI tags do not create a related-post match", () => {
       post("five", "售后工作流", "账号生意复盘")
     ) > 0
   );
+});
+
+test("explicit topics override incidental body keywords and may be empty", () => {
+  const explicit = post(
+    "curated",
+    "AI 生命科学",
+    "研究边界",
+    [],
+    "店铺客服 Claude"
+  ) as unknown as { data: { topics?: string[] } };
+  explicit.data.topics = ["ai-longevity"];
+  assert.deepEqual(getPostTopicSlugs(explicit as never), ["ai-longevity"]);
+  explicit.data.topics = [];
+  assert.deepEqual(getPostTopicSlugs(explicit as never), []);
 });

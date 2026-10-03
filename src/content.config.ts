@@ -15,6 +15,15 @@ const blog = defineCollection({
       featured: z.boolean().optional(),
       draft: z.boolean().optional(),
       tags: z.array(z.string()).default(["others"]),
+      topics: z
+        .array(
+          z.enum([
+            "ai-one-person-company",
+            "ai-longevity",
+            "ai-account-business",
+          ])
+        )
+        .optional(),
       ogImage: image().or(z.string()).optional(),
       description: z.string(),
       canonicalURL: z.string().optional(),

@@ -26,11 +26,7 @@
     }
 
     a {
-      @apply wrap-break-word text-foreground decoration-dashed underline-offset-4 hover:text-accent focus-visible:no-underline;
-    }
-
-    ul {
-      @apply overflow-x-clip;
+      @apply wrap-break-word text-accent underline-offset-4 hover:decoration-2 focus-visible:no-underline;
     }
 
     li {
@@ -82,6 +78,7 @@
 
     blockquote {
       @apply border-s-accent/80 wrap-break-word text-foreground/80;
+      border-inline-start-width: 1px;
     }
 
     details {

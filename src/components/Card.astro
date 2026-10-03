@@ -4,6 +4,7 @@ import { slugifyStr } from "@/utils/slugify";
 import { getPath } from "@/utils/getPath";
 import { cleanPostDescription } from "@/utils/postDescription";
 import Datetime from "./Datetime.astro";
+import { getArticleSeries } from "@/utils/articleReading";
 
 type Props = {
   variant?: "h2" | "h3";
@@ -18,11 +19,11 @@ const displayDescription = cleanPostDescription(
 );
 ---
 
-<li class="my-6">
+<li class="post-list-item">
   <a
     href={getPath(id, filePath)}
     class:list={[
-      "inline-block text-lg font-medium text-accent",
+      "post-list-title text-lg font-semibold text-foreground",
       "decoration-dashed underline-offset-4 hover:underline",
       "focus-visible:no-underline focus-visible:underline-offset-0",
     ]}
@@ -31,6 +32,9 @@ const displayDescription = cleanPostDescription(
       {title}
     </Heading>
   </a>
-  <Datetime {...props} />
-  <p>{displayDescription}</p>
+  <div class="post-list-meta">
+    <span>{getArticleSeries(data.tags)}</span>
+    <Datetime {...props} />
+  </div>
+  <p class="post-list-description">{displayDescription}</p>
 </li>

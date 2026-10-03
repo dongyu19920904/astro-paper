@@ -13,6 +13,7 @@ import { remarkProxyImages } from "./src/utils/remarkProxyImages";
 import { remarkRemoveToc } from "./src/utils/remarkRemoveToc";
 import { rehypeFigures } from "./src/utils/rehypeFigures";
 import { SITE } from "./src/config";
+import { remarkArticleSources } from "./src/utils/remarkArticleSources";
 
 // https://astro.build/config
 export default defineConfig({
@@ -26,6 +27,7 @@ export default defineConfig({
   ],
   markdown: {
     remarkPlugins: [
+      [remarkArticleSources, { site: SITE.website }],
       remarkRemoveToc,
       remarkProxyImages,
       remarkToc,

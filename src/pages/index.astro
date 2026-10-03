@@ -5,6 +5,7 @@ import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import getSortedPosts from "@/utils/getSortedPosts";
 import { getPath } from "@/utils/getPath";
+import { getArticleSeries } from "@/utils/articleReading";
 import { SITE } from "@/config";
 import { HOME_PROJECTS } from "@/data/navProjects";
 import { TOPIC_HUBS } from "@/data/topicHubs";
@@ -12,7 +13,7 @@ import authorKnowledge from "@/data/authorKnowledge.json";
 import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
 import "@/styles/home-studio.css";
 
-const posts = getSortedPosts(await getCollection("blog")).slice(0, 3);
+const posts = getSortedPosts(await getCollection("blog")).slice(0, 6);
 const dateFormatter = new Intl.DateTimeFormat("zh-CN", {
   timeZone: SITE.timezone,
   year: "numeric",
@@ -29,7 +30,7 @@ function formatPostDate(date: Date) {
 
 <Layout
   pageType="website"
-  title={SITE.title + " | AI 账号店、AI 一人公司与生命延续学实验"}
+  title={SITE.title + " | AI 实践与生命延续学记录"}
   description={SITE.desc}
   canonicalURL={SITE.website}
 >
@@ -38,8 +39,9 @@ function formatPostDate(date: Date) {
     <main id="main-content" data-layout="index" class="studio-main">
       <section class="studio-intro" aria-labelledby="home-title">
         <div class="studio-identity">
-          <h1 id="home-title">yuyu</h1>
-          <a href="/about/">关于我 <IconArrowRight /></a>
+          <h1 id="home-title">yuyu</h1><a href="/about/"
+            >关于我 <IconArrowRight /></a
+          >
         </div>
         <div class="studio-intro-copy">
           <p class="studio-lead">
@@ -49,131 +51,138 @@ function formatPostDate(date: Date) {
             经营爱窝啦 AI 账号店，实践 AI 一人公司，探索 AI 生命延续学。
           </p>
           <div class="studio-actions">
-            <a href="/projects/" class="studio-primary"
-              >探索项目 <IconArrowRight /></a
+            <a href="/posts/" class="studio-primary"
+              >读我的记录 <IconArrowRight /></a
             >
-            <a href="/posts/">读我的记录 <IconArrowRight /></a>
+            <a href="/projects/">探索项目 <IconArrowRight /></a>
             <a
               href={SITE.brand.website}
               class="studio-shop"
               target="_blank"
               rel="noopener noreferrer"
+              >爱窝啦 · AI 账号店 <span aria-hidden="true">↗</span></a
             >
-              爱窝啦 · AI 账号店 <span aria-hidden="true">↗</span>
-            </a>
           </div>
         </div>
       </section>
-
       <div class="studio-workspace">
-        <section aria-labelledby="home-projects-title">
+        <section class="studio-records" aria-labelledby="home-posts-title">
           <div class="studio-heading">
-            <h2 id="home-projects-title">正在做的项目</h2>
-            <a href="/projects/">全部项目 <IconArrowRight /></a>
+            <h2 id="home-posts-title">最近发布</h2><a href="/posts/"
+              >全部文章 <IconArrowRight /></a
+            >
           </div>
-          <div class="studio-projects">
-            {
-              HOME_PROJECTS.map((project, index) => (
-                <article class="studio-project">
-                  <a
-                    class="studio-preview"
-                    href={project.url}
-                    aria-label={"打开项目：" + project.title}
-                    target={
-                      project.url.startsWith("http") ? "_blank" : undefined
-                    }
-                    rel={
-                      project.url.startsWith("http")
-                        ? "noopener noreferrer"
-                        : undefined
-                    }
-                  >
-                    <img
-                      src={project.preview.src}
-                      alt={project.preview.alt}
-                      width={project.preview.width}
-                      height={project.preview.height}
-                      loading={index === 0 ? "eager" : "lazy"}
-                      fetchpriority={index === 0 ? "high" : "auto"}
-                      decoding="async"
-                    />
-                  </a>
-                  <div class="studio-project-content">
-                    <p class="studio-project-meta">
-                      <span>{project.tag}</span>
-                      {project.status && <span>{project.status}</span>}
-                    </p>
-                    <h3>
-                      <a
-                        href={project.url}
-                        target={
-                          project.url.startsWith("http") ? "_blank" : undefined
-                        }
-                        rel={
-                          project.url.startsWith("http")
-                            ? "noopener noreferrer"
-                            : undefined
-                        }
-                      >
-                        {project.title}
-                        <IconArrowRight />
-                      </a>
-                    </h3>
-                    <p>{project.desc}</p>
-                  </div>
-                </article>
-              ))
-            }
-          </div>
-          <p class="studio-snapshot-note">
-            界面快照 · {HOME_PROJECTS[0].preview.capturedAt} · 以项目当前页面为准
-          </p>
-        </section>
-
-        <aside class="studio-journal" aria-label="文章与近况">
           {
-            posts.length > 0 && (
-              <section
-                class="studio-records"
-                aria-labelledby="home-posts-title"
-              >
-                <div class="studio-heading">
-                  <h2 id="home-posts-title">最近的记录</h2>
-                  <a href="/posts/">
-                    全部文章 <IconArrowRight />
-                  </a>
-                </div>
-                <ul class="studio-posts">
-                  {posts.map(post => (
-                    <li>
+            posts.length > 0 ? (
+              <ul class="studio-posts">
+                {posts.map(post => (
+                  <li>
+                    <div class="studio-post-meta">
                       <time datetime={post.data.pubDatetime.toISOString()}>
                         {formatPostDate(post.data.pubDatetime)}
                       </time>
-                      <h3>
-                        <a href={getPath(post.id, post.filePath)}>
-                          {post.data.title}
-                        </a>
-                      </h3>
-                    </li>
-                  ))}
-                </ul>
-              </section>
+                      <span>{getArticleSeries(post.data.tags)}</span>
+                    </div>
+                    <h3>
+                      <a href={getPath(post.id, post.filePath)}>
+                        {post.data.title}
+                        <IconArrowRight />
+                      </a>
+                    </h3>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p>
+                文章正在整理中。<a href="/topics/">按主题阅读</a>
+              </p>
             )
           }
+          <a class="studio-more" href="/posts/">继续阅读 <IconArrowRight /></a>
+        </section>
+        <aside class="studio-journal" aria-label="主题、项目与近况">
           <nav class="studio-focus" aria-label="长期关注的三个方向">
             <h2>长期关注</h2>
             {
               TOPIC_HUBS.map(topic => (
                 <a href={"/topics/" + topic.slug + "/"}>
-                  <span>{topic.shortTitle}</span>
-                  <IconArrowRight />
+                  <>
+                    <span>{topic.shortTitle}</span>
+                    <IconArrowRight />
+                  </>
                 </a>
               ))
             }
           </nav>
+          <section aria-labelledby="home-projects-title">
+            <div class="studio-heading">
+              <h2 id="home-projects-title">正在做的项目</h2><a href="/projects/"
+                >全部项目 <IconArrowRight /></a
+              >
+            </div>
+            <div class="studio-projects">
+              {
+                HOME_PROJECTS.map(project => (
+                  <article class="studio-project">
+                    <a
+                      class="studio-preview"
+                      href={project.url}
+                      aria-label={"打开项目：" + project.title}
+                      target={
+                        project.url.startsWith("http") ? "_blank" : undefined
+                      }
+                      rel={
+                        project.url.startsWith("http")
+                          ? "noopener noreferrer"
+                          : undefined
+                      }
+                    >
+                      <img
+                        src={project.preview.src}
+                        alt={project.preview.alt}
+                        width={project.preview.width}
+                        height={project.preview.height}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </a>
+                    <div class="studio-project-content">
+                      <p class="studio-project-meta">
+                        <span>{project.tag}</span>
+                        {project.status && <span>{project.status}</span>}
+                      </p>
+                      <h3>
+                        <a
+                          href={project.url}
+                          target={
+                            project.url.startsWith("http")
+                              ? "_blank"
+                              : undefined
+                          }
+                          rel={
+                            project.url.startsWith("http")
+                              ? "noopener noreferrer"
+                              : undefined
+                          }
+                        >
+                          {project.title}
+                          <IconArrowRight />
+                        </a>
+                      </h3>
+                      <p>{project.desc}</p>
+                    </div>
+                  </article>
+                ))
+              }
+            </div>
+            <p class="studio-snapshot-note">
+              界面快照 · {HOME_PROJECTS[0].preview.capturedAt} · 以项目当前页面为准
+            </p>
+          </section>
           <div class="studio-now">
-            <a href="/now/">最近在忙什么 <IconArrowRight /></a>
-            <span>资料更新 · {authorKnowledge.updatedAt}</span>
+            <a href="/now/">最近在忙什么 <IconArrowRight /></a><span
+              >资料更新 · {authorKnowledge.updatedAt}</span
+            >
           </div>
         </aside>
       </div>
@@ -181,11 +190,9 @@ function formatPostDate(date: Date) {
     <Footer class="studio-footer" />
   </div>
 </Layout>
-
 <script>
   document.addEventListener("astro:page-load", () => {
-    if (document.querySelector('[data-layout="index"]')) {
+    if (document.querySelector('[data-layout="index"]'))
       sessionStorage.setItem("backUrl", "/");
-    }
   });
 </script>

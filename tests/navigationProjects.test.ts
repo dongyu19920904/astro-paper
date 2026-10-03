@@ -43,7 +43,7 @@ test("field notes keep real content while reducing homepage duplication", () => 
     "utf8"
   );
   assert.match(page, /class="studio-workspace"/);
-  assert.match(page, /<aside[^>]+aria-label="文章与近况"/);
+  assert.match(page, /<aside[^>]+aria-label="主题、项目与近况"/);
   assert.match(
     page,
     /<time datetime=\{post\.data\.pubDatetime\.toISOString\(\)\}/
