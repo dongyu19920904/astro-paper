@@ -4,11 +4,6 @@
  */
 @import "../../tokens.css";
 
-html:has(.home-studio),
-body:has(.home-studio) {
-  overflow-x: clip;
-}
-
 .home-studio {
   --background: var(--color-studio-paper);
   --foreground: var(--color-studio-ink);
@@ -74,7 +69,7 @@ body:has(.home-studio) {
 }
 
 .studio-lead {
-  max-width: 34rem;
+  max-width: 38rem;
   font-size: var(--text-studio-lead);
   line-height: 1.5;
   font-weight: 600;
@@ -210,13 +205,16 @@ body:has(.home-studio) {
 }
 
 .studio-project h3 a {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: var(--space-studio-xs);
+  min-height: 44px;
+  width: fit-content;
+  max-width: 100%;
 }
 
 .studio-project-content > p:last-child {
-  margin-top: var(--space-studio-xs);
+  margin-top: 0.25rem;
   color: var(--color-studio-secondary);
   font-size: var(--text-studio-body);
   line-height: 1.8;
@@ -232,7 +230,7 @@ body:has(.home-studio) {
 .studio-journal {
   display: flex;
   flex-direction: column;
-  gap: var(--space-studio-lg);
+  gap: var(--space-studio-md);
 }
 
 .studio-posts li {
@@ -246,7 +244,7 @@ body:has(.home-studio) {
 
 .studio-posts time {
   display: block;
-  margin-bottom: var(--space-studio-xs);
+  margin-bottom: 0;
   color: var(--color-studio-secondary);
   font-size: var(--text-studio-small);
   font-variant-numeric: tabular-nums;
@@ -257,6 +255,19 @@ body:has(.home-studio) {
   font-weight: 500;
   line-height: 1.7;
   overflow-wrap: anywhere;
+}
+
+.studio-posts h3 a {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding-block: 0.25rem;
+}
+
+.home-studio .studio-footer nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
 }
 
 .studio-focus a {
@@ -344,11 +355,43 @@ body:has(.home-studio) {
 }
 
 @media (max-width: 39.99rem) {
+  .home-studio #top-nav-wrap {
+    padding-block: var(--space-studio-sm);
+  }
+  .studio-intro {
+    gap: var(--space-studio-sm);
+    padding-block: var(--space-studio-lg);
+  }
   .studio-identity h1 {
     font-size: 2.5rem;
   }
   .studio-lead {
     font-size: 1.375rem;
+  }
+  .studio-summary,
+  .studio-project-content > p:last-child {
+    line-height: 1.65;
+  }
+  .studio-actions {
+    margin-top: var(--space-studio-md);
+    gap: 0 var(--space-studio-md);
+  }
+  .studio-workspace {
+    gap: var(--space-studio-lg);
+    padding-block: var(--space-studio-lg);
+  }
+  .studio-heading {
+    margin-bottom: var(--space-studio-sm);
+  }
+  .studio-projects {
+    gap: var(--space-studio-md);
+  }
+  .studio-project {
+    gap: var(--space-studio-sm);
+    padding-bottom: var(--space-studio-md);
+  }
+  .studio-project-meta {
+    margin-bottom: 0;
   }
 }
 

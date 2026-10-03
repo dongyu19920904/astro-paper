@@ -1,6 +1,8 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { existsSync, readFileSync } from "node:fs";
+import { runInNewContext } from "node:vm";
+import ts from "typescript";
 
 import {
   HOME_PROJECTS,
@@ -56,6 +58,105 @@ test("field notes keep real content while reducing homepage duplication", () => 
   );
   assert.doesNotMatch(css, /text-shadow|scale\(1\.015\)/);
   assert.match(css, /minmax\(0, 1\.85fr\) minmax\(0, 1fr\)/);
+});
+
+test("homepage refinements preserve copy and improve reading targets", () => {
+  const page = readFileSync(
+    new URL("../src/pages/index.astro", import.meta.url),
+    "utf8"
+  );
+  const css = readFileSync(
+    new URL("../src/styles/home-studio.css", import.meta.url),
+    "utf8"
+  );
+  assert.ok(page.includes("将时间留给长期探索。"));
+  assert.match(css, /\.studio-posts h3 a\s*\{[^}]*min-height: 44px/);
+  assert.match(css, /\.studio-project h3 a\s*\{[^}]*min-height: 44px/);
+  assert.doesNotMatch(css, /overflow-x:\s*(?:clip|hidden)|line-clamp/);
+});
+
+test("navigation controls use Chinese accessible names", () => {
+  const header = readFileSync(
+    new URL("../src/components/Header.astro", import.meta.url),
+    "utf8"
+  );
+  assert.ok(header.includes('aria-label="搜索文章"'));
+  assert.ok(header.includes('aria-label="展开导航"'));
+  assert.ok(header.includes('openMenu ? "展开导航" : "收起导航"'));
+  assert.ok(header.includes('menuBtn.setAttribute("title", menuAction)'));
+});
+
+test("theme action labels stay in sync through clicks and page swaps", () => {
+  const source = readFileSync(
+    new URL("../src/scripts/theme.ts", import.meta.url),
+    "utf8"
+  );
+  const code = ts.transpileModule(source, {
+    compilerOptions: { target: ts.ScriptTarget.ES2022 },
+  }).outputText;
+
+  for (const initial of ["light", "dark"]) {
+    const attrs: Record<string, string> = {};
+    const rootAttrs: Record<string, string> = {};
+    const events: Record<string, () => void> = {};
+    const storage = new Map<string, string>();
+    const listeners = new Map<string, () => void>();
+    const makeButton = () => ({
+      setAttribute: (name: string, value: string) => {
+        attrs[name] = value;
+      },
+      addEventListener: (name: string, callback: () => void) => {
+        listeners.set(name, callback);
+      },
+    });
+    let button = makeButton();
+    const theme = {
+      themeValue: initial,
+      getTheme: () => theme.themeValue,
+      setTheme: (value: string) => {
+        theme.themeValue = value;
+      },
+    };
+    runInNewContext(code, {
+      window: {
+        theme,
+        matchMedia: () => ({ matches: false, addEventListener: () => {} }),
+        getComputedStyle: () => ({ backgroundColor: "rgb(255, 255, 255)" }),
+      },
+      document: {
+        body: {},
+        firstElementChild: {
+          setAttribute: (name: string, value: string) => {
+            rootAttrs[name] = value;
+          },
+        },
+        querySelector: (selector: string) =>
+          selector === "#theme-btn" ? button : null,
+        addEventListener: (name: string, callback: () => void) => {
+          events[name] = callback;
+        },
+      },
+      localStorage: {
+        getItem: (name: string) => storage.get(name) ?? null,
+        setItem: (name: string, value: string) => storage.set(name, value),
+      },
+    });
+    const firstAction = initial === "dark" ? "切换到日间" : "切换到夜间";
+    const nextAction = initial === "dark" ? "切换到夜间" : "切换到日间";
+    assert.equal(attrs["aria-label"], firstAction);
+    assert.equal(attrs.title, firstAction);
+    listeners.get("click")!();
+    assert.equal(attrs["aria-label"], nextAction);
+    assert.equal(attrs.title, nextAction);
+    assert.equal(storage.get("theme"), initial === "dark" ? "light" : "dark");
+
+    button = makeButton();
+    events["astro:after-swap"]();
+    assert.equal(attrs["aria-label"], nextAction);
+    listeners.get("click")!();
+    assert.equal(attrs["aria-label"], firstAction);
+    assert.equal(rootAttrs["data-theme"], initial);
+  }
 });
 
 test("homepage previews are local real-project assets with stable dimensions", () => {
