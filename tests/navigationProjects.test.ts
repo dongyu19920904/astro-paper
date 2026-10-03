@@ -159,6 +159,88 @@ test("theme action labels stay in sync through clicks and page swaps", () => {
   }
 });
 
+test("day and night retain the original blog palette without home overrides", () => {
+  const source = (path: string) =>
+    readFileSync(new URL(`../${path}`, import.meta.url), "utf8");
+  const css = source("src/styles/global.css");
+  const light = css.match(
+    /:root,\s*html\[data-theme="light"\]\s*\{([^}]+)\}/
+  )![1];
+  const dark = css.match(/html\[data-theme="dark"\]\s*\{([^}]+)\}/)![1];
+  for (const [block, expected] of [
+    [
+      light,
+      { background: "#fbfcfe", foreground: "#111827", accent: "#0b5cad" },
+    ],
+    [dark, { background: "#212737", foreground: "#eaedf3", accent: "#ff6b01" }],
+  ] as const) {
+    for (const [name, value] of Object.entries(expected)) {
+      assert.match(block, new RegExp(`--${name}:\\s*${value}\\s*;`));
+    }
+  }
+  const home = source("src/styles/home-studio.css").match(
+    /\.home-studio\s*\{([^}]+)\}/
+  )![1];
+  assert.doesNotMatch(home, /--(?:background|foreground|accent|muted|border):/);
+  assert.doesNotMatch(css + source("tokens.css"), /oklch\(/);
+  assert.doesNotMatch(source("src/styles/reading.css"), /--color-studio-/);
+  assert.match(
+    source("src/components/Card.astro"),
+    /post-list-title text-lg font-medium text-accent/
+  );
+  assert.match(
+    source("src/styles/reading.css"),
+    /\.article-title\s*\{[^}]*color:\s*var\(--accent\)/
+  );
+  assert.match(
+    source("src/styles/home-studio.css"),
+    /\.studio-posts h3 a\s*\{[^}]*color:\s*var\(--accent\)/
+  );
+});
+
+test("base and secondary text and colored actions have readable contrast", () => {
+  const css = readFileSync(
+    new URL("../src/styles/global.css", import.meta.url),
+    "utf8"
+  );
+  const luminance = (hex: string) => {
+    const rgb = hex
+      .slice(1)
+      .match(/../g)!
+      .map(part => {
+        const value = parseInt(part, 16) / 255;
+        return value <= 0.04045
+          ? value / 12.92
+          : ((value + 0.055) / 1.055) ** 2.4;
+      });
+    return rgb[0] * 0.2126 + rgb[1] * 0.7152 + rgb[2] * 0.0722;
+  };
+  const blocks = [
+    css.match(/:root,\s*html\[data-theme="light"\]\s*\{([^}]+)\}/)![1],
+    css.match(/html\[data-theme="dark"\]\s*\{([^}]+)\}/)![1],
+  ];
+  for (const block of blocks) {
+    const color = (name: string) => {
+      const value = block.match(
+        new RegExp(`--${name}:\\s*(#[0-9a-f]{6})\\s*;`, "i")
+      )?.[1];
+      assert.ok(value, `Missing explicit ${name} color`);
+      return luminance(value);
+    };
+    for (const [text, background] of [
+      ["foreground", "background"],
+      ["secondary", "background"],
+      ["accent", "background"],
+      ["on-accent", "accent"],
+    ]) {
+      const a = color(text),
+        b = color(background);
+      const ratio = (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
+      assert.ok(ratio >= 4.5, `${text}/${background}: ${ratio.toFixed(2)}`);
+    }
+  }
+});
+
 test("homepage previews are local real-project assets with stable dimensions", () => {
   for (const project of HOME_PROJECTS) {
     assert.match(project.preview.src, /^\/images\/projects\/[a-z0-9-]+\.webp$/);

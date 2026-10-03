@@ -16,7 +16,7 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 0.35rem 1rem;
-  color: var(--color-studio-secondary);
+  color: var(--secondary);
   font-size: 0.875rem;
   line-height: 1.75;
 }
@@ -25,7 +25,7 @@
 }
 .post-list-description {
   margin-top: 0.5rem;
-  color: var(--color-studio-secondary);
+  color: var(--secondary);
   line-height: 1.85;
   overflow-wrap: anywhere;
 }
@@ -33,6 +33,7 @@
   max-width: 44rem;
 }
 .article-title {
+  color: var(--accent);
   font-size: 1.875rem;
   font-weight: 700;
   line-height: 1.5;
@@ -50,14 +51,14 @@
 .article-method {
   padding-block: 0.75rem;
   border-bottom: 1px solid var(--border);
-  color: var(--color-studio-secondary);
+  color: var(--secondary);
   font-size: 0.875rem;
   line-height: 1.85;
 }
 .article-toc {
   margin-top: 1.5rem;
   font-size: 0.875rem;
-  color: var(--color-studio-secondary);
+  color: var(--secondary);
 }
 .article-toc summary {
   cursor: pointer;
@@ -122,13 +123,13 @@
 .copy-status {
   display: block;
   font-size: 0.875rem;
-  color: var(--color-studio-secondary);
+  color: var(--secondary);
 }
 .article-citation {
   margin-top: 2rem;
   padding-block: 1rem;
   border-block: 1px solid var(--border);
-  color: var(--color-studio-secondary);
+  color: var(--secondary);
   font-size: 0.875rem;
   line-height: 1.85;
   overflow-wrap: anywhere;
@@ -165,7 +166,7 @@
 .archive-row time {
   padding-top: 0.7rem;
   font-size: 0.875rem;
-  color: var(--color-studio-secondary);
+  color: var(--secondary);
   font-variant-numeric: tabular-nums;
 }
 .archive-row a {

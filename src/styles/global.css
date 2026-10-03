@@ -1,17 +1,19 @@
 @import "tailwindcss";
 @import "./typography.css";
-@import "../../tokens.css";
 @import "./reading.css";
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 :root,
 html[data-theme="light"] {
-  --background: var(--color-studio-paper);
-  --foreground: var(--color-studio-ink);
-  --accent: var(--color-studio-accent);
-  --muted: var(--color-studio-accent-soft);
-  --border: var(--color-studio-line);
+  color-scheme: light;
+  --background: #fbfcfe;
+  --foreground: #111827;
+  --accent: #0b5cad;
+  --muted: #eef3f8;
+  --border: #d8e0ea;
+  --secondary: #4b5563;
+  --on-accent: #ffffff;
   --font-display:
     var(--font-google-sans-code, "Microsoft YaHei UI"), "PingFang SC",
     "Noto Sans CJK SC", "Noto Sans SC", system-ui, sans-serif;
@@ -34,11 +36,14 @@ html[data-theme="light"] {
 }
 
 html[data-theme="dark"] {
-  --background: var(--color-studio-paper);
-  --foreground: var(--color-studio-ink);
-  --accent: var(--color-studio-accent);
-  --muted: var(--color-studio-accent-soft);
-  --border: var(--color-studio-line);
+  color-scheme: dark;
+  --background: #212737;
+  --foreground: #eaedf3;
+  --accent: #ff6b01;
+  --muted: #343f60;
+  --border: #ab4b08;
+  --secondary: #c0c6d2;
+  --on-accent: #212737;
   --font-display:
     var(--font-google-sans-code, "Microsoft YaHei UI"), "PingFang SC",
     "Noto Sans CJK SC", "Noto Sans SC", system-ui, sans-serif;

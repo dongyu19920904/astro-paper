@@ -1,13 +1,13 @@
-/* Hallmark: Ecosystem Index / personal field notes. Home-scoped tokens. */
+/* Homepage aliases consume the original blog theme, never override it. */
 :root {
-  --color-studio-paper: oklch(98% 0.003 160);
-  --color-studio-surface: oklch(95% 0.005 160);
-  --color-studio-ink: oklch(23% 0.008 160);
-  --color-studio-secondary: oklch(43% 0.01 160);
-  --color-studio-accent: oklch(43% 0.08 165);
-  --color-studio-accent-soft: oklch(92% 0.025 165);
-  --color-studio-on-accent: oklch(98% 0.003 160);
-  --color-studio-line: oklch(83% 0.006 160);
+  --color-studio-paper: var(--background, #fbfcfe);
+  --color-studio-surface: var(--muted, #eef3f8);
+  --color-studio-ink: var(--foreground, #111827);
+  --color-studio-secondary: var(--secondary, #4b5563);
+  --color-studio-accent: var(--accent, #0b5cad);
+  --color-studio-accent-soft: var(--muted, #eef3f8);
+  --color-studio-on-accent: var(--on-accent, #ffffff);
+  --color-studio-line: var(--border, #d8e0ea);
   --font-studio-display: Georgia, "Times New Roman", serif;
   --font-studio-body:
     "Microsoft YaHei", "Microsoft YaHei UI", "PingFang SC", "Noto Sans CJK SC",
@@ -28,15 +28,4 @@
   --rule-studio: 1px solid var(--color-studio-line);
   --ease-studio-out: cubic-bezier(0.2, 0.8, 0.2, 1);
   --dur-studio: 180ms;
-}
-
-:root[data-theme="dark"] {
-  --color-studio-paper: oklch(18% 0.005 160);
-  --color-studio-surface: oklch(23% 0.007 160);
-  --color-studio-ink: oklch(94% 0.005 160);
-  --color-studio-secondary: oklch(75% 0.008 160);
-  --color-studio-accent: oklch(79% 0.085 165);
-  --color-studio-accent-soft: oklch(29% 0.025 165);
-  --color-studio-on-accent: oklch(18% 0.005 160);
-  --color-studio-line: oklch(35% 0.008 160);
 }
