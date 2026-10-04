@@ -31,12 +31,18 @@ const backUrl = SITE.showBackButton ? Astro.url.pathname : "/";
 </main>
 
 <script>
-  document.addEventListener("astro:page-load", () => {
+  function rememberBackUrl() {
     const mainContent: HTMLElement | null =
       document.querySelector("#main-content");
     const backUrl = mainContent?.dataset?.backurl;
     if (backUrl) {
-      sessionStorage.setItem("backUrl", backUrl);
+      try {
+        sessionStorage.setItem("backUrl", backUrl);
+      } catch {
+        // Keep the ordinary fallback link when storage is unavailable.
+      }
     }
-  });
+  }
+  rememberBackUrl();
+  document.addEventListener("astro:page-load", rememberBackUrl);
 </script>

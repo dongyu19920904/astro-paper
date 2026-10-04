@@ -1,5 +1,4 @@
 ---
-import { ClientRouter } from "astro:transitions";
 import { PUBLIC_GOOGLE_SITE_VERIFICATION } from "astro:env/client";
 import { SITE } from "@/config";
 import {
@@ -23,7 +22,6 @@ type Props = {
   keywords?: string[];
   citations?: string[];
   scrollSmooth?: boolean;
-  clientRouter?: boolean;
 };
 
 const {
@@ -40,7 +38,6 @@ const {
   keywords = [],
   citations = [],
   scrollSmooth = false,
-  clientRouter = true,
 } = Astro.props;
 
 const resolvedCanonicalURL = new URL(String(canonicalURL), SITE.website);
@@ -157,8 +154,6 @@ const la51InitScript = SITE.analytics.la51Id
       )
     }
 
-    {clientRouter && <ClientRouter />}
-
     {
       SITE.analytics.la51Id && (
         <>
@@ -180,7 +175,7 @@ const la51InitScript = SITE.analytics.la51Id
         const isTheme = value => value === "light" || value === "dark";
         const activeTheme = window.theme?.getTheme();
 
-        // ClientRouter reuses this window; preserve the active controller.
+        // Preserve a controller if this bootstrap is evaluated again.
         if (isTheme(activeTheme)) {
           document.documentElement.setAttribute("data-theme", activeTheme);
           return;

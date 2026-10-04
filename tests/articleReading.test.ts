@@ -37,11 +37,14 @@ test("article typography inherits the active theme instead of fixed gray default
   assert.match(articleRule, /--tw-prose-bullets: var\(--accent\)/);
 });
 
-test("articles isolate document state while other pages keep client navigation", () => {
-  assert.match(source("src/layouts/PostDetails.astro"), /clientRouter: false/);
+test("every shared-layout page uses ordinary document navigation", () => {
   const layout = source("src/layouts/Layout.astro");
-  assert.match(layout, /clientRouter = true/);
-  assert.match(layout, /\{clientRouter && <ClientRouter \/>\}/);
+  assert.doesNotMatch(layout, /ClientRouter|clientRouter|astro:transitions/);
+  assert.doesNotMatch(source("src/layouts/PostDetails.astro"), /clientRouter/);
+  assert.match(layout, /scripts\/theme\.ts/);
+  for (const file of ["src/pages/index.astro", "src/layouts/Main.astro"]) {
+    assert.match(source(file), /rememberBackUrl\(\);/);
+  }
 });
 test("series and automated disclosure are deterministic, not invented reviews", () => {
   assert.equal(getArticleSeries(["bioai-daily", "ai"]), "生命科学观察");

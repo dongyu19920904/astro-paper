@@ -191,8 +191,14 @@ function formatPostDate(date: Date) {
   </div>
 </Layout>
 <script>
-  document.addEventListener("astro:page-load", () => {
-    if (document.querySelector('[data-layout="index"]'))
+  function rememberBackUrl() {
+    if (!document.querySelector('[data-layout="index"]')) return;
+    try {
       sessionStorage.setItem("backUrl", "/");
-  });
+    } catch {
+      // Navigation still works when storage is unavailable.
+    }
+  }
+  rememberBackUrl();
+  document.addEventListener("astro:page-load", rememberBackUrl);
 </script>
