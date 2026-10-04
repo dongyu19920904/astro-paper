@@ -6,6 +6,7 @@ import {
   articleProgress,
   estimateReadingMinutes,
   getArticleSeries,
+  getArticleSeriesTone,
   isAutomatedArticle,
   sortByPublishedDate,
 } from "../src/utils/articleReading.ts";
@@ -21,7 +22,7 @@ test("article typography inherits the active theme instead of fixed gray default
     css.indexOf(".app-prose {"),
     css.indexOf("    h1,")
   );
-  for (const property of ["body", "headings", "bold", "quotes", "code"]) {
+  for (const property of ["body", "headings", "quotes", "code"]) {
     assert.match(
       articleRule,
       new RegExp(`--tw-prose-${property}: var\\(--foreground\\)`)
@@ -35,6 +36,9 @@ test("article typography inherits the active theme instead of fixed gray default
   }
   assert.match(articleRule, /--tw-prose-links: var\(--accent\)/);
   assert.match(articleRule, /--tw-prose-bullets: var\(--accent\)/);
+  assert.match(articleRule, /--tw-prose-bold: var\(--emphasis\)/);
+  assert.match(css, /strong\s*\{\s*color: var\(--emphasis\)/);
+  assert.match(css, /a strong\s*\{\s*color: inherit/);
 });
 
 test("every shared-layout page uses ordinary document navigation", () => {
@@ -53,6 +57,51 @@ test("series and automated disclosure are deterministic, not invented reviews", 
   assert.equal(estimateReadingMinutes(""), 1);
   assert.equal(estimateReadingMinutes("字".repeat(700)), 2);
   assert.match(source("src/layouts/PostDetails.astro"), /未记录逐篇人工核验/);
+});
+
+test("series color uses explicit daily tags and leaves unknown content neutral", () => {
+  assert.equal(getArticleSeriesTone(["bioai-daily", "ai-daily"]), "life");
+  assert.equal(getArticleSeriesTone(["ai-daily", "ai"]), "tech");
+  assert.equal(getArticleSeriesTone(["ai", "claude", "long life"]), "neutral");
+  assert.equal(getArticleSeriesTone([]), "neutral");
+  assert.equal(getArticleSeriesTone(), "neutral");
+  for (const path of [
+    "src/pages/index.astro",
+    "src/components/Card.astro",
+    "src/layouts/PostDetails.astro",
+  ]) {
+    assert.match(source(path), /<ArticleSeries/);
+  }
+});
+
+test("both theme palettes retain readable emphasis and series labels", () => {
+  const css = source("src/styles/global.css");
+  const luminance = (hex: string) => {
+    const rgb = hex.slice(1).match(/../g)!.map(channel => {
+      const value = parseInt(channel, 16) / 255;
+      return value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4;
+    });
+    return rgb[0] * 0.2126 + rgb[1] * 0.7152 + rgb[2] * 0.0722;
+  };
+  for (const theme of ["light", "dark"]) {
+    const rule = css.match(new RegExp(`html\\[data-theme="${theme}"\\] \\{([^}]+)`))![1];
+    const value = (name: string) => rule.match(new RegExp(`--${name}: (#[a-f0-9]{6})`))![1];
+    const pairs = [
+      ["foreground", "background"],
+      ["secondary", "background"],
+      ["emphasis", "background"],
+      ["foreground", "quote-bg"],
+      ["secondary", "muted"],
+      ["topic-life", "topic-life-bg"],
+      ["topic-tech", "topic-tech-bg"],
+    ];
+    for (const [foreground, background] of pairs) {
+      const l1 = luminance(value(foreground));
+      const l2 = luminance(value(background));
+      assert.ok((Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05) >= 4.5,
+        `${theme} ${foreground} on ${background} must meet AA text contrast`);
+    }
+  }
 });
 test("reading progress uses the article, clamps bounds and handles short text", () => {
   assert.equal(articleProgress(100, 2000, 800), 0);

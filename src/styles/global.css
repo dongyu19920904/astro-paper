@@ -14,6 +14,12 @@ html[data-theme="light"] {
   --border: #d8e0ea;
   --secondary: #4b5563;
   --on-accent: #ffffff;
+  --emphasis: #b45309;
+  --topic-life: #047857;
+  --topic-life-bg: #ecfdf5;
+  --topic-tech: #0e7490;
+  --topic-tech-bg: #ecfeff;
+  --quote-bg: #f0f6fc;
   --font-display:
     var(--font-google-sans-code, "Microsoft YaHei UI"), "PingFang SC",
     "Noto Sans CJK SC", "Noto Sans SC", system-ui, sans-serif;
@@ -44,6 +50,12 @@ html[data-theme="dark"] {
   --border: #ab4b08;
   --secondary: #c0c6d2;
   --on-accent: #212737;
+  --emphasis: #ff6b01;
+  --topic-life: #6ee7b7;
+  --topic-life-bg: #17382f;
+  --topic-tech: #67e8f9;
+  --topic-tech-bg: #193640;
+  --quote-bg: #2a3244;
   --font-display:
     var(--font-google-sans-code, "Microsoft YaHei UI"), "PingFang SC",
     "Noto Sans CJK SC", "Noto Sans SC", system-ui, sans-serif;

@@ -8,12 +8,12 @@ import Datetime from "@/components/Datetime.astro";
 import EditPost from "@/components/EditPost.astro";
 import ShareLinks from "@/components/ShareLinks.astro";
 import BackButton from "@/components/BackButton.astro";
+import ArticleSeries from "@/components/ArticleSeries.astro";
 import { getPath } from "@/utils/getPath";
 import { cleanPostDescription } from "@/utils/postDescription";
 import { scoreRelatedPost } from "@/utils/postTopics";
 import {
   estimateReadingMinutes,
-  getArticleSeries,
   isAutomatedArticle,
 } from "@/utils/articleReading";
 import { slugifyStr } from "@/utils/slugify";
@@ -115,7 +115,7 @@ const automated = isAutomatedArticle(tags);
     </h1>
     <div class="article-byline" data-pagefind-ignore>
       <a href="/about/" rel="author">{author}</a>
-      <span>{getArticleSeries(tags)}</span>
+      <ArticleSeries {tags} />
       <Datetime {pubDatetime} {modDatetime} {timezone} size="lg" />
       <span>约 {estimateReadingMinutes(post.body ?? "")} 分钟</span>
       <EditPost {hideEditPost} {post} />
@@ -197,7 +197,7 @@ const automated = isAutomatedArticle(tags);
                   {item.data.title}
                 </a>
                 <div class="post-list-meta">
-                  <span>{getArticleSeries(item.data.tags)}</span>
+                  <ArticleSeries tags={item.data.tags} />
                   <Datetime pubDatetime={item.data.pubDatetime} />
                 </div>
               </li>

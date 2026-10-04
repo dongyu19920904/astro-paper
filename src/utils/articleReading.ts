@@ -4,6 +4,12 @@ export function getArticleSeries(tags: readonly string[] = []) {
   return "个人记录";
 }
 
+export function getArticleSeriesTone(tags: readonly string[] = []) {
+  if (tags.includes("bioai-daily")) return "life";
+  if (tags.includes("ai-daily")) return "tech";
+  return "neutral";
+}
+
 export function isAutomatedArticle(tags: readonly string[] = []) {
   return tags.includes("ai-daily") || tags.includes("bioai-daily");
 }

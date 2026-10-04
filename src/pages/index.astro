@@ -5,7 +5,7 @@ import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import getSortedPosts from "@/utils/getSortedPosts";
 import { getPath } from "@/utils/getPath";
-import { getArticleSeries } from "@/utils/articleReading";
+import ArticleSeries from "@/components/ArticleSeries.astro";
 import { SITE } from "@/config";
 import { HOME_PROJECTS } from "@/data/navProjects";
 import { TOPIC_HUBS } from "@/data/topicHubs";
@@ -81,7 +81,7 @@ function formatPostDate(date: Date) {
                       <time datetime={post.data.pubDatetime.toISOString()}>
                         {formatPostDate(post.data.pubDatetime)}
                       </time>
-                      <span>{getArticleSeries(post.data.tags)}</span>
+                      <ArticleSeries tags={post.data.tags} />
                     </div>
                     <h3>
                       <a href={getPath(post.id, post.filePath)}>
@@ -105,7 +105,7 @@ function formatPostDate(date: Date) {
             <h2>长期关注</h2>
             {
               TOPIC_HUBS.map(topic => (
-                <a href={"/topics/" + topic.slug + "/"}>
+                <a href={"/topics/" + topic.slug + "/"} data-topic={topic.slug}>
                   <>
                     <span>{topic.shortTitle}</span>
                     <IconArrowRight />

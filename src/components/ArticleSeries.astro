@@ -1,0 +1,13 @@
+---
+import { getArticleSeries, getArticleSeriesTone } from "@/utils/articleReading";
+
+type Props = {
+  tags?: readonly string[];
+};
+
+const { tags = [] } = Astro.props;
+---
+
+<span class="post-series" data-series={getArticleSeriesTone(tags)}>
+  {getArticleSeries(tags)}
+</span>

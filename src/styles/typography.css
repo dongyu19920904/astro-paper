@@ -8,7 +8,7 @@
     --tw-prose-headings: var(--foreground);
     --tw-prose-lead: var(--secondary);
     --tw-prose-links: var(--accent);
-    --tw-prose-bold: var(--foreground);
+    --tw-prose-bold: var(--emphasis);
     --tw-prose-counters: var(--secondary);
     --tw-prose-bullets: var(--accent);
     --tw-prose-hr: var(--border);
@@ -32,13 +32,21 @@
     }
 
     p,
-    strong,
     ol,
     ul,
     figcaption,
     table,
     code {
       @apply text-foreground;
+    }
+
+    strong {
+      color: var(--emphasis);
+      font-weight: 700;
+    }
+
+    a strong {
+      color: inherit;
     }
 
     a {
@@ -93,8 +101,20 @@
     }
 
     blockquote {
-      @apply border-s-accent/80 wrap-break-word text-foreground/80;
+      @apply border-s-accent wrap-break-word text-foreground;
       border-inline-start-width: 1px;
+      border-radius: 4px;
+      background: var(--quote-bg);
+      padding: 0.75rem 1rem;
+      font-style: normal;
+    }
+
+    blockquote > :first-child {
+      margin-top: 0;
+    }
+
+    blockquote > :last-child {
+      margin-bottom: 0;
     }
 
     details {

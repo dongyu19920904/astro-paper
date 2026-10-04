@@ -253,13 +253,19 @@
 }
 
 .studio-posts h3 a {
-  color: var(--accent);
+  color: var(--foreground);
   display: flex;
   align-items: center;
   min-height: 44px;
   padding-block: 0.25rem;
   justify-content: space-between;
   gap: 1rem;
+  transition: color var(--dur-studio) var(--ease-studio-out);
+}
+
+.studio-posts h3 a:hover,
+.studio-posts h3 a:focus-visible {
+  color: var(--accent);
 }
 
 .studio-post-meta {
@@ -291,7 +297,19 @@
   gap: var(--space-studio-xs);
   min-height: 44px;
   font-size: var(--text-studio-body);
-  white-space: nowrap;
+  overflow-wrap: anywhere;
+}
+
+.studio-focus a[data-topic="ai-one-person-company"] {
+  color: var(--topic-tech);
+}
+
+.studio-focus a[data-topic="ai-longevity"] {
+  color: var(--topic-life);
+}
+
+.studio-focus a[data-topic="ai-account-business"] {
+  color: var(--accent);
 }
 
 .studio-focus h2 {
@@ -416,7 +434,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .studio-main a > svg {
+  .studio-main a > svg,
+  .studio-posts h3 a {
     transition: none;
   }
   .studio-main a:hover > svg {

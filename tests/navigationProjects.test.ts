@@ -194,7 +194,11 @@ test("day and night retain the original blog palette without home overrides", ()
   );
   assert.match(
     source("src/styles/home-studio.css"),
-    /\.studio-posts h3 a\s*\{[^}]*color:\s*var\(--accent\)/
+    /\.studio-posts h3 a\s*\{[^}]*color:\s*var\(--foreground\)/
+  );
+  assert.match(
+    source("src/styles/home-studio.css"),
+    /\.studio-posts h3 a:hover,\s*\.studio-posts h3 a:focus-visible\s*\{[^}]*color:\s*var\(--accent\)/
   );
 });
 
