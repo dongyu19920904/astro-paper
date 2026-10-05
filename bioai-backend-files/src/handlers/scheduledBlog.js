@@ -71,8 +71,8 @@ async function streamChat(env, userPrompt, systemPrompt) {
 function buildUserPrompt({ dateStr, dailyContent, blogType, signals }) {
     const signalList = signals.map((signal, index) => `${index + 1}. ${signal}`).join('\n');
     const blogFocus = blogType === 'bioai-daily'
-        ? 'AI 生命延续学、普通人能不能用、内容/项目/硬件机会'
-        : 'AI 账号店、AI 一人公司、客服自动化、工具上新和用户理解成本';
+        ? '一个具体的生命延续学研究问题、公开数据或工具，帮助读者理解结果与应用距离'
+        : '一个具体的 AI 工具变化或做事难题，帮助读者理解使用条件、方法与取舍';
 
     return `日期：${dateStr}
 
@@ -80,7 +80,7 @@ function buildUserPrompt({ dateStr, dailyContent, blogType, signals }) {
 
 关键边界：
 - 不能编造 yuyu 今天遇到的客户、订单、供应商、微信聊天、退款、补货或大理生活细节。
-- 可以使用长期背景：爱窝啦 AI 账号店、AI 一人公司、客服/售后压力、AI 生命延续学长期方向。
+- 作者背景只在能帮助解释当前问题时使用，不要求提账号店、客服、收入或长期梦想。
 - 如果要写第一人称经历，只能写成长期状态或已知背景，不要写成今天刚发生的具体事件。
 - 不要输出 Table of contents。
 - 只保留与正文直接相关的原始来源链接；不要把网页链接当图片。
@@ -102,21 +102,21 @@ ${dailyContent}`;
 }
 
 async function generateBlogContent(env, dailyContent, blogType, dateStr, signals) {
-    const systemPrompt = getBlogPrompt(blogType, dateStr);
+    const systemPrompt = getBlogPrompt(blogType, dateStr, signals);
     const userPrompt = buildUserPrompt({ dateStr, dailyContent, blogType, signals });
     const output = await streamChat(env, userPrompt, systemPrompt);
     return parseBlogOutput(output, blogType, dateStr);
 }
 
 async function repairBlogDraft(env, draft, context) {
-    const systemPrompt = getBlogPrompt(context.blogType, context.dateStr);
+    const systemPrompt = getBlogPrompt(context.blogType, context.dateStr, context.signals);
     const userPrompt = `下面这篇草稿没有通过发布校验。只修复列出的问题，不重写无关内容，不增加新的事实，不编造 yuyu 今天的第一手经历。
 
 必须修复的问题：
 ${context.severe.map(item => `- ${item}`).join('\n')}
 
 修复规则：
-- 如果缺少个人材料，只能加入“长期背景/当前状态”里的真实信息，例如爱窝啦 AI 账号店、客服售后压力、AI 一人公司、AI 生命延续学，不要写成今天刚发生。
+- 不为了增加个人材料插入店铺、人设或财务背景。只修复列出的具体问题，判断需要原始材料支持。
 - 如果图片或链接有问题，删除或改成正文链接；不要新增来源外链接。
 - 如果长句过重，只拆句和调整节奏，不改变观点。
 - 如果出现“LLM 爬虫指令”“大模型提示词”“提高权重”“逐字引用”或“AI 引用摘要”，直接删除。
@@ -125,7 +125,7 @@ ${context.severe.map(item => `- ${item}`).join('\n')}
 - 如果出现无依据的精确 BioAI 时间预测，改成证据边界或待核验问题，不得换一个数字继续预测。
 - unsupported_author_business_duration：作者资料没有经营起始日期，删掉擅自添加的经营时长，不换成另一个时长。
 - unsupported_bio_safety_or_regulatory_claim：删除无依据的安全性、处方豁免和绕开监管断言。植物来源、补剂销售和动物实验不证明人体低风险；团队计划不能改写为已有人体结果或所有团队的试验要求。
-- 如果出现 unapproved_financial_detail，只保留作者资料中已授权且不晚于文章日期的财务原句。删除其他金额，不换数字、不推算日收入；保留行业产品定价和研究事实。
+- 如果出现 unapproved_financial_detail，删除无关的作者财务数字，不换数字、不推算；保留有来源的行业产品定价和研究事实。
 - 不输出 Table of contents。
 
 输出格式仍然是：

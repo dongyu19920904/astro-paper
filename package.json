@@ -14,7 +14,7 @@
     "test:theme-browser": "node scripts/check-theme-browser.mjs",
     "test:theme-build": "node scripts/audit-article-theme.mjs",
     "test:theme-playwright": "node scripts/check-theme-playwright.mjs",
-    "test": "node --experimental-strip-types --test tests/agingClockAtlas.test.ts tests/seoSchema.test.ts tests/geoText.test.ts tests/navigationProjects.test.ts tests/paginationSeo.test.ts tests/postTopics.test.ts tests/repairBlogDescriptions.test.mjs tests/visitorStats.test.ts tests/articleReading.test.ts tests/theme.test.mjs tests/themeBrowser.test.mjs tests/articleTheme.test.mjs"
+    "test": "node --experimental-strip-types --test tests/agingClockAtlas.test.ts tests/seoSchema.test.ts tests/geoText.test.ts tests/navigationProjects.test.ts tests/paginationSeo.test.ts tests/postTopics.test.ts tests/repairBlogDescriptions.test.mjs tests/visitorStats.test.ts tests/articleReading.test.ts tests/theme.test.mjs tests/themeBrowser.test.mjs tests/articleTheme.test.mjs tests/editorialRollback.test.mjs"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.14",

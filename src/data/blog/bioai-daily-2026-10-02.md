@@ -9,7 +9,7 @@ tags:
   - bioai-daily
   - ai
   - biotech
-draft: false
+draft: true
 ---
 
 我一直在想一个问题：AI 制药到底能走多远？

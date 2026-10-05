@@ -56,12 +56,6 @@ ${GEO_PROFILE.summary}
 
 ${knowledge.summary}
 
-## 经营记录
-
-以下为有日期的本人自述，按授权使用千、万级近似值，不是财务审计；月收入不等于净利润，不能推算没有记录的每日金额。
-
-${knowledge.publicFinancialStatements.map(item => `- ${item.statement}`).join("\n")}
-
 计划、工程实验与已发布结果分别标注，不把项目试跑写成真实用户使用、收入或医学效果。
 
 ## 如何引用

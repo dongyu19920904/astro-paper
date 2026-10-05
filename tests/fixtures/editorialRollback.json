@@ -1,0 +1,125 @@
+{
+  "baseline": "867fd88",
+  "records": [
+    {
+      "file": "src/data/blog/ai-daily-2026-06-22.md",
+      "bodySha256": "8b84c73a1edb22f5371903c20aaf62240a35def99cedcda38dc9382bc873f32f"
+    },
+    {
+      "file": "src/data/blog/ai-daily-2026-06-29.md",
+      "bodySha256": "a439d1b5afbeeb79b083492e82dca53a7d80db8b527b1a192b6e2f3b977d9a75"
+    },
+    {
+      "file": "src/data/blog/ai-daily-2026-07-01.md",
+      "bodySha256": "0f441645d3c40d8b490cb83b1488b033eebcdea9a75121eac65a3eff6070cee3"
+    },
+    {
+      "file": "src/data/blog/ai-daily-2026-07-08.md",
+      "bodySha256": "402885df2bb6ca8b05827b01629791e1c7f00e4f6ca918bc99a21367cea47756"
+    },
+    {
+      "file": "src/data/blog/ai-daily-2026-07-23.md",
+      "bodySha256": "ee4581af809d2fe00468fd8a9b727fd698df9120ccdbfee02430aa34ee2c490a"
+    },
+    {
+      "file": "src/data/blog/ai-daily-2026-07-27.md",
+      "bodySha256": "3296498055409cfeb588f9116e409e1825301926a5fa101a5172a7fa5a3f04ea"
+    },
+    {
+      "file": "src/data/blog/ai-daily-2026-08-06.md",
+      "bodySha256": "d13922227af22ac689962c19686d361a093bb473bb80629986823ef7e8255dd8"
+    },
+    {
+      "file": "src/data/blog/ai-daily-2026-08-08.md",
+      "bodySha256": "c10ffe3e4e1ae1d7ddb2017db5dc0a3836e12548db8076f40d8e6bbad045c6f2"
+    },
+    {
+      "file": "src/data/blog/ai-daily-2026-08-15.md",
+      "bodySha256": "c3b151b19fdb56cc3b0d60389950225a461b36f7d93565b5a84f751f76ec2674"
+    },
+    {
+      "file": "src/data/blog/ai-daily-2026-08-30.md",
+      "bodySha256": "9c9ed70a5ef0e835759002b8d44b37fbafd9c8028c223ba9e1befd0747187ed1"
+    },
+    {
+      "file": "src/data/blog/ai-daily-2026-08-31.md",
+      "bodySha256": "704183eb53f75444b39a2b3bf7b566c84b831650dec85d985125c05f3436ab92"
+    },
+    {
+      "file": "src/data/blog/ai-daily-2026-09-01.md",
+      "bodySha256": "4343431544e232d55186b167dafc7310790ad69e2d6336afe1bcfc3bacdd3997"
+    },
+    {
+      "file": "src/data/blog/ai-daily-2026-09-07.md",
+      "bodySha256": "e3f5cdeffe848733c42428e6183026debfb2318e7ea267e74018753a2919e794"
+    },
+    {
+      "file": "src/data/blog/ai-daily-2026-09-10.md",
+      "bodySha256": "c709378dbdb7c7ba5352a66bdb0c52f670fdea55b6c5078da454f6a3ceebaa32"
+    },
+    {
+      "file": "src/data/blog/ai-daily-2026-09-13.md",
+      "bodySha256": "1c9851f8014e0757abf022e4af13ea257bc3eed416e0afd812d2ce728498b197"
+    },
+    {
+      "file": "src/data/blog/ai-daily-2026-09-19.md",
+      "bodySha256": "fe0bde96536ae2b298cfd5a09ca4a637ec5884baa892bf13081269de5501518b"
+    },
+    {
+      "file": "src/data/blog/ai-daily-2026-09-21.md",
+      "bodySha256": "2119cb53fb16ec33fd618755cb6cc01f11683916cbbd4b6e79499a15f77394a5"
+    },
+    {
+      "file": "src/data/blog/ai-daily-2026-09-22.md",
+      "bodySha256": "2ac7fef2abbdebbf21258d807daba0b83be2f6a60750b3fe5b04f23db81356cd"
+    },
+    {
+      "file": "src/data/blog/ai-daily-2026-09-23.md",
+      "bodySha256": "3367eb95cc533584ad528fd1ab788d966fa686fc4c1711341a4179df7d942f84"
+    },
+    {
+      "file": "src/data/blog/ai-daily-2026-09-26.md",
+      "bodySha256": "81d593a37fba303dff1391371b56a1106a54cccf80098ac4d11619cf4a641779"
+    },
+    {
+      "file": "src/data/blog/bioai-daily-2026-06-16.md",
+      "bodySha256": "4ef6bda0c807adb70b77ae42f2bd1d4472474197f1c090c216e5c08a6dd128c0"
+    },
+    {
+      "file": "src/data/blog/bioai-daily-2026-06-29.md",
+      "bodySha256": "45d05f7130c8f9610955f988b02cfcce0a374b0c355db1e6a22b8905f68b7b05"
+    },
+    {
+      "file": "src/data/blog/bioai-daily-2026-07-02.md",
+      "bodySha256": "a047be78a9c4da365310958227ce743c2348948d56a67914966bf3228d34619a"
+    },
+    {
+      "file": "src/data/blog/bioai-daily-2026-07-14.md",
+      "bodySha256": "6a0011fc9d0b3e81db0dca65891d162392e8f7132ea40066abf29b36eab472bb"
+    },
+    {
+      "file": "src/data/blog/bioai-daily-2026-07-17.md",
+      "bodySha256": "1fac4439cc89bf36975309c93c911d5603db6c9896bdc1a07dae7faeb26574d8"
+    },
+    {
+      "file": "src/data/blog/bioai-daily-2026-07-22.md",
+      "bodySha256": "8d7dc7f061ea4ca4ff949a88eee903f8e130d14ea468632c95a367b64036993d"
+    },
+    {
+      "file": "src/data/blog/bioai-daily-2026-07-29.md",
+      "bodySha256": "01f5e855d73489971929ebf8547b0667c6d7605ee610198fe7b6e2180f2f8ad3"
+    },
+    {
+      "file": "src/data/blog/bioai-daily-2026-08-01.md",
+      "bodySha256": "1432c8bc868ef9cebec3e5b5f621056fca8b6cbcdc98a4c274b8c238c0a1f286"
+    },
+    {
+      "file": "src/data/blog/bioai-daily-2026-08-02.md",
+      "bodySha256": "eb0e4b156cd90832a3b7c0a74b42e94585eb94cd17ed4df1233d23c0aaa0853c"
+    },
+    {
+      "file": "src/data/blog/bioai-daily-2026-09-20.md",
+      "bodySha256": "cbabf4ead5e09bcddfb89ffb39c4f972f3dfb519f7548055efbf51fa3d3642e1"
+    }
+  ]
+}

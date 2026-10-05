@@ -7,7 +7,7 @@ tags:
   - bioai-daily
   - ai
   - biotech
-draft: false
+draft: true
 ---
 
 我想推进 AI 生命延续学，现实中却经常先去忙账号店的客服和维护。资讯、自媒体、项目、AI 健康硬件都是我考虑过的方向，但不能每看见一个研究标题，就将它当成下一件可以卖的产品。

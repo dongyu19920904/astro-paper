@@ -10,12 +10,6 @@ const BIO_SIGNAL_PATTERNS = [
     /长寿|延寿|衰老|抗衰|生命|健康|医疗|药物|蛋白|论文|临床|生物标志物|可穿戴|检测|阿尔茨海默|脑龄/i,
 ];
 
-const PERSONAL_MATERIAL_PATTERNS = [
-    /我|自己|小店|账号店|爱窝啦|Aivora|aivora/i,
-    /账号|发卡|卡密|客服|售后|补货|上新|教程|用户|客户|供应商|中转|镜像|额度|Cursor|Claude|Gemini|Codex|ChatGPT/i,
-    /一人公司|自动化|生命延续|生命科学|长生|BioAI|日报|现金流|项目/i,
-];
-
 const FABRICATED_TODAY_EXPERIENCE_PATTERNS = [
     /今天[^。！？\n]{0,50}(客户|买家|用户|供应商|客服|售后|补货|退款|订单|下单|私信|微信|群里|咖啡馆|大理)/,
     /(刚刚|早上|下午|晚上)[^。！？\n]{0,50}(客户|买家|用户|供应商|客服|售后|补货|退款|订单|下单|私信|微信|群里)/,
@@ -239,12 +233,6 @@ export function qualifyDailyForPersonalBlog(dailyContent, blogType) {
     return { eligible: true, signals };
 }
 
-function containsPersonalMaterial(markdown) {
-    const text = stripMarkdown(markdown);
-    const matches = PERSONAL_MATERIAL_PATTERNS.filter(pattern => pattern.test(text));
-    return matches.length >= 2;
-}
-
 export function containsBlackHatLLMInstruction(markdown) {
     const text = String(markdown || '');
     return BLACK_HAT_LLM_INSTRUCTION_PATTERNS.some(pattern => pattern.test(text));
@@ -347,9 +335,6 @@ export function validateBlogDraft({ title, body, dailyContent, blogType, allowed
     }
     if (/Table of contents/i.test(body || '')) {
         severe.push('toc_visible');
-    }
-    if (!containsPersonalMaterial(body)) {
-        severe.push('missing_personal_material');
     }
     if (FABRICATED_TODAY_EXPERIENCE_PATTERNS.some(pattern => pattern.test(text))) {
         severe.push('possible_fabricated_today_experience');

@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { readFileSync, readdirSync } from "node:fs";
+import { createHash } from "node:crypto";
 import type { Root } from "mdast";
 import {
   articleProgress,
@@ -317,7 +318,7 @@ test("search indexes article content and excludes related titles and navigation"
   assert.match(script, /controller\.abort\(\)/);
   assert.match(script, /astro:before-swap/);
 });
-test("known private trading amounts do not remain in published Markdown", () => {
+test("financial references are restricted to the explicitly restored historical prose", () => {
   const root = new URL("../src/data/blog/", import.meta.url);
   const privateAmounts =
     /(?:日销售额|每天销售额|日销|日流水|每天出单).{0,15}(?:3000|三千)|(?:利润|毛利).{0,8}(?:1000|一千)|(?:3000|三千).{0,12}(?:销售额|流水|营业额)/;
@@ -326,5 +327,27 @@ test("known private trading amounts do not remain in published Markdown", () => 
     .filter(file =>
       privateAmounts.test(readFileSync(new URL(file, root), "utf8"))
     );
-  assert.deepEqual(leaks, []);
+  const body = (text: string) =>
+    text
+      .replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n/, "")
+      .replace(/\r\n/g, "\n")
+      .trim();
+  const fixture = JSON.parse(
+    readFileSync(
+      new URL("./fixtures/editorialRollback.json", import.meta.url),
+      "utf8"
+    )
+  );
+  for (const file of leaks) {
+    const current = readFileSync(new URL(file, root), "utf8");
+    const restored = fixture.records.find(
+      (item: { file: string }) => item.file === `src/data/blog/${file}`
+    );
+    assert.ok(restored, `Not an authorized historical restore: ${file}`);
+    assert.equal(
+      createHash("sha256").update(body(current)).digest("hex"),
+      restored.bodySha256,
+      file
+    );
+  }
 });

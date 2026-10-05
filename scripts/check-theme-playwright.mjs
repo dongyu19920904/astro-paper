@@ -40,10 +40,10 @@ const report = {
 const paths = [
   "/",
   "/posts/",
-  "/posts/bioai-daily-2026-10-03/",
-  "/posts/bioai-daily-2026-10-02/",
+  "/posts/bioai-daily-2026-09-29/",
+  "/posts/bioai-daily-2026-09-26/",
   "/posts/bioai-daily-2026-09-30/",
-  "/posts/ai-daily-2026-10-03/",
+  "/posts/ai-daily-2026-09-26/",
   "/posts/ai-daily-2026-09-28/",
   "/posts/bioai-daily-2026-09-12/",
   "/posts/ai-daily-2026-01-10/",
@@ -136,7 +136,7 @@ try {
         for (let index = 0; index < 6; index += 1) {
           before = await toggle(page, before);
           entry.records.push(before);
-          if (pathname === "/posts/bioai-daily-2026-10-03/" && index < 2) {
+          if (pathname === "/posts/bioai-daily-2026-09-29/" && index < 2) {
             await page.screenshot({
               path: `${output}.${viewport.width}.${before.theme}.png`,
             });
@@ -210,7 +210,7 @@ try {
         entry.status = "passed";
       }
       if (local && viewport.width === 1280) {
-        await page.goto(new URL("/posts/bioai-daily-2026-10-03/", base).href, {
+        await page.goto(new URL("/posts/bioai-daily-2026-09-29/", base).href, {
           waitUntil: "load",
         });
         await ready(page);
