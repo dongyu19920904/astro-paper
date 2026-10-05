@@ -28,7 +28,7 @@ export function buildLlmsTxt() {
 - Reviewed through: ${knowledge.updatedAt}
 - Public profile: ${SITE.website}now/
 - ${knowledge.summary}
-- Plans and engineering experiments are not completed outcomes or clinical evidence. Private finances and raw diaries are not provided.
+- Plans and engineering experiments are not completed outcomes or clinical evidence. Only explicitly authorized, dated financial self-reports are public; raw diaries and customer records are not provided.
 
 ## Key Pages
 ${pageList()}
@@ -56,9 +56,17 @@ ${GEO_PROFILE.summary}
 
 ${knowledge.summary}
 
+## 经营记录
+
+以下为有日期的本人自述，按授权使用千、万级近似值，不是财务审计；月收入不等于净利润，不能推算没有记录的每日金额。
+
+${knowledge.publicFinancialStatements.map(item => `- ${item.statement}`).join("\n")}
+
 计划、工程实验与已发布结果分别标注，不把项目试跑写成真实用户使用、收入或医学效果。
 
 ## 如何引用
+
+本站由 yuyu 提供作者资料、选题方向与项目记录。自动更新系列使用 AI 辅助整理和撰稿；未标注本人审阅的文章不代表逐篇人工核验。个人亲历以有日期的本人记录为准，外部事实可通过文末参考资料核对。
 
 ${markdownList(GEO_PROFILE.citationGuidelines)}
 

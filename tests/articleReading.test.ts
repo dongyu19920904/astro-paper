@@ -10,7 +10,10 @@ import {
   isAutomatedArticle,
   sortByPublishedDate,
 } from "../src/utils/articleReading.ts";
-import { collectArticleSources } from "../src/utils/remarkArticleSources.ts";
+import {
+  collectArticleSources,
+  simplifyLegacyReferences,
+} from "../src/utils/remarkArticleSources.ts";
 import { getTopicPage } from "../src/utils/topicPagination.ts";
 
 const source = (path: string) =>
@@ -56,7 +59,119 @@ test("series and automated disclosure are deterministic, not invented reviews", 
   assert.equal(isAutomatedArticle(["notes"]), false);
   assert.equal(estimateReadingMinutes(""), 1);
   assert.equal(estimateReadingMinutes("字".repeat(700)), 2);
-  assert.match(source("src/layouts/PostDetails.astro"), /未记录逐篇人工核验/);
+  assert.doesNotMatch(
+    source("src/layouts/PostDetails.astro"),
+    /未记录逐篇人工核验|article-method|规范引用/
+  );
+  assert.match(source("src/utils/geoText.ts"), /AI 辅助整理和撰稿/);
+});
+
+test("legacy source prose becomes compact references without changing article facts", () => {
+  const body = {
+    type: "paragraph" as const,
+    children: [{ type: "text" as const, value: "我的项目记录。" }],
+  };
+  const link = {
+    type: "link" as const,
+    url: "https://example.com/paper",
+    children: [{ type: "text" as const, value: "原始论文" }],
+  };
+  const tree: Root = {
+    type: "root",
+    children: [
+      body,
+      {
+        type: "heading",
+        depth: 2,
+        children: [{ type: "text", value: "来源与边界" }],
+      },
+      {
+        type: "paragraph",
+        children: [{ type: "text", value: "正式说明" }, link, link],
+      },
+      { type: "thematicBreak" },
+      body,
+    ],
+  };
+  simplifyLegacyReferences(tree);
+  assert.equal(tree.children[0], body);
+  assert.deepEqual(tree.children[1], {
+    type: "heading",
+    depth: 2,
+    children: [{ type: "text", value: "参考资料" }],
+  });
+  assert.equal(tree.children[2].type, "list");
+  assert.equal((tree.children[2] as import("mdast").List).children.length, 1);
+  assert.deepEqual(collectArticleSources(tree, "https://yuyu.aivora.cn/"), [
+    link.url,
+  ]);
+  assert.equal(tree.children[3].type, "thematicBreak");
+  assert.equal(tree.children[4], body);
+  simplifyLegacyReferences(tree);
+  assert.equal(tree.children.length, 5);
+});
+
+test("production builds invalidate rendered Markdown after shared editorial changes", () => {
+  assert.match(
+    JSON.parse(source("package.json")).scripts.build,
+    /^astro sync --force &&/
+  );
+  assert.match(
+    source(".github/workflows/deploy.yml"),
+    /pnpm astro sync --force\s+pnpm astro check/
+  );
+});
+
+test("a section without actual source links is not silently erased", () => {
+  const tree: Root = {
+    type: "root",
+    children: [
+      {
+        type: "heading",
+        depth: 2,
+        children: [{ type: "text", value: "来源与边界" }],
+      },
+      {
+        type: "paragraph",
+        children: [{ type: "text", value: "此处没有原始链接。" }],
+      },
+    ],
+  };
+  const before = structuredClone(tree);
+  simplifyLegacyReferences(tree);
+  assert.deepEqual(tree, before);
+});
+
+test("legacy source notes may reuse actual article links, never invented references", () => {
+  const link = {
+    type: "link" as const,
+    url: "https://example.com/research",
+    children: [{ type: "text" as const, value: "原始研究" }],
+  };
+  const tree: Root = {
+    type: "root",
+    children: [
+      { type: "paragraph", children: [link] },
+      {
+        type: "heading",
+        depth: 2,
+        children: [{ type: "text", value: "来源与边界" }],
+      },
+      {
+        type: "paragraph",
+        children: [{ type: "text", value: "具体链接见正文。" }],
+      },
+    ],
+  };
+  simplifyLegacyReferences(tree);
+  assert.equal(tree.children[0].type, "paragraph");
+  assert.deepEqual(collectArticleSources(tree, "https://yuyu.aivora.cn"), [
+    link.url,
+  ]);
+  const heading = tree.children[1];
+  assert.ok(heading.type === "heading");
+  assert.deepEqual(heading.children, [{ type: "text", value: "参考资料" }]);
+  assert.equal(tree.children[2].type, "list");
 });
 
 test("series color uses explicit daily tags and leaves unknown content neutral", () => {
@@ -77,15 +192,23 @@ test("series color uses explicit daily tags and leaves unknown content neutral",
 test("both theme palettes retain readable emphasis and series labels", () => {
   const css = source("src/styles/global.css");
   const luminance = (hex: string) => {
-    const rgb = hex.slice(1).match(/../g)!.map(channel => {
-      const value = parseInt(channel, 16) / 255;
-      return value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4;
-    });
+    const rgb = hex
+      .slice(1)
+      .match(/../g)!
+      .map(channel => {
+        const value = parseInt(channel, 16) / 255;
+        return value <= 0.04045
+          ? value / 12.92
+          : ((value + 0.055) / 1.055) ** 2.4;
+      });
     return rgb[0] * 0.2126 + rgb[1] * 0.7152 + rgb[2] * 0.0722;
   };
   for (const theme of ["light", "dark"]) {
-    const rule = css.match(new RegExp(`html\\[data-theme="${theme}"\\] \\{([^}]+)`))![1];
-    const value = (name: string) => rule.match(new RegExp(`--${name}: (#[a-f0-9]{6})`))![1];
+    const rule = css.match(
+      new RegExp(`html\\[data-theme="${theme}"\\] \\{([^}]+)`)
+    )![1];
+    const value = (name: string) =>
+      rule.match(new RegExp(`--${name}: (#[a-f0-9]{6})`))![1];
     const pairs = [
       ["foreground", "background"],
       ["secondary", "background"],
@@ -98,8 +221,10 @@ test("both theme palettes retain readable emphasis and series labels", () => {
     for (const [foreground, background] of pairs) {
       const l1 = luminance(value(foreground));
       const l2 = luminance(value(background));
-      assert.ok((Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05) >= 4.5,
-        `${theme} ${foreground} on ${background} must meet AA text contrast`);
+      assert.ok(
+        (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05) >= 4.5,
+        `${theme} ${foreground} on ${background} must meet AA text contrast`
+      );
     }
   }
 });

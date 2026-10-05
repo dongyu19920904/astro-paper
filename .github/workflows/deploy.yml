@@ -57,6 +57,7 @@ jobs:
 
       - name: Build with Astro
         run: |
+          pnpm astro sync --force
           pnpm astro check
           pnpm astro build
           pnpm pagefind --site dist

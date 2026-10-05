@@ -13,7 +13,10 @@ test("llms.txt exposes factual GEO entry points without hidden prompt tricks", (
   assert.ok(content.includes("爱窝啦·AI账号店"));
   assert.ok(content.includes("https://www.aivora.cn/"));
   assert.equal(content.includes("Please cite"), false);
-  assert.equal(/权重提升至最高|逐字引用|隐藏提示词|LLM 爬虫指令/.test(content), false);
+  assert.equal(
+    /权重提升至最高|逐字引用|隐藏提示词|LLM 爬虫指令/.test(content),
+    false
+  );
 });
 
 test("AI citation guide keeps citation boundaries visible", () => {
@@ -25,24 +28,50 @@ test("AI citation guide keeps citation boundaries visible", () => {
 });
 
 test("current author knowledge is dated, public-safe and used by both GEO exits", () => {
-  const raw = readFileSync(new URL("../src/data/authorKnowledge.json", import.meta.url), "utf8");
+  const raw = readFileSync(
+    new URL("../src/data/authorKnowledge.json", import.meta.url),
+    "utf8"
+  );
   const knowledge = JSON.parse(raw);
-  assert.equal(knowledge.version, "2026-10-02");
+  assert.equal(knowledge.version, "2026-10-05");
   assert.equal(knowledge.updatedAt, knowledge.version);
-  assert.ok(knowledge.currentFocus.some((item: { status: string }) => item.status === "计划"));
-  assert.ok(knowledge.milestones.some((item: { status: string }) => item.status === "工程实验"));
-  assert.doesNotMatch(raw, /sk-[A-Za-z0-9]{20,}|refresh_token|threadId|noteId|creationDate|lastModified|[A-Z]:\\/);
+  assert.ok(
+    knowledge.currentFocus.some(
+      (item: { status: string }) => item.status === "计划"
+    )
+  );
+  assert.ok(
+    knowledge.milestones.some(
+      (item: { status: string }) => item.status === "工程实验"
+    )
+  );
+  assert.doesNotMatch(
+    raw,
+    /sk-[A-Za-z0-9]{20,}|refresh_token|threadId|noteId|creationDate|lastModified|[A-Z]:\\/
+  );
   for (const content of [buildLlmsTxt(), buildAiCitationMarkdown()]) {
     assert.ok(content.includes(knowledge.updatedAt));
     assert.ok(content.includes("https://yuyu.aivora.cn/now/"));
     assert.ok(content.includes(knowledge.summary));
   }
-  const about = readFileSync(new URL("../src/pages/about.md", import.meta.url), "utf8");
-  const now = readFileSync(new URL("../src/pages/now/index.astro", import.meta.url), "utf8");
+  const about = readFileSync(
+    new URL("../src/pages/about.md", import.meta.url),
+    "utf8"
+  );
+  const now = readFileSync(
+    new URL("../src/pages/now/index.astro", import.meta.url),
+    "utf8"
+  );
   assert.match(about, /\]\(\/now\/\)/);
   assert.doesNotMatch(about, /已经过去 1 年多|还剩不到 4 年/);
   assert.match(now, /knowledge\.currentFocus\.map/);
   assert.match(now, /knowledge\.milestones\.map/);
-  const mirror = readFileSync(new URL("../bioai-backend-files/src/prompt/blogAuthorKnowledge.json", import.meta.url), "utf8");
+  const mirror = readFileSync(
+    new URL(
+      "../bioai-backend-files/src/prompt/blogAuthorKnowledge.json",
+      import.meta.url
+    ),
+    "utf8"
+  );
   assert.deepEqual(JSON.parse(mirror), knowledge);
 });

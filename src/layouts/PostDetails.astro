@@ -12,10 +12,7 @@ import ArticleSeries from "@/components/ArticleSeries.astro";
 import { getPath } from "@/utils/getPath";
 import { cleanPostDescription } from "@/utils/postDescription";
 import { scoreRelatedPost } from "@/utils/postTopics";
-import {
-  estimateReadingMinutes,
-  isAutomatedArticle,
-} from "@/utils/articleReading";
+import { estimateReadingMinutes } from "@/utils/articleReading";
 import { slugifyStr } from "@/utils/slugify";
 import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
 import IconChevronRight from "@/assets/icons/IconChevronRight.svg";
@@ -93,7 +90,6 @@ const relatedPosts = posts
 const displayPosts = relatedPosts.length
   ? relatedPosts
   : posts.filter(candidate => candidate.id !== post.id).slice(0, 3);
-const automated = isAutomatedArticle(tags);
 ---
 
 <Layout {...layoutProps}>
@@ -121,19 +117,6 @@ const automated = isAutomatedArticle(tags);
       <EditPost {hideEditPost} {post} />
     </div>
     {
-      automated && (
-        <div class="article-method" data-pagefind-ignore>
-          <p>
-            AI 辅助自动整理 ·
-            未记录逐篇人工核验。时效信息与具体经历请结合原始来源核对。
-          </p>
-          {tags.includes("bioai-daily") && (
-            <p>研究信息不等于人体效果，不作为诊断、治疗或个人干预依据。</p>
-          )}
-        </div>
-      )
-    }
-    {
       toc.length >= 4 && (
         <details class="article-toc" data-pagefind-ignore>
           <summary>本文目录 · {toc.length} 节</summary>
@@ -150,22 +133,6 @@ const automated = isAutomatedArticle(tags);
     <article id="article" data-pagefind-body class="article-prose mt-8 w-full">
       <Content />
     </article>
-    <aside
-      class="article-citation"
-      aria-label="引用与内容边界"
-      data-pagefind-ignore
-    >
-      <p>
-        规范引用：{author}，《{title}》，{
-          pubDatetime.toLocaleDateString("zh-CN", { timeZone: SITE.timezone })
-        }。<a href={articleCanonicalURL}>文章原地址</a>
-      </p>
-      <p>
-        个人观察与资料整理，不构成医疗、投资建议或平台服务承诺。<a
-          href="/ai-citation.md">引用说明</a
-        > · <a href="/llms.txt">llms.txt</a>
-      </p>
-    </aside>
     <ul class="my-6 flex flex-wrap gap-4" data-pagefind-ignore>
       {tags.map(tag => <Tag tag={slugifyStr(tag)} tagName={tag} size="sm" />)}
     </ul>
