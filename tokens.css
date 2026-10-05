@@ -9,9 +9,7 @@
   --color-studio-on-accent: var(--on-accent, #ffffff);
   --color-studio-line: var(--border, #d8e0ea);
   --font-studio-display: Georgia, "Times New Roman", serif;
-  --font-studio-body:
-    "Microsoft YaHei", "Microsoft YaHei UI", "PingFang SC", "Noto Sans CJK SC",
-    "Noto Sans SC", system-ui, sans-serif;
+  --font-studio-body: var(--font-body);
   --space-studio-xs: 0.5rem;
   --space-studio-sm: 0.75rem;
   --space-studio-md: 1rem;

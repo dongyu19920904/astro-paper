@@ -12,7 +12,10 @@ import ArticleSeries from "@/components/ArticleSeries.astro";
 import { getPath } from "@/utils/getPath";
 import { cleanPostDescription } from "@/utils/postDescription";
 import { scoreRelatedPost } from "@/utils/postTopics";
-import { estimateReadingMinutes } from "@/utils/articleReading";
+import {
+  estimateReadingMinutes,
+  getArticleSeriesTone,
+} from "@/utils/articleReading";
 import { slugifyStr } from "@/utils/slugify";
 import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
 import IconChevronRight from "@/assets/icons/IconChevronRight.svg";
@@ -97,25 +100,28 @@ const displayPosts = relatedPosts.length
   <BackButton />
   <main
     id="main-content"
+    data-series={getArticleSeriesTone(tags)}
     class:list={[
       "article-layout app-layout pb-12",
       { "mt-8": !SITE.showBackButton },
     ]}
   >
-    <h1
-      transition:name={slugifyStr(title)}
-      class="article-title"
-      data-pagefind-meta="title"
-    >
-      {title}
-    </h1>
-    <div class="article-byline" data-pagefind-ignore>
-      <a href="/about/" rel="author">{author}</a>
-      <ArticleSeries {tags} />
-      <Datetime {pubDatetime} {modDatetime} {timezone} size="lg" />
-      <span>约 {estimateReadingMinutes(post.body ?? "")} 分钟</span>
-      <EditPost {hideEditPost} {post} />
-    </div>
+    <header class="article-header">
+      <h1
+        transition:name={slugifyStr(title)}
+        class="article-title"
+        data-pagefind-meta="title"
+      >
+        {title}
+      </h1>
+      <div class="article-byline" data-pagefind-ignore>
+        <a href="/about/" rel="author">{author}</a>
+        <ArticleSeries {tags} />
+        <Datetime {pubDatetime} {modDatetime} {timezone} size="lg" />
+        <span>约 {estimateReadingMinutes(post.body ?? "")} 分钟</span>
+        <EditPost {hideEditPost} {post} />
+      </div>
+    </header>
     {
       toc.length >= 4 && (
         <details class="article-toc" data-pagefind-ignore>

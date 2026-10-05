@@ -7,6 +7,22 @@ const layout = read("../src/layouts/PostDetails.astro");
 const css = read("../src/styles/article-prose.css");
 const global = read("../src/styles/global.css");
 const reading = read("../src/styles/reading.css");
+const sharedLayout = read("../src/layouts/Layout.astro");
+
+test("the shared native theme opts out of Dark Reader dynamic recoloring early", () => {
+  assert.match(
+    sharedLayout,
+    /SITE\.lightAndDarkMode && <meta name="darkreader-lock"/
+  );
+  assert.ok(
+    sharedLayout.indexOf('name="darkreader-lock"') <
+      sharedLayout.indexOf('id="LA_COLLECT"')
+  );
+  assert.doesNotMatch(
+    sharedLayout,
+    /DarkReader\.disable|style\.darkreader|location\.reload/
+  );
+});
 
 test("every blog uses the shared native article class, not prose theme utilities", () => {
   const article = layout.match(/<article\b[\s\S]*?>/)?.[0];
@@ -72,4 +88,21 @@ test("native prose keeps lists, tables, images, quotes and code readable", () =>
     css,
     /\.astro-code code\s*\{\s*color: inherit;\s*background: transparent/
   );
+});
+
+test("reading hierarchy uses the real series without adding another theme state", () => {
+  assert.match(layout, /data-series=\{getArticleSeriesTone\(tags\)\}/);
+  assert.match(
+    reading,
+    /data-series="life"[^}]+--article-heading: var\(--topic-life\)/
+  );
+  assert.match(
+    reading,
+    /data-series="tech"[^}]+--article-heading: var\(--topic-tech\)/
+  );
+  assert.match(css, /color: var\(--article-heading, var\(--foreground\)\)/);
+  assert.match(css, /\.heading-link:focus-visible/);
+  assert.match(css, /html\[data-theme\] \.article-prose \.heading-link\s*\{/);
+  assert.match(css, /@media \(hover: none\)/);
+  assert.match(css, /padding: 3\.25rem 1\.125rem 1\.125rem/);
 });

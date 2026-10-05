@@ -10,6 +10,9 @@ const palette = {
     accent: "rgb(11, 92, 173)",
     emphasis: "rgb(180, 83, 9)",
     quote: "rgb(240, 246, 252)",
+    secondary: "rgb(75, 85, 99)",
+    life: "rgb(4, 120, 87)",
+    tech: "rgb(14, 116, 144)",
   },
   dark: {
     background: "rgb(33, 39, 55)",
@@ -17,6 +20,9 @@ const palette = {
     accent: "rgb(255, 107, 1)",
     emphasis: "rgb(255, 107, 1)",
     quote: "rgb(42, 50, 68)",
+    secondary: "rgb(192, 198, 210)",
+    life: "rgb(110, 231, 183)",
+    tech: "rgb(103, 232, 249)",
   },
 };
 
@@ -45,6 +51,10 @@ export function collectThemeRecord() {
               color: style.color,
               background: style.backgroundColor,
               inLink: !!element.closest("a"),
+              headingLink: !!element.closest("a.heading-link"),
+              referenceHeading: element.matches(
+                'h2[id="参考资料"], h2[id="references"]'
+              ),
             };
             return [JSON.stringify(row), row];
           })
@@ -65,6 +75,9 @@ export function collectThemeRecord() {
     canonical: document.querySelector('link[rel="canonical"]')?.href,
     timeOrigin: performance.timeOrigin,
     theme: root.getAttribute("data-theme"),
+    series:
+      document.querySelector(".article-layout")?.getAttribute("data-series") ??
+      "neutral",
     buttonCount: document.querySelectorAll("#theme-btn").length,
     label: button?.getAttribute("aria-label"),
     hitButton: !!hit?.closest("#theme-btn"),
@@ -127,13 +140,17 @@ export function assertThemeRecord(record, expectedTheme, previous) {
   for (const [kind, rows] of Object.entries(record.colors)) {
     for (const [index, row] of rows.entries()) {
       const color =
-        kind === "strong"
-          ? row.inLink
-            ? expected.accent
-            : expected.emphasis
-          : ["link", "title", "h3"].includes(kind)
-            ? expected.accent
-            : expected.foreground;
+        row.headingLink || row.referenceHeading
+          ? expected.secondary
+          : kind === "h2" && ["life", "tech"].includes(record.series)
+            ? expected[record.series]
+            : kind === "strong"
+              ? row.inLink
+                ? expected.accent
+                : expected.emphasis
+              : ["link", "h3"].includes(kind)
+                ? expected.accent
+                : expected.foreground;
       assert.equal(row.color, color, `${kind}[${index}] actual color`);
       if (kind === "quote") {
         assert.equal(row.background, expected.quote, "quote actual background");

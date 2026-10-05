@@ -36,7 +36,7 @@ function record(theme = "dark") {
         { ...row(accent), inLink: true },
       ],
       link: [row(accent)],
-      title: [row(accent)],
+      title: [row(foreground)],
       quote: [
         {
           ...row(foreground),
@@ -54,6 +54,27 @@ test("validator accepts actual-color records for both existing palettes", () => 
   assert.doesNotThrow(() =>
     assertThemeRecord(record("light"), "light", record())
   );
+});
+
+test("validator checks semantic headings, quieter references and heading links", () => {
+  const value = record();
+  value.series = "life";
+  value.colors.h2 = [
+    { ...value.colors.h2[0], color: "rgb(110, 231, 183)" },
+    {
+      ...value.colors.h2[0],
+      color: "rgb(192, 198, 210)",
+      referenceHeading: true,
+    },
+  ];
+  value.colors.link.push({
+    ...value.colors.link[0],
+    color: "rgb(192, 198, 210)",
+    headingLink: true,
+  });
+  assert.doesNotThrow(() => assertThemeRecord(value, "dark"));
+  value.colors.h2[0].color = "rgb(4, 120, 87)";
+  assert.throws(() => assertThemeRecord(value, "dark"), /h2\[0\] actual color/);
 });
 
 test("validator rejects changed root with unchanged paragraph colors", () => {

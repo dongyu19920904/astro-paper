@@ -72,6 +72,8 @@ const la51InitScript = SITE.analytics.la51Id
 >
   <head>
     <meta charset="UTF-8" />
+    <!-- One color owner: our native theme, not a second dynamic recoloring pass. -->
+    {SITE.lightAndDarkMode && <meta name="darkreader-lock" content="" />}
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="canonical" href={resolvedCanonicalURL} />

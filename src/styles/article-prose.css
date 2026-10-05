@@ -2,8 +2,11 @@
 html[data-theme] .article-prose,
 html[data-theme]
   .article-prose
-  :where(p, ul, ol, li, h1, h2, h4, h5, h6, th, td, details) {
+  :where(p, ul, ol, li, h1, h4, h5, h6, th, td, details) {
   color: var(--foreground);
+}
+html[data-theme] .article-prose h2 {
+  color: var(--article-heading, var(--foreground));
 }
 html[data-theme] .article-prose :where(a, h3) {
   color: var(--accent);
@@ -19,7 +22,7 @@ html[data-theme] .article-prose blockquote {
   background: var(--quote-bg);
   border-color: var(--accent);
 }
-html[data-theme] .article-prose :where(hr, img, th, td) {
+html[data-theme] .article-prose :where(hr, img, th, td, .astro-code) {
   border-color: var(--border);
 }
 html[data-theme] .article-prose figcaption {
@@ -52,6 +55,10 @@ html[data-theme="dark"] .article-prose .astro-code span {
 }
 .article-prose {
   overflow-wrap: anywhere;
+}
+.article-prose :where(img, video) {
+  max-width: 100%;
+  height: auto;
 }
 .article-prose :where(p, ul, ol, blockquote, pre) {
   margin-block: 1.25em;
@@ -166,6 +173,9 @@ html[data-theme="dark"] .article-prose .astro-code span {
 .article-prose th {
   padding-block: 0.375rem;
 }
+.article-prose tbody tr:nth-child(even) {
+  background: var(--quote-bg);
+}
 .article-prose code {
   padding: 0.25rem;
   border-radius: 4px;
@@ -174,7 +184,7 @@ html[data-theme="dark"] .article-prose .astro-code span {
   overflow-wrap: anywhere;
 }
 .article-prose .astro-code {
-  padding: 0.875rem 1.125rem;
+  padding: 3.25rem 1.125rem 1.125rem;
   border-width: 1px;
   border-radius: 6px;
   font-size: 0.875em;
@@ -191,4 +201,22 @@ html[data-theme="dark"] .article-prose .astro-code span {
 }
 .article-prose summary {
   cursor: pointer;
+}
+html[data-theme] .article-prose .heading-link {
+  color: var(--secondary);
+  text-decoration: none;
+  opacity: 0;
+}
+.article-prose :where(h2, h3, h4, h5, h6):hover .heading-link,
+.article-prose .heading-link:focus-visible {
+  opacity: 1;
+}
+.article-prose :where(h2[id="参考资料"], h2[id="references"]) + ul {
+  font-size: 0.9375rem;
+  line-height: 1.8;
+}
+@media (hover: none) {
+  .article-prose .heading-link {
+    opacity: 1;
+  }
 }

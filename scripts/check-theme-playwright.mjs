@@ -35,6 +35,7 @@ const report = {
   journeys: [],
   pageErrors: [],
   errors: [],
+  analyticsExcluded: true,
 };
 const paths = [
   "/",
@@ -96,6 +97,16 @@ try {
       reducedMotion: "reduce",
     });
     const page = await context.newPage();
+    // Theme QA must not count automated visits in production analytics.
+    await page.route("https://sdk.51.la/**", route =>
+      route.fulfill({
+        contentType: "application/javascript",
+        body: "window.LA={init(){}};",
+      })
+    );
+    await page.route("https://v6-widget.51.la/**", route =>
+      route.fulfill({ contentType: "application/javascript", body: "" })
+    );
     page.setDefaultTimeout(15000);
     page.on("pageerror", error =>
       report.pageErrors.push({ url: page.url(), message: error.message })
@@ -117,7 +128,7 @@ try {
         const entry = { pathname, viewport, records: [], status: "pending" };
         report.cases.push(entry);
         await page.goto(new URL(pathname, base).href, {
-          waitUntil: "domcontentloaded",
+          waitUntil: "load",
         });
         await ready(page);
         let before = await record(page);
@@ -131,7 +142,7 @@ try {
             });
           }
         }
-        await page.reload({ waitUntil: "domcontentloaded" });
+        await page.reload({ waitUntil: "load" });
         await ready(page);
         const restored = await record(page);
         assert.equal(
@@ -152,7 +163,7 @@ try {
       }
       for (const from of ["/", "/posts/"]) {
         await page.goto(new URL(from, base).href, {
-          waitUntil: "domcontentloaded",
+          waitUntil: "load",
         });
         await ready(page);
         const selected = await toggle(page, await record(page));
@@ -174,7 +185,7 @@ try {
             url.origin === expected.origin &&
             url.pathname.replace(/\/$/, "") ===
               expected.pathname.replace(/\/$/, ""),
-          { waitUntil: "domcontentloaded" }
+          { waitUntil: "load" }
         );
         await ready(page);
         let before = await record(page);
@@ -188,7 +199,7 @@ try {
           before = await toggle(page, before);
           entry.records.push(before);
         }
-        await page.goBack({ waitUntil: "domcontentloaded" });
+        await page.goBack({ waitUntil: "load" });
         await ready(page);
         const back = await record(page);
         assert.equal(
@@ -200,7 +211,7 @@ try {
       }
       if (local && viewport.width === 1280) {
         await page.goto(new URL("/posts/bioai-daily-2026-10-03/", base).href, {
-          waitUntil: "domcontentloaded",
+          waitUntil: "load",
         });
         await ready(page);
         const beforePinned = await record(page);

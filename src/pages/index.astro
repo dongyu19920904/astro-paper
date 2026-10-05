@@ -10,6 +10,7 @@ import { SITE } from "@/config";
 import { HOME_PROJECTS } from "@/data/navProjects";
 import { TOPIC_HUBS } from "@/data/topicHubs";
 import authorKnowledge from "@/data/authorKnowledge.json";
+import { cleanPostDescription } from "@/utils/postDescription";
 import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
 import "@/styles/home-studio.css";
 
@@ -75,7 +76,7 @@ function formatPostDate(date: Date) {
           {
             posts.length > 0 ? (
               <ul class="studio-posts">
-                {posts.map(post => (
+                {posts.map((post, index) => (
                   <li>
                     <div class="studio-post-meta">
                       <time datetime={post.data.pubDatetime.toISOString()}>
@@ -89,6 +90,12 @@ function formatPostDate(date: Date) {
                         <IconArrowRight />
                       </a>
                     </h3>
+                    {index < 2 &&
+                      cleanPostDescription(post.data.description, "") && (
+                        <p class="studio-post-description">
+                          {cleanPostDescription(post.data.description, "")}
+                        </p>
+                      )}
                   </li>
                 ))}
               </ul>

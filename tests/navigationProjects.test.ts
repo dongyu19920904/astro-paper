@@ -54,8 +54,10 @@ test("field notes keep real content while reducing homepage duplication", () => 
   assert.match(page, /authorKnowledge\.updatedAt/);
   assert.doesNotMatch(
     page,
-    /briefDescription|post\.data\.description|studio-mastline|studio-section-index/
+    /briefDescription|studio-mastline|studio-section-index/
   );
+  assert.match(page, /index < 2/);
+  assert.match(page, /cleanPostDescription\(post\.data\.description, ""\)/);
   assert.doesNotMatch(css, /text-shadow|scale\(1\.015\)/);
   assert.match(css, /minmax\(0, 1\.85fr\) minmax\(0, 1fr\)/);
 });
@@ -190,7 +192,7 @@ test("day and night retain the original blog palette without home overrides", ()
   );
   assert.match(
     source("src/styles/reading.css"),
-    /\.article-title\s*\{[^}]*color:\s*var\(--accent\)/
+    /\.article-title\s*\{[^}]*color:\s*var\(--foreground\)/
   );
   assert.match(
     source("src/styles/home-studio.css"),

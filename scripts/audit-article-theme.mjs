@@ -14,6 +14,11 @@ for (const file of files) {
   const article = html.match(/<article\b[^>]*\bid="article"[^>]*>/)?.[0];
   if (!article) continue;
   articles += 1;
+  assert.match(
+    html,
+    /<meta\b[^>]*name="darkreader-lock"/,
+    `native theme lock missing: ${file}`
+  );
   assert.match(article, /class="article-prose mt-8 w-full"/, file);
   assert.doesNotMatch(article, /app-prose|prose-pre|dark:/, file);
   const css = [
@@ -34,5 +39,5 @@ const assets = [...stylesheets].map(href => {
   return { href, sha256: createHash("sha256").update(source).digest("hex") };
 });
 process.stdout.write(
-  `${JSON.stringify({ articles, legacyArticleClasses: 0, assets }, null, 2)}\n`
+  `${JSON.stringify({ articles, nativeThemeLocks: articles, legacyArticleClasses: 0, assets }, null, 2)}\n`
 );
