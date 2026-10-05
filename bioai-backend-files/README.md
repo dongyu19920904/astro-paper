@@ -1,5 +1,29 @@
 # 博客自动生成功能 - 部署指南
 
+## 当前维护说明（2026-10-05）
+
+正式代码以 `CloudFlare-BioAI-Daily` 仓库为准。本目录只镜像个人博客模块，不是完整 Worker 工程。知识库、质量校验、日期/幂等和调度配套不能省略。
+
+本轮只改个人博客内容输入与质量控制，不改变三个 BioAI 主任务、生产 Secrets 或 cron。下面的两时段 cron、直接覆盖配置和删除文件式回退示例已经过时，只留作历史记录，**不要执行**。当前回退应使用此前正式部署的 Worker 版本，不能删除正在使用的处理器。
+
+个人博客的 `streamChat` 在局部环境副本中设置 `ANTHROPIC_NATIVE_SYSTEM_PROMPT: true`。配套后端 `src/chatapi.js` 的流式 Anthropic 调用必须包含以下分支：
+
+```javascript
+if (systemPromptText && systemPromptText.trim() !== '') {
+    if (env.ANTHROPIC_NATIVE_SYSTEM_PROMPT === true) {
+        payload.system = systemPromptText;
+    } else {
+        payload.messages[0].content = `${systemPromptText}\n\n${promptText}`;
+    }
+}
+```
+
+该开关不是新 Cloudflare 绑定，不写入生产 vars；其他调用不设置它，保持原请求格式。标准字段见 [Anthropic Messages API](https://platform.claude.com/docs/en/api/messages/create)。不要仅复制本目录的 handler 到不含配套分支的旧后端。
+
+新版本先做 `dryRun`：只读真实来源并生成私人草稿，不写文章与任务 KV。轻度长句不追加调用，严重问题最多一次定向 repair。撤下的六篇仍保留文件，已有文件检查防止自动重写；缺材料或校验失败可以不发表。
+
+## 以下为历史安装记录（不再执行）
+
 ## 📁 文件清单
 
 所有需要的文件已生成到 `D:\GitHub\astro-paper\bioai-backend-files\` 目录：
