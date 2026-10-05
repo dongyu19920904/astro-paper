@@ -6,6 +6,26 @@ function initializeArticleReader() {
   const article = document.querySelector<HTMLElement>("#article");
   if (!article) return;
   const controller = new AbortController();
+  const outline = document.querySelector<HTMLDetailsElement>(".article-toc");
+  if (outline) outline.open = window.matchMedia("(min-width: 75rem)").matches;
+  article.querySelectorAll<HTMLImageElement>("img").forEach(image => {
+    const unavailable = () => {
+      if (image.dataset.fallbackShown) return;
+      image.dataset.fallbackShown = "true";
+      const source = image.dataset.originalSrc || image.src;
+      if (!/^https?:\/\//i.test(source)) return;
+      image.hidden = true;
+      const link = document.createElement("a");
+      link.className = "media-unavailable";
+      link.href = source;
+      link.textContent = "图片暂时无法加载，查看原图";
+      const anchor =
+        image.parentElement?.tagName === "A" ? image.parentElement : image;
+      anchor.after(link);
+    };
+    image.addEventListener("error", unavailable, { signal: controller.signal });
+    if (image.complete && image.naturalWidth === 0) unavailable();
+  });
   article
     .querySelectorAll<HTMLElement>("h2[id],h3[id],h4[id],h5[id],h6[id]")
     .forEach(heading => {

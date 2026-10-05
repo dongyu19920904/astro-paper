@@ -72,6 +72,9 @@ test("validator checks semantic headings, quieter references and heading links",
     color: "rgb(192, 198, 210)",
     headingLink: true,
   });
+  value.colors.paragraph.push({ ...value.colors.paragraph[0], color: "rgb(192, 198, 210)", referenceText: true });
+  value.colors.paragraph.push({ ...value.colors.paragraph[0], color: "rgb(110, 231, 183)", noteTitle: true });
+  value.colors.paragraph.push({ ...value.colors.paragraph[0], color: "rgb(255, 107, 1)", noteTitle: true, warningTitle: true });
   assert.doesNotThrow(() => assertThemeRecord(value, "dark"));
   value.colors.h2[0].color = "rgb(4, 120, 87)";
   assert.throws(() => assertThemeRecord(value, "dark"), /h2\[0\] actual color/);

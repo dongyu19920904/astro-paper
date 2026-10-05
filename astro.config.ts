@@ -12,8 +12,10 @@ import { transformerFileName } from "./src/utils/transformers/fileName";
 import { remarkProxyImages } from "./src/utils/remarkProxyImages";
 import { remarkRemoveToc } from "./src/utils/remarkRemoveToc";
 import { rehypeFigures } from "./src/utils/rehypeFigures";
+import { rehypeReadingBlocks } from "./src/utils/rehypeReadingBlocks";
 import { SITE } from "./src/config";
 import { remarkArticleSources } from "./src/utils/remarkArticleSources";
+import { remarkArticleMedia } from "./src/utils/remarkArticleMedia";
 
 // https://astro.build/config
 export default defineConfig({
@@ -28,12 +30,13 @@ export default defineConfig({
   markdown: {
     remarkPlugins: [
       [remarkArticleSources, { site: SITE.website }],
+      remarkArticleMedia,
       remarkRemoveToc,
       remarkProxyImages,
       remarkToc,
       [remarkCollapse, { test: "Table of contents" }],
     ],
-    rehypePlugins: [rehypeFigures],
+    rehypePlugins: [rehypeFigures, rehypeReadingBlocks],
     shikiConfig: {
       // For more themes, visit https://shiki.style/themes
       themes: { light: "min-light", dark: "night-owl" },

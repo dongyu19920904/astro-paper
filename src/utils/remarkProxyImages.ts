@@ -23,6 +23,13 @@ export const remarkProxyImages: Plugin<[], Root> = () => {
       const original = node.url.trim();
       if (!shouldProxy(original)) return;
       const normalized = normalizeUrl(original);
+      node.data = {
+        ...node.data,
+        hProperties: {
+          ...node.data?.hProperties,
+          "data-original-src": normalized,
+        },
+      };
       node.url = `${IMAGE_PROXY}${encodeURIComponent(normalized)}`;
     });
   };

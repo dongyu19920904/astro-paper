@@ -1,7 +1,7 @@
 // src/handlers/scheduledBlog.js
 // Personal blog generation is isolated from the BioAI daily cron jobs.
 
-import { getISODate, removeMarkdownCodeBlock } from '../helpers.js';
+import { getISODate } from '../helpers.js';
 import { callChatAPIStream } from '../chatapi.js';
 import { createOrUpdateGitHubFile, getGitHubFileSha } from '../github.js';
 import { getBlogPrompt } from '../prompt/blogPrompt.js';
@@ -16,6 +16,7 @@ import {
 } from '../blogQuality.js';
 import { buildAstroPaperFrontMatter } from '../utils/frontmatter.js';
 import { resolveBlogDate } from '../utils/blogDate.js';
+import { addReferencedSourceMedia } from '../blogMedia.js';
 
 async function fetchDailyContent(repoOwner, repoName, dateStr) {
     const rawUrl = `https://raw.githubusercontent.com/${repoOwner}/${repoName}/main/daily/${dateStr}.md`;
@@ -41,8 +42,11 @@ async function fetchDailyContent(repoOwner, repoName, dateStr) {
     }
 }
 
-function parseBlogOutput(output) {
-    const cleanedOutput = removeMarkdownCodeBlock(output).trim();
+export function parseBlogOutput(output) {
+    const raw = String(output || '').trim();
+    // Unwrap only a whole-response fence; code examples inside an article are content.
+    const wrapper = raw.match(/^```(?:markdown|md|text)?[ \t]*\r?\n([\s\S]*?)\r?\n```$/i);
+    const cleanedOutput = (wrapper ? wrapper[1] : raw).trim();
     const lines = cleanedOutput.split('\n');
     const title = (lines[0] || '').replace(/^#*\s*/, '').replace(/["""]/g, '').trim();
 
@@ -215,6 +219,7 @@ async function generateSingleBlog(env, dateStr, dailyContent, config, dryRun = f
     const allowedUrls = [...extractUrls(dailyContent), config.sourceUrl];
     let draft = await generateBlogContent(env, dailyContent, config.type, dateStr, qualification.signals);
     draft.body = normalizeGeneratedMarkdown(draft.body, allowedUrls);
+    draft.body = addReferencedSourceMedia(draft.body, dailyContent);
 
     let validation = validateBlogDraft({
         title: draft.title,
@@ -235,6 +240,7 @@ async function generateSingleBlog(env, dateStr, dailyContent, config, dryRun = f
             severe: validation.severe,
         });
         draft.body = normalizeGeneratedMarkdown(draft.body, allowedUrls);
+        draft.body = addReferencedSourceMedia(draft.body, dailyContent);
         validation = validateBlogDraft({
             title: draft.title,
             body: draft.body,

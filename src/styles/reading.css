@@ -101,16 +101,30 @@
 }
 .article-toc summary {
   cursor: pointer;
-  padding-block: 0.5rem;
+  padding-block: 0.75rem;
+  color: var(--foreground);
+  font-weight: 600;
 }
 .article-toc ol {
-  padding-inline-start: 1.5rem;
+  padding-inline-start: 0;
+  list-style: none;
 }
 .article-toc a {
-  display: inline-block;
-  padding-block: 0.35rem;
-  text-decoration: underline;
+  display: block;
+  padding: 0.65rem 0.75rem;
+  border-inline-start: 1px solid var(--border);
+  overflow-wrap: anywhere;
+  line-height: 1.65;
   text-underline-offset: 0.2em;
+}
+.article-toc a:hover,
+.article-toc a:focus-visible {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+.article-reading,
+.article-outline {
+  min-width: 0;
 }
 .article-layout .article-prose {
   font-size: 1.0625rem;
@@ -119,13 +133,21 @@
   letter-spacing: 0;
 }
 .article-layout .article-prose h2 {
-  font-size: 1.375rem;
+  font-size: 1.5rem;
   line-height: 1.6;
-  margin-top: 2.5rem;
-  margin-bottom: 0.75rem;
-  padding-bottom: 0.4rem;
-  border-bottom: 1px solid var(--border);
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  padding-top: 0.75rem;
   font-weight: 700;
+  text-wrap: balance;
+}
+.article-layout .article-prose h2::before {
+  content: "";
+  display: block;
+  width: 2rem;
+  height: 1px;
+  margin-bottom: 0.75rem;
+  background: var(--article-heading);
 }
 .article-layout .article-prose h3 {
   font-size: 1.125rem;
@@ -251,5 +273,35 @@ html[data-theme]
   }
   .article-layout .article-prose {
     font-size: 1.125rem;
+  }
+}
+@media (min-width: 75rem) {
+  .article-layout.has-article-toc {
+    max-width: 68rem;
+  }
+  .article-layout.has-article-toc > :not(.article-reading) {
+    max-width: 44rem;
+  }
+  .has-article-toc .article-reading {
+    display: grid;
+    grid-template-columns: minmax(0, 44rem) minmax(0, 15rem);
+    grid-template-areas: "body outline";
+    gap: 4rem;
+    align-items: start;
+  }
+  .has-article-toc #article {
+    grid-area: body;
+  }
+  .article-outline {
+    grid-area: outline;
+    position: sticky;
+    top: 2rem;
+    margin-top: 2rem;
+    max-height: calc(100dvh - 4rem);
+    overflow-y: auto;
+    scrollbar-color: var(--border) transparent;
+  }
+  .article-toc {
+    margin-top: 0;
   }
 }

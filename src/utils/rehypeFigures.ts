@@ -1,4 +1,4 @@
-type HastNode = {
+export type HastNode = {
   type?: string;
   tagName?: string;
   properties?: Record<string, unknown>;
@@ -37,28 +37,63 @@ function normalizeImage(img: HastNode) {
 function wrapParagraphImage(node: HastNode) {
   if (!isElement(node, "p") || !node.children) return;
 
-  const visibleChildren = node.children.filter(child => !isWhitespaceText(child));
-  if (visibleChildren.length !== 1 || !isElement(visibleChildren[0], "img")) {
+  const visibleChildren = node.children.filter(
+    child => !isWhitespaceText(child)
+  );
+  if (visibleChildren.length !== 1) {
     return;
   }
-
-  const image = visibleChildren[0];
+  const media = visibleChildren[0];
+  const linkedImage =
+    isElement(media, "a") && media.children?.length === 1
+      ? media.children[0]
+      : undefined;
+  const image = isElement(media, "img") ? media : linkedImage;
+  if (!isElement(image, "img") || !image) return;
   normalizeImage(image);
-
   const caption = captionFromImage(image);
+  const source = isElement(media, "a")
+    ? String(media.properties?.href || "")
+    : "";
+  const captionChildren: HastNode[] = caption
+    ? [{ type: "text", value: caption }]
+    : [];
+  if (/^https?:\/\//i.test(source)) {
+    captionChildren.push(
+      { type: "text", value: caption ? " · " : "" },
+      {
+        type: "element",
+        tagName: "a",
+        properties: { href: source },
+        children: [{ type: "text", value: "图源" }],
+      }
+    );
+  }
+  const original = String(image.properties?.["data-original-src"] || "");
+  if (/^https?:\/\//i.test(original)) {
+    captionChildren.push(
+      { type: "text", value: captionChildren.length ? " · " : "" },
+      {
+        type: "element",
+        tagName: "a",
+        properties: { href: original },
+        children: [{ type: "text", value: "原图" }],
+      }
+    );
+  }
   node.tagName = "figure";
-  node.properties = {};
-  node.children = caption
+  node.properties = { className: ["article-media"] };
+  node.children = captionChildren.length
     ? [
-        image,
+        media,
         {
           type: "element",
           tagName: "figcaption",
           properties: {},
-          children: [{ type: "text", value: caption }],
+          children: captionChildren,
         },
       ]
-    : [image];
+    : [media];
 }
 
 function visit(node: HastNode) {

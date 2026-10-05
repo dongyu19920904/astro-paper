@@ -55,6 +55,9 @@ export function collectThemeRecord() {
               referenceHeading: element.matches(
                 'h2[id="参考资料"], h2[id="references"]'
               ),
+              referenceText: !!element.closest(".article-references") && !element.closest("a") && element.tagName !== "H2",
+              noteTitle: element.classList.contains("article-note-title"),
+              warningTitle: element.classList.contains("article-note-title") && element.closest('[data-kind="warning"]') !== null,
             };
             return [JSON.stringify(row), row];
           })
@@ -140,8 +143,10 @@ export function assertThemeRecord(record, expectedTheme, previous) {
   for (const [kind, rows] of Object.entries(record.colors)) {
     for (const [index, row] of rows.entries()) {
       const color =
-        row.headingLink || row.referenceHeading
+        row.headingLink || row.referenceHeading || row.referenceText
           ? expected.secondary
+          : row.warningTitle ? expected.emphasis
+          : row.noteTitle ? expected[record.series] || expected.foreground
           : kind === "h2" && ["life", "tech"].includes(record.series)
             ? expected[record.series]
             : kind === "strong"
