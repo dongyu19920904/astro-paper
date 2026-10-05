@@ -168,7 +168,14 @@ try {
         };
         report.journeys.push(entry);
         await link.click();
-        await page.waitForURL(new URL(target, base).href);
+        const expected = new URL(target, base);
+        await page.waitForURL(
+          url =>
+            url.origin === expected.origin &&
+            url.pathname.replace(/\/$/, "") ===
+              expected.pathname.replace(/\/$/, ""),
+          { waitUntil: "domcontentloaded" }
+        );
         await ready(page);
         let before = await record(page);
         assert.equal(
