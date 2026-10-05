@@ -1,0 +1,80 @@
+name: One-off article reading verification
+on:
+  push:
+    branches: [codex/article-reading-verification-20261005]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Prepare isolated browser
+        run: |
+          npm install --prefix "$RUNNER_TEMP/reading-check" playwright@1.62.1
+          "$RUNNER_TEMP/reading-check/node_modules/.bin/playwright" install --with-deps chromium
+      - name: Read published pages and verify theme changes
+        run: |
+          node --input-type=module <<'JS'
+          import assert from 'node:assert/strict';
+          import {writeFileSync} from 'node:fs';
+          import {pathToFileURL} from 'node:url';
+          const {chromium}=await import(pathToFileURL(process.env.RUNNER_TEMP+'/reading-check/node_modules/playwright/index.mjs'));
+          const {collectThemeRecord,assertThemeRecord}=await import(pathToFileURL(process.cwd()+'/scripts/check-theme-browser.mjs'));
+          const report={base:'https://yuyu.aivora.cn',cases:[],pages:[],errors:[],analyticsExcluded:true,modelCalls:0,passed:false};
+          const browser=await chromium.launch({headless:true});
+          try{
+            for(const viewport of [{width:1280,height:900},{width:390,height:844}]){
+              const context=await browser.newContext({viewport,reducedMotion:'reduce'});
+              await context.route('https://sdk.51.la/**',r=>r.fulfill({contentType:'application/javascript',body:'window.LA={init(){}}'}));
+              await context.route('https://v6-widget.51.la/**',r=>r.fulfill({contentType:'application/javascript',body:''}));
+              const page=await context.newPage();
+              page.on('pageerror',e=>report.errors.push(e.message));
+              await page.addInitScript(()=>document.addEventListener('click',event=>{window.__themeCheckClick={button:!!event.target.closest('#theme-btn'),trusted:event.isTrusted};},true));
+              for(const slug of ['bioai-daily-2026-09-29','ai-daily-2026-09-26']){
+                const response=await page.goto(report.base+'/posts/'+slug+'/',{waitUntil:'domcontentloaded',timeout:45000});
+                assert.equal(response.status(),200);
+                await page.locator('#article .heading-link').first().waitFor();
+                assert.equal(await page.locator('.article-reading').count(),1);
+                for(const theme of ['light','dark']){
+                  const before=await page.evaluate(collectThemeRecord);assertThemeRecord(before,before.theme);
+                  if(before.theme!==theme){
+                    if(!await page.locator('#theme-btn').isVisible())await page.getByRole('button',{name:'展开导航'}).click();
+                    await page.locator('#theme-btn').click();
+                    await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+                    const after=await page.evaluate(collectThemeRecord);assertThemeRecord(after,theme,before);
+                    if(viewport.width<600)await page.getByRole('button',{name:'收起导航'}).click();
+                  }
+                  assertThemeRecord(await page.evaluate(collectThemeRecord),theme);
+                  const figures=await page.locator('#article figure').count();assert.ok(figures>=1);
+                  assert.ok(await page.locator('#article figcaption a').count()>=2);
+                  report.cases.push({slug,viewport,theme,figures,themePassed:true});
+                }
+              }
+              await context.close();
+            }
+            const paths=['/','/posts/ai-daily-2026-10-05/','/posts/bioai-daily-2026-10-05/','/rss.xml','/sitemap-0.xml'];
+            for(const series of ['ai','bioai'])for(const day of ['02','03','04'])paths.push('/posts/'+series+'-daily-2026-10-'+day+'/');
+            for(const pathname of paths){
+              const response=await fetch(report.base+pathname,{signal:AbortSignal.timeout(45000)});const html=await response.text();
+              const withdrawn=/daily-2026-10-0[234]/.test(pathname);assert.equal(response.status,withdrawn?404:200,pathname);
+              if(pathname.includes('2026-10-05'))assert.match(html,/article-reading/);
+              if(pathname.includes('bioai-daily-2026-10-05')){assert.match(html,/<figure\b/);assert.match(html,/图源/);}
+              if(pathname==='/')assert.match(html,/LA-DATA-WIDGET/);
+              if(pathname.endsWith('.xml'))assert.doesNotMatch(html,/(?:ai|bioai)-daily-2026-10-0[234](?:\/|<)/);
+              report.pages.push({pathname,status:response.status});
+            }
+            assert.deepEqual(report.errors,[]);report.passed=true;
+          }catch(error){report.failure=error.stack;throw error;}
+          finally{writeFileSync('reading-hosted.json',JSON.stringify(report,null,2));await browser.close();console.log(JSON.stringify({passed:report.passed,cases:report.cases.length,pages:report.pages.length,errors:report.errors.length}));}
+          JS
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: article-reading-verification
+          path: reading-hosted.json
+          retention-days: 3
