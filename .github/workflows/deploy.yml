@@ -9,6 +9,10 @@ on:
     branches: [main]
   # 允许手动触发
   workflow_dispatch:
+  # Recover missed push triggers; this never starts report generation.
+  schedule:
+    - cron: "45 13 * * *"
+    - cron: "45 23 * * *"
 
 # 设置 GITHUB_TOKEN 的权限以允许部署到 GitHub Pages
 permissions:
