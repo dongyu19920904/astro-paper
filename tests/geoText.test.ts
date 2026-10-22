@@ -33,7 +33,7 @@ test("current author knowledge is dated, public-safe and used by both GEO exits"
     "utf8"
   );
   const knowledge = JSON.parse(raw);
-  assert.equal(knowledge.version, "2026-10-05");
+  assert.equal(knowledge.version, "2026-10-22");
   assert.equal(knowledge.updatedAt, knowledge.version);
   assert.ok(
     knowledge.currentFocus.some(
