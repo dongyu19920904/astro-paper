@@ -17,6 +17,8 @@ const FABRICATED_TODAY_EXPERIENCE_PATTERNS = [
 ];
 
 const UNSUPPORTED_AUTHOR_TOOL_ROUTINE_PATTERNS = [
+    /我有(?:一|个|一个)[^。！？\n]{0,12}习惯/,
+    /(?:我|是因为)[^。！？\n]{0,12}(?:吃过亏|踩过坑)/,
     /我(?:最常|通常|习惯)[^。！？\n]{0,25}(?:加|提示词|让\s*AI|使用|会在|丢|输入|交给)/i,
     /(?:这个|我的)习惯来自(?:反复)?踩坑/,
     /我(?:曾经|以前|原来)[^。！？\n]{0,25}(?:以为|觉得|认为|使用|试用|加)/,
@@ -398,6 +400,12 @@ export function validateBlogDraft({ title, body, dailyContent, blogType, allowed
         /(?:不是|不在)模型(?:问题|能力|智商)[^。！？\n]{0,15}(?:是|在)(?:沟通|表达|理解|使用者)/.test(text)
     )) {
         severe.push('unsupported_tool_effectiveness_claim');
+    }
+    if (blogType === 'ai-daily' && /(?:EXTRACTED|直接从代码[^。！？\n]{0,10}(?:读|提取))[^。！？\n]{0,180}(?:可以直接信|无需核对|不用核对|不需要核对)/i.test(text)) {
+        severe.push('unsupported_extracted_certainty');
+    }
+    if (blogType === 'bioai-daily' && /(?:训练|初始化|起点)[^。！？\n]{0,80}(?:结果差很多|差别巨大|大幅提升)/.test(text)) {
+        severe.push('unsupported_bio_effect_size');
     }
     if (/(?:经营|卖(?:\s*AI\s*)?账号)[^。！？\n]{0,15}(?:这一年多|[一二两三四五六七八九十\d]+年(?:多|来))/.test(text)) {
         severe.push('unsupported_author_business_duration');
