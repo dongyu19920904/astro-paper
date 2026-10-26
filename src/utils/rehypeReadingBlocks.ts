@@ -14,7 +14,28 @@ function text(node: HastNode): string {
     : (node.children || []).map(text).join("");
 }
 
-function visit(node: HastNode) {
+function visit(node: HastNode, state: { tables: number }) {
+  const classNames = node.properties?.className;
+  if (
+    node.children &&
+    !(Array.isArray(classNames) && classNames.includes("table-scroll"))
+  ) {
+    node.children = node.children.map(child => {
+      if (child.tagName !== "table") return child;
+      state.tables++;
+      return {
+        type: "element",
+        tagName: "div",
+        properties: {
+          className: ["table-scroll"],
+          role: "region",
+          tabIndex: 0,
+          "aria-label": `表格 ${state.tables}，可横向滚动`,
+        },
+        children: [child],
+      };
+    });
+  }
   if (node.tagName === "blockquote") {
     const paragraph = node.children?.find(child => child.tagName === "p");
     const first = paragraph?.children?.[0];
@@ -71,9 +92,29 @@ function visit(node: HastNode) {
       }
     }
   }
-  node.children?.forEach(visit);
+  node.children?.forEach(child => visit(child, state));
 }
 
 export function rehypeReadingBlocks() {
-  return (tree: HastNode) => visit(tree);
+  return (tree: HastNode) => {
+    const opening = tree.children?.find(
+      child => child.type !== "text" || child.value?.trim()
+    );
+    if (
+      opening?.tagName === "p" &&
+      !opening.children?.some(child => child.tagName === "img")
+    ) {
+      const classes = opening.properties?.className;
+      opening.properties = {
+        ...opening.properties,
+        className: [
+          ...new Set([
+            ...(Array.isArray(classes) ? classes : []),
+            "article-lead",
+          ]),
+        ],
+      };
+    }
+    visit(tree, { tables: 0 });
+  };
 }
