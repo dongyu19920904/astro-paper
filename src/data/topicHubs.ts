@@ -1,3 +1,5 @@
+import { LONGEVITY_GUIDE } from "./longevityGuide.ts";
+
 export const TOPIC_HUBS = [
   {
     slug: "ai-one-person-company",
@@ -21,8 +23,7 @@ export const TOPIC_HUBS = [
     slug: "ai-longevity",
     title: "AI 生命延续学",
     shortTitle: "AI 生命延续学",
-    description:
-      "围绕 AI 与衰老研究、脑健康、数字生物标志物和生命科学工具，整理来源、项目实验与可验证的阶段性认识。",
+    description: LONGEVITY_GUIDE.description,
     scope:
       "内容用于信息整理和项目探索，不构成医疗建议；涉及研究结论时应回到论文、机构或临床注册来源核验。",
     questions: [

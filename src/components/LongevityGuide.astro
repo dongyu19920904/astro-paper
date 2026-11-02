@@ -1,0 +1,132 @@
+---
+import { LONGEVITY_GUIDE as guide } from "@/data/longevityGuide";
+import "@/styles/article-prose.css";
+---
+
+<section
+  id="longevity-guide"
+  class="border-b border-border py-6"
+  aria-labelledby="longevity-intro"
+>
+  <article id="article" class="article-prose">
+    <h2 id="longevity-intro">AI 生命延续学，从哪里入门？</h2>
+    <p>{guide.definition}</p>
+    <p class="text-sm">{guide.authorScope} <a href="/about/">关于我</a></p>
+    <p class="text-sm">
+      指南更新于 <time datetime={guide.updatedAt}>{guide.updatedAt}</time>
+    </p>
+    <h2 id="ai-immortality">AI 能让人长生不老吗？</h2>
+    <p>{guide.answer}</p>
+    <dl class="space-y-4">
+      {
+        guide.concepts.map(item => (
+          <div>
+            <>
+              <dt class="font-semibold">{item.name}</dt>
+              <dd>
+                <p>
+                  {item.meaning}
+                  {item.limit}
+                </p>
+              </dd>
+            </>
+          </div>
+        ))
+      }
+    </dl>
+    <h2 id="longevity-evidence">读一条研究，先看它到了哪一步</h2>
+    <p>先问研究对象，再看结论。别省掉“在哪些条件下成立”这半句话。</p>
+    <div
+      class="table-scroll"
+      tabindex="0"
+      role="region"
+      aria-label="研究证据阶段比较，可横向滚动"
+    >
+      <table>
+        <caption class="sr-only">不同研究阶段的检查方法和限制</caption>
+        <thead
+          ><tr
+            ><th scope="col">材料</th><th scope="col">读的时候看什么</th><th
+              scope="col">不要推到哪里</th
+            ></tr
+          ></thead
+        >
+        <tbody
+          >{
+            guide.evidence.map(item => (
+              <tr>
+                <>
+                  <th scope="row">{item.stage}</th>
+                  <td>{item.check}</td>
+                  <td>{item.limit}</td>
+                </>
+              </tr>
+            ))
+          }</tbody
+        >
+      </table>
+    </div>
+    <h2 id="longevity-reading">接下来可以读什么、做什么？</h2>
+    <ol>{guide.steps.map(step => <li>{step}</li>)}</ol>
+    <p>
+      <a href="/projects/aging-clock-atlas/">比较多维衰老时钟与开源项目</a
+      >，或去 <a href="https://news.aibioo.cn/">BioAI 日报</a>继续找研究线索。
+    </p>
+    {
+      guide.questions.map(item => (
+        <section>
+          <>
+            <h3>{item.question}</h3>
+            <p>{item.answer}</p>
+          </>
+        </section>
+      ))
+    }
+    <h2 id="longevity-references">参考资料</h2>
+    <ul>
+      {
+        guide.sources.map(source => (
+          <li>
+            <a href={source.url}>{source.title}</a>（{source.kind}）
+            <p>{source.purpose}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </article>
+</section>
+
+<style>
+  #longevity-guide {
+    min-width: 0;
+  }
+  #longevity-guide .article-prose {
+    font-size: 1rem;
+    line-height: 1.85;
+  }
+  #longevity-guide h2 {
+    margin-block: 2rem 0.75rem;
+    font-size: 1.375rem;
+    font-weight: 700;
+    line-height: 1.6;
+  }
+  #longevity-guide h2:first-child {
+    margin-top: 0;
+  }
+  #longevity-guide h3 {
+    margin-block: 1.5rem 0.5rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.7;
+  }
+  #longevity-guide .table-scroll {
+    overflow-x: auto;
+    max-width: 100%;
+  }
+  #longevity-guide table {
+    min-width: 34rem;
+  }
+  #longevity-guide th {
+    text-align: start;
+  }
+</style>

@@ -9,12 +9,15 @@ import Card from "@/components/Card.astro";
 import Pagination from "@/components/Pagination.astro";
 import { buildPaginationSeo } from "@/utils/paginationSeo";
 import { SITE } from "@/config";
+import LongevityGuide from "@/components/LongevityGuide.astro";
+import { getLongevityGuide } from "@/data/longevityGuide";
 
 type Props = { topic: TopicHub; page: Page<CollectionEntry<"blog">> };
 const { topic, page } = Astro.props;
+const guide = getLongevityGuide(topic.slug, page.currentPage);
 const canonicalBase = new URL(`/topics/${topic.slug}/`, SITE.website);
 const seo = buildPaginationSeo({
-  title: topic.title,
+  title: guide?.seoTitle ?? topic.title,
   description: topic.description,
   canonicalBase,
   currentPage: page.currentPage,
@@ -53,6 +56,7 @@ const seo = buildPaginationSeo({
         )
       }
     </header>
+    {guide && <LongevityGuide />}
     {
       page.currentPage === 1 && (
         <section class="border-b border-border py-5">

@@ -24,6 +24,12 @@ export const GEO_PROFILE = {
   ],
   primaryPages: [
     {
+      title: "AI 生命延续学入门与研究专题",
+      url: "https://yuyu.aivora.cn/topics/ai-longevity/",
+      description:
+        "区分 AI 长生不老的期待与研究证据，连接衰老时钟、开源项目和持续记录。",
+    },
+    {
       title: "首页",
       url: "https://yuyu.aivora.cn/",
       description: "yuyu 的个人主页与项目入口。",
